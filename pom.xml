@@ -16,12 +16,6 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
-        <!-- mybatis  -->
-        <dependency>
-        	<groupId>org.mybatis</groupId>
-        	<artifactId>mybatis</artifactId>
-        	<version>3.2.8</version>
-        </dependency>
         <!-- 对象拷贝 -->
         <dependency>
             <groupId>commons-beanutils</groupId>
