@@ -28,7 +28,7 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="mapperLocations">
             <list>
-                <value>classpath*:sqlmap/test.xml</value>
+                <value>classpath*:sqlmap/test1.xml</value>
             </list>
         </property>
     </bean>
