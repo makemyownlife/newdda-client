@@ -3,8 +3,7 @@ package com.elong.pb.newdda.parser;
 import com.alibaba.druid.sql.parser.SQLParserUtils;
 import com.alibaba.druid.sql.parser.SQLStatementParser;
 import com.alibaba.druid.util.JdbcUtils;
-import org.junit.Test;
-
+import org.testng.annotations.Test;
 import java.util.List;
 
 /**
@@ -22,6 +21,5 @@ public class DruidPaserUnitTest {
         SQLStatementParser parser = SQLParserUtils.createSQLStatementParser(sql, JdbcUtils.MYSQL);
         List stmtList = parser.parseStatementList();
     }
-
 
 }
