@@ -2,8 +2,6 @@ package com.elong.pb.newdda.dao.impl;
 
 import com.elong.pb.newdda.dao.TestDao;
 import com.elong.pb.newdda.plugin.MyBatisBaseDao;
-import org.mybatis.spring.support.SqlSessionDaoSupport;
-import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**

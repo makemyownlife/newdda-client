@@ -5,5 +5,8 @@
 
 <mapper namespace="test">
 
+        <select id="query" resultType="map">
+                select *  from test
+        </select>
 
 </mapper>

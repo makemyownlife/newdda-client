@@ -1,6 +1,5 @@
 package com.elong.pb.newdda.plugin;
 
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
 /**
@@ -11,6 +10,5 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
  * To change this template use File | Settings | File Templates.
  */
 public class MyBatisBaseDao extends SqlSessionDaoSupport {
-
 
 }
