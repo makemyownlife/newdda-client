@@ -8,6 +8,8 @@
            http://www.springframework.org/schema/aop
            http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
 
-
+    <bean id="testDao" class="com.elong.pb.newdda.dao.impl.TestDaoImpl">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
 
 </beans>

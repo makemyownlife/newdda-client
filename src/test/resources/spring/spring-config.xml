@@ -20,4 +20,9 @@
     <!-- 数据源 -->
     <import resource="spring-config-datasource.xml"/>
 
+    <!-- dao相关 -->
+    <import resource="spring-config-dao.xml"/>
+
+
+
 </beans>

@@ -1,11 +1,10 @@
 package com.elong.pb.newdda.plugin;
 
+import com.elong.pb.newdda.dao.TestDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
-import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import java.util.List;
 
 /**
  * mybatis 单元测试
@@ -15,11 +14,14 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @ContextConfiguration(locations = {"/spring/spring-config.xml"})
-public class MybatisUnitTest  extends AbstractTransactionalTestNGSpringContextTests {
+public class MybatisUnitTest extends AbstractTransactionalTestNGSpringContextTests {
+
+    @Autowired
+    private TestDao testDao;
 
     @Test
     public void testQuery() {
-
+        testDao.query();
     }
 
 }
