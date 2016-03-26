@@ -14,7 +14,7 @@ import java.util.List;
 public class TestDaoImpl extends MyBatisBaseDao implements TestDao {
 
     public List query() {
-        return getSqlSession().selectList("test.query");
+        return getSqlSession().selectList("test.query" ,1);
     }
 
 }

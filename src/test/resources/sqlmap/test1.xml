@@ -6,7 +6,7 @@
 <mapper namespace="test">
 
         <select id="query" resultType="map">
-                select *  from test
+                select *  from test  where id = #{id}
         </select>
 
 </mapper>
