@@ -1,6 +1,7 @@
 package com.elong.pb.newdda.parser;
 
 import org.testng.annotations.Test;
+import org.testng.asserts.Assertion;
 
 import java.sql.*;
 
@@ -16,7 +17,7 @@ public class JdbcUnitTest {
     @Test
     public void testJdbcConnect() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.jdbc.Driver");
-        String url = "jdbc:mysql://10.100.19.144:3306/wiki";
+        String url = "jdbc:mysql://localhost:3306/wiki";
         String username = "root";
         String password = "ilxw";
         Connection connection = DriverManager.getConnection(url, username, password);
@@ -45,5 +46,7 @@ public class JdbcUnitTest {
         }
 
     }
+
+
 }
 
