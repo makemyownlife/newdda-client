@@ -31,6 +31,11 @@
                 <value>classpath*:sqlmap/test1.xml</value>
             </list>
         </property>
+        <property name="plugins">
+            <list>
+                <bean class="com.elong.pb.newdda.plugin.MyBatisShardInterceptor"></bean>
+            </list>
+        </property>
     </bean>
 
 </beans>
