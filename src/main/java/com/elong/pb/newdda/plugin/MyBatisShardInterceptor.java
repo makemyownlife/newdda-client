@@ -16,7 +16,7 @@ import java.util.Properties;
  */
 public class MyBatisShardInterceptor implements Interceptor {
 
-    private static Logger logger = LoggerFactory.getLogger(MyBatisShardInterceptor.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(MyBatisShardInterceptor.class);
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
@@ -25,7 +25,7 @@ public class MyBatisShardInterceptor implements Interceptor {
 
     @Override
     public Object plugin(Object target) {
-        logger.error("target:{}", target);
+        LOGGER.error("target:{}", target);
         if (target instanceof Executor) {
             return target;
             //return Plugin.wrap(target, this);

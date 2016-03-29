@@ -4,6 +4,7 @@ import com.alibaba.druid.sql.parser.SQLParserUtils;
 import com.alibaba.druid.sql.parser.SQLStatementParser;
 import com.alibaba.druid.util.JdbcUtils;
 import org.testng.annotations.Test;
+
 import java.util.List;
 
 /**
@@ -17,9 +18,19 @@ public class DruidPaserUnitTest {
 
     @Test
     public void testSelectStatement() {
-        String sql = "select *  from user where id = 1";
+        String sql = "select a.*  from user a , city c where id = 1 and a.city_id = c.id ";
         SQLStatementParser parser = SQLParserUtils.createSQLStatementParser(sql, JdbcUtils.MYSQL);
         List stmtList = parser.parseStatementList();
+    }
+
+    @Test
+    public void testInsertStatement() {
+
+    }
+
+    @Test
+    public void testUpdateStatement() {
+
     }
 
 }
