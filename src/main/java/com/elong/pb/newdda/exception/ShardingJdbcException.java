@@ -1,4 +1,4 @@
-package com.elong.pb.newdda.jdbc;
+package com.elong.pb.newdda.exception;
 
 /**
  * Created with IntelliJ IDEA.
