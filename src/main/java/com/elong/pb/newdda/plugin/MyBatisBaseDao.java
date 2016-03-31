@@ -11,4 +11,6 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
  */
 public class MyBatisBaseDao extends SqlSessionDaoSupport {
 
+
+
 }

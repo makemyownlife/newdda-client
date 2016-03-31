@@ -1,11 +1,14 @@
 package com.elong.pb.newdda.jdbc;
 
 /**
- * Created with IntelliJ IDEA.
+ * 分区的链接
  * User: zhangyong
  * Date: 2016/3/31
  * Time: 18:53
  * To change this template use File | Settings | File Templates.
  */
-public class ShardingConnection  {
+public class ShardingConnection {
+
+
+
 }

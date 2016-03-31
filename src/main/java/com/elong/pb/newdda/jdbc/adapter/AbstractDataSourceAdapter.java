@@ -1,6 +1,4 @@
-package com.elong.pb.newdda.datasource;
-
-import com.elong.pb.newdda.jdbc.adapter.WrapperAdapter;
+package com.elong.pb.newdda.jdbc.adapter;
 
 import javax.sql.DataSource;
 import java.io.PrintWriter;

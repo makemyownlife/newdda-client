@@ -1,5 +1,6 @@
 package com.elong.pb.newdda.datasource;
 
+import com.elong.pb.newdda.jdbc.adapter.AbstractDataSourceAdapter;
 import java.sql.Connection;
 import java.sql.SQLException;
 
