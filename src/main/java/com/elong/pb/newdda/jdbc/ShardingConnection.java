@@ -1,5 +1,11 @@
 package com.elong.pb.newdda.jdbc;
 
+
+import com.elong.pb.newdda.jdbc.adapter.AbstractConnectionAdapter;
+
+import java.sql.*;
+import java.util.Collection;
+
 /**
  * 分区的链接
  * User: zhangyong
@@ -7,7 +13,7 @@ package com.elong.pb.newdda.jdbc;
  * Time: 18:53
  * To change this template use File | Settings | File Templates.
  */
-public class ShardingConnection {
+public class ShardingConnection extends AbstractConnectionAdapter {
 
 
 
