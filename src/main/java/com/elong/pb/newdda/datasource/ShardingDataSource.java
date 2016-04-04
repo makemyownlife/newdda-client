@@ -3,6 +3,8 @@ package com.elong.pb.newdda.datasource;
 import com.elong.pb.newdda.jdbc.adapter.AbstractDataSourceAdapter;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
+import java.util.logging.Logger;
 
 /**
  * 支持分片的数据源 (后续可以扩展到)

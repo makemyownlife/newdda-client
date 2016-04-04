@@ -4,6 +4,7 @@ import javax.sql.DataSource;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
+import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -35,5 +36,12 @@ public abstract class AbstractDataSourceAdapter extends WrapperAdapter implement
     public final void setLoginTimeout(final int seconds) throws SQLException {
         throw new SQLFeatureNotSupportedException("unsupported setLoginTimeout(int seconds)");
     }
+
+    //=================================== special method for jdk 1.7 start ===================================
+    @Override
+    public final Logger getParentLogger() throws SQLFeatureNotSupportedException {
+        return Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    }
+    //=================================== special method for jdk 1.7 end ===================================
 
 }
