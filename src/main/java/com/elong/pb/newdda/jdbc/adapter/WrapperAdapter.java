@@ -1,5 +1,8 @@
 package com.elong.pb.newdda.jdbc.adapter;
 
+import com.dangdang.ddframe.rdb.sharding.exception.ShardingJdbcException;
+import com.dangdang.ddframe.rdb.sharding.jdbc.util.JdbcMethodInvocation;
+
 import java.sql.SQLException;
 import java.sql.Wrapper;
 

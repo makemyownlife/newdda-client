@@ -77,7 +77,6 @@ public abstract class AbstractUnsupportedOperationConnection extends WrapperAdap
         throw new SQLFeatureNotSupportedException("setTypeMap");
     }
 
-
     @Override
     public final Clob createClob() throws SQLException {
         throw new SQLFeatureNotSupportedException("createClob");
