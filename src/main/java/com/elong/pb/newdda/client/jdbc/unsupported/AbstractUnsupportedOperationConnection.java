@@ -1,6 +1,6 @@
-package com.elong.pb.newdda.jdbc.unsupported;
+package com.elong.pb.newdda.client.jdbc.unsupported;
 
-import com.elong.pb.newdda.jdbc.adapter.WrapperAdapter;
+import com.elong.pb.newdda.client.jdbc.adapter.WrapperAdapter;
 import java.sql.*;
 import java.util.Map;
 import java.util.Properties;

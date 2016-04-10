@@ -16,7 +16,7 @@ import org.testng.annotations.Test;
 public class ShardingDataSourceUnitTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
-    private ShardingDataSource shardingDataSource;
+    private com.elong.pb.newdda.datasource.ShardingDataSource shardingDataSource;
 
     @Test
     public void testShardDataSource(){

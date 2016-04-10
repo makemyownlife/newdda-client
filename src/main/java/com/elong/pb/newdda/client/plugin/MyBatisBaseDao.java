@@ -1,4 +1,4 @@
-package com.elong.pb.newdda.plugin;
+package com.elong.pb.newdda.client.plugin;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
@@ -10,7 +10,6 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
  * To change this template use File | Settings | File Templates.
  */
 public class MyBatisBaseDao extends SqlSessionDaoSupport {
-
 
 
 }
