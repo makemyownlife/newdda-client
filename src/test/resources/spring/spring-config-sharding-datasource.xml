@@ -49,7 +49,7 @@
         <property name="minEvictableIdleTimeMillis" value="300000"/>
     </bean>
 
-    <bean id="shardingDataSource" class="com.elong.pb.newdda.client.client.datasource.ShardingDataSource">
+    <bean id="shardingDataSource" class="com.elong.pb.newdda.client.datasource.ShardingDataSource">
 
     </bean>
 

@@ -1,4 +1,4 @@
-package com.elong.pb.newdda.client.client.plugin;
+package com.elong.pb.newdda.client.plugin;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 

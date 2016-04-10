@@ -1,4 +1,4 @@
-package com.elong.pb.newdda.client.client.jdbc.adapter;
+package com.elong.pb.newdda.client.jdbc.adapter;
 
 import java.sql.SQLException;
 import java.sql.Wrapper;
