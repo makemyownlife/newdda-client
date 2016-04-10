@@ -1,6 +1,7 @@
-package com.elong.pb.newdda.client.jdbc;
+package com.elong.pb.newdda.client.client.jdbc;
 
-import com.elong.pb.newdda.client.jdbc.adapter.AbstractConnectionAdapter;
+import com.elong.pb.newdda.client.client.jdbc.adapter.AbstractConnectionAdapter;
+
 import java.sql.*;
 import java.util.Collection;
 

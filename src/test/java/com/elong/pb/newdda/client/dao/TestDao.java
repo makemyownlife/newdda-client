@@ -1,4 +1,4 @@
-package com.elong.pb.newdda.dao;
+package com.elong.pb.newdda.client.dao;
 
 import java.util.List;
 

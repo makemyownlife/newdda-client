@@ -1,6 +1,6 @@
-package com.elong.pb.newdda.plugin;
+package com.elong.pb.newdda.client.plugin;
 
-import com.elong.pb.newdda.dao.TestDao;
+import com.elong.pb.newdda.client.dao.TestDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;

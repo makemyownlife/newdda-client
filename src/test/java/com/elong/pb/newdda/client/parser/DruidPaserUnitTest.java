@@ -1,4 +1,4 @@
-package com.elong.pb.newdda.parser;
+package com.elong.pb.newdda.client.parser;
 
 import com.alibaba.druid.sql.parser.SQLParserUtils;
 import com.alibaba.druid.sql.parser.SQLStatementParser;

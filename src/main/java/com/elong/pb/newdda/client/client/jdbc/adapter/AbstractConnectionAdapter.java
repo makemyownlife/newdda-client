@@ -1,7 +1,7 @@
-package com.elong.pb.newdda.client.jdbc.adapter;
+package com.elong.pb.newdda.client.client.jdbc.adapter;
 
 
-import com.elong.pb.newdda.client.jdbc.unsupported.AbstractUnsupportedOperationConnection;
+import com.elong.pb.newdda.client.client.jdbc.unsupported.AbstractUnsupportedOperationConnection;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

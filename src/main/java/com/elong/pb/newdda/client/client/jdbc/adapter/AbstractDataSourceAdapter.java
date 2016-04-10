@@ -1,4 +1,4 @@
-package com.elong.pb.newdda.client.jdbc.adapter;
+package com.elong.pb.newdda.client.client.jdbc.adapter;
 
 import javax.sql.DataSource;
 import java.io.PrintWriter;

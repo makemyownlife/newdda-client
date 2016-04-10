@@ -1,7 +1,7 @@
-package com.elong.pb.newdda.dao.impl;
+package com.elong.pb.newdda.client.dao.impl;
 
-import com.elong.pb.newdda.dao.TestDao;
-import com.elong.pb.newdda.plugin.MyBatisBaseDao;
+import com.elong.pb.newdda.client.dao.TestDao;
+import com.elong.pb.newdda.client.client.plugin.MyBatisBaseDao;
 import java.util.List;
 
 /**

@@ -1,4 +1,4 @@
-package com.elong.pb.newdda.client.exception;
+package com.elong.pb.newdda.client.client.exception;
 
 /**
  * Created with IntelliJ IDEA.

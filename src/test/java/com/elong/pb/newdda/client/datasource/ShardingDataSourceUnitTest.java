@@ -1,5 +1,6 @@
-package com.elong.pb.newdda.datasource;
+package com.elong.pb.newdda.client.datasource;
 
+import com.elong.pb.newdda.client.client.datasource.ShardingDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -16,7 +17,7 @@ import org.testng.annotations.Test;
 public class ShardingDataSourceUnitTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
-    private com.elong.pb.newdda.datasource.ShardingDataSource shardingDataSource;
+    private ShardingDataSource shardingDataSource;
 
     @Test
     public void testShardDataSource(){
