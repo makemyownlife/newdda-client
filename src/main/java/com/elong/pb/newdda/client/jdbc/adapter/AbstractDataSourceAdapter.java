@@ -38,7 +38,6 @@ public abstract class AbstractDataSourceAdapter extends WrapperAdapter implement
     }
 
     //=================================== special method for jdk 1.7 start ===================================
-    @Override
     public final Logger getParentLogger() throws SQLFeatureNotSupportedException {
         return Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     }
