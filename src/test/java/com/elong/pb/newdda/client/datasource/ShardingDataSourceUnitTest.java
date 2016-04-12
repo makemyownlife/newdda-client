@@ -5,6 +5,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
+import java.sql.SQLException;
+
 /**
  * 支持分片的数据源 相关测试
  * User: zhangyong
@@ -19,8 +21,8 @@ public class ShardingDataSourceUnitTest extends AbstractTestNGSpringContextTests
     private ShardingDataSource shardingDataSource;
 
     @Test
-    public void testShardDataSource(){
-        System.out.println(shardingDataSource);
+    public void testShardDataSource() throws SQLException {
+        shardingDataSource.getConnection();
     }
 
 }

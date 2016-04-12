@@ -1,6 +1,8 @@
 package com.elong.pb.newdda.client.datasource;
 
 import com.elong.pb.newdda.client.jdbc.adapter.AbstractDataSourceAdapter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -13,6 +15,8 @@ import java.sql.SQLException;
  * To change this template use File | Settings | File Templates.
  */
 public class ShardingDataSource extends AbstractDataSourceAdapter {
+
+    private final static Logger logger = LoggerFactory.getLogger(ShardingDataSource.class);
 
     @Override
     public Connection getConnection() throws SQLException {
