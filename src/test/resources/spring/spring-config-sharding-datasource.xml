@@ -13,7 +13,8 @@
 
     <context:annotation-config/>
 
-    <bean id="dataSource1" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+    <bean id="dataSource1-master" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
+          destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://10.100.19.144:3306/pb_account1"/>
         <property name="username" value="root"/>
@@ -25,9 +26,48 @@
         <property name="minEvictableIdleTimeMillis" value="300000"/>
     </bean>
 
-    <bean id="dataSource2" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+    <bean id="dataSource1-slave" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
+          destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://10.100.19.144:3306/pb_account1"/>
+        <property name="username" value="root"/>
+        <property name="password" value="ilxw"/>
+        <property name="initialSize" value="5"/>
+        <property name="minIdle" value="3"/>
+        <property name="maxActive" value="45"/>
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+    </bean>
+
+    <bean id="dataSource2-master" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
+          destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://10.100.19.144:3306/pb_account2"/>
+        <property name="username" value="root"/>
+        <property name="password" value="ilxw"/>
+        <property name="initialSize" value="5"/>
+        <property name="minIdle" value="3"/>
+        <property name="maxActive" value="45"/>
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+    </bean>
+
+    <bean id="dataSource2-slave" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
+          destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://10.100.19.144:3306/pb_account2"/>
+        <property name="username" value="root"/>
+        <property name="password" value="ilxw"/>
+        <property name="initialSize" value="5"/>
+        <property name="minIdle" value="3"/>
+        <property name="maxActive" value="45"/>
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+    </bean>
+
+    <bean id="dataSource3-master" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://10.100.19.144:3306/pb_account3"/>
         <property name="username" value="root"/>
         <property name="password" value="ilxw"/>
         <property name="initialSize" value="5"/>
@@ -49,8 +89,8 @@
         <property name="minEvictableIdleTimeMillis" value="300000"/>
     </bean>
 
-    <bean id="shardingDataSource" class="com.elong.pb.newdda.client.datasource.ShardingDataSource">
 
+    <bean id="shardingDataSource" class="com.elong.pb.newdda.client.datasource.ShardingDataSource">
     </bean>
 
 </beans>
