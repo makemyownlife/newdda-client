@@ -17,10 +17,9 @@ public class MasterSlaveDataSource {
 
     private List<DataSource> slaveDataSources;
 
-    public MasterSlaveDataSource(String name, DataSource masterDataSource, List<DataSource> slaveDataSources) {
+    public MasterSlaveDataSource(String name, DataSource masterDataSource) {
         this.name = name;
         this.masterDataSource = masterDataSource;
-        this.slaveDataSources = slaveDataSources;
     }
 
     public DataSource getMasterDataSource() {
@@ -33,6 +32,10 @@ public class MasterSlaveDataSource {
 
     public List<DataSource> getSlaveDataSources() {
         return slaveDataSources;
+    }
+
+    public void setSlaveDataSources(List<DataSource> slaveDataSources) {
+        this.slaveDataSources = slaveDataSources;
     }
 
 }

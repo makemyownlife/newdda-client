@@ -65,7 +65,8 @@
         <property name="minEvictableIdleTimeMillis" value="300000"/>
     </bean>
 
-    <bean id="dataSource3-master" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+    <bean id="dataSource3-master" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
+          destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://10.100.19.144:3306/pb_account3"/>
         <property name="username" value="root"/>
@@ -89,8 +90,19 @@
         <property name="minEvictableIdleTimeMillis" value="300000"/>
     </bean>
 
+    <!-- 分区1  -->
+    <bean id="sharding1" class="com.elong.pb.newdda.client.datasource.MasterSlaveDataSource">
+        <constructor-arg index="0" value="sharding1"/>
+        <constructor-arg index="1" ref="dataSource1-master"/>
+        <property name="slaveDataSources">
+            <list>
+                <ref local="dataSource1-slave"/>
+            </list>
+        </property>
+    </bean>
 
     <bean id="shardingDataSource" class="com.elong.pb.newdda.client.datasource.ShardingDataSource">
+
     </bean>
 
 </beans>
