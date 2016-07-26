@@ -8,5 +8,4 @@ import com.dangdang.ddframe.rdb.sharding.jdbc.unsupported.AbstractUnsupportedOpe
 public abstract class AbstractStatementAdapter extends AbstractUnsupportedOperationStatement {
 
 
-
 }
