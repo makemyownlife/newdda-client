@@ -6,7 +6,7 @@ import java.sql.*;
 /**
  * Created by zhangyong on 2016/7/26.
  */
-public abstract class AbstractUnsupportedOperationPreparedStatement implements PreparedStatement {
+public abstract class AbstractUnsupportedOperationPreparedStatement extends AbstractUnsupportedOperationStatement implements PreparedStatement {
 
     @Override
     public final ResultSetMetaData getMetaData() throws SQLException {
