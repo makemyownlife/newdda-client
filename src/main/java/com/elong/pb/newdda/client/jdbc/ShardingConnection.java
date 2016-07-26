@@ -1,6 +1,9 @@
 package com.elong.pb.newdda.client.jdbc;
 
 import com.elong.pb.newdda.client.jdbc.adapter.AbstractConnectionAdapter;
+import com.elong.pb.newdda.client.router.rule.ShardingRule;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.Collection;
@@ -13,6 +16,14 @@ import java.util.Collection;
  * To change this template use File | Settings | File Templates.
  */
 public class ShardingConnection extends AbstractConnectionAdapter {
+
+    private final static Logger logger = LoggerFactory.getLogger(ShardingConnection.class);
+
+    private ShardingRule shardingRule;
+
+    public ShardingConnection(ShardingRule shardingRule) {
+        this.shardingRule = shardingRule;
+    }
 
     @Override
     protected Collection<Connection> getConnections() {
