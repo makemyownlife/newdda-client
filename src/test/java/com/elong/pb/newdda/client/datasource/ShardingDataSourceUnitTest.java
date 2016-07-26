@@ -5,6 +5,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -22,7 +25,29 @@ public class ShardingDataSourceUnitTest extends AbstractTestNGSpringContextTests
 
     @Test
     public void testShardDataSource() throws SQLException {
-        shardingDataSource.getConnection();
+        Connection shardingConnection = shardingDataSource.getConnection();
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        try {
+            statement = null;
+            rs = null;
+            statement = shardingConnection.prepareStatement("select * from test where id = ?");
+            statement.setInt(1, 1);
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                System.out.println("结果是:" + rs.getString("id"));
+            }
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+            if (shardingConnection != null) {
+                shardingConnection.close();
+            }
+        }
     }
 
 }
