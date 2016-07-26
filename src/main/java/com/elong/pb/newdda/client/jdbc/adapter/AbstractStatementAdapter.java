@@ -1,6 +1,7 @@
 package com.elong.pb.newdda.client.jdbc.adapter;
 
-import com.dangdang.ddframe.rdb.sharding.jdbc.unsupported.AbstractUnsupportedOperationStatement;
+
+import com.elong.pb.newdda.client.jdbc.unsupported.AbstractUnsupportedOperationStatement;
 
 /**
  * Created by zhangyong on 2016/7/26.
