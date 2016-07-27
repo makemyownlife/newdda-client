@@ -2,6 +2,7 @@ package com.elong.pb.newdda.client.datasource;
 
 import com.elong.pb.newdda.client.jdbc.ShardingConnection;
 import com.elong.pb.newdda.client.jdbc.adapter.AbstractDataSourceAdapter;
+import com.elong.pb.newdda.client.router.rule.ShardingRule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,9 +20,15 @@ public class ShardingDataSource extends AbstractDataSourceAdapter {
 
     private final static Logger logger = LoggerFactory.getLogger(ShardingDataSource.class);
 
+    private ShardingRule shardingRule;
+
+    public ShardingDataSource(ShardingRule shardingRule) {
+        this.shardingRule = shardingRule;
+    }
+
     @Override
     public Connection getConnection() throws SQLException {
-        ShardingConnection shardingConnection = new ShardingConnection();
+        ShardingConnection shardingConnection = new ShardingConnection(shardingRule);
         return shardingConnection;
     }
 
