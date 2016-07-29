@@ -16,8 +16,7 @@
  */
 
 package com.elong.pb.newdda.client.jdbc.adapter;
-
-import com.dangdang.ddframe.rdb.sharding.jdbc.unsupported.AbstractUnsupportedOperationResultSet;
+import com.elong.pb.newdda.client.jdbc.operation.AbstractUnsupportedOperationResultSet;
 import com.google.common.base.Preconditions;
 
 import java.sql.ResultSet;
