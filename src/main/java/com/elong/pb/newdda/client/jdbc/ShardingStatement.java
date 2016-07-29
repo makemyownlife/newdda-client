@@ -18,9 +18,26 @@ public class ShardingStatement extends AbstractStatementAdapter {
 
     private final SqlRouter sqlRouter;
 
-    public ShardingStatement(ShardingConnection shardingConnection, SqlRouter sqlRouter) {
+    private final int resultSetType;
+
+    private final int resultSetConcurrency;
+
+    private final int resultSetHoldability;
+
+    public ShardingStatement(final ShardingConnection shardingConnection, final SqlRouter sqlRouter) throws SQLException {
+        this(shardingConnection, sqlRouter, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+    }
+
+    public ShardingStatement(final ShardingConnection shardingConnection, final SqlRouter sqlRouter, final int resultSetType, final int resultSetConcurrency) throws SQLException {
+        this(shardingConnection, sqlRouter, resultSetType, resultSetConcurrency, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+    }
+
+    public ShardingStatement(final ShardingConnection shardingConnection, final SqlRouter sqlRouter, final int resultSetType, final int resultSetConcurrency, final int resultSetHoldability) {
         this.shardingConnection = shardingConnection;
         this.sqlRouter = sqlRouter;
+        this.resultSetType = resultSetType;
+        this.resultSetConcurrency = resultSetConcurrency;
+        this.resultSetHoldability = resultSetHoldability;
     }
 
     public Collection<? extends Statement> getRoutedStatements() throws SQLException {

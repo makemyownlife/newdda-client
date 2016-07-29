@@ -1,6 +1,8 @@
 package com.elong.pb.newdda.client.jdbc.operation;
 
+import com.elong.pb.newdda.client.jdbc.ShardingConnection;
 import com.elong.pb.newdda.client.jdbc.ShardingStatement;
+import com.elong.pb.newdda.client.router.SqlRouter;
 
 import java.io.Reader;
 import java.sql.*;
@@ -9,6 +11,10 @@ import java.sql.*;
  * Created by zhangyong on 2016/7/26.
  */
 public abstract class AbstractOperationPreparedStatement extends ShardingStatement implements PreparedStatement {
+
+    public AbstractOperationPreparedStatement(final ShardingConnection shardingConnection, final SqlRouter sqlRouter, final int resultSetType, final int resultSetConcurrency, final int resultSetHoldability) throws SQLException {
+        super(shardingConnection, sqlRouter, resultSetType, resultSetConcurrency, resultSetHoldability);
+    }
 
     @Override
     public final ResultSetMetaData getMetaData() throws SQLException {
