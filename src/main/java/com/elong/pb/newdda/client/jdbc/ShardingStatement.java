@@ -2,17 +2,22 @@ package com.elong.pb.newdda.client.jdbc;
 
 import com.elong.pb.newdda.client.jdbc.adapter.AbstractStatementAdapter;
 import com.elong.pb.newdda.client.router.SqlRouter;
+import com.google.common.hash.HashCode;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by zhangyong on 2016/7/26.
  */
 public class ShardingStatement extends AbstractStatementAdapter {
+
+    private final Map<HashCode, Statement> cachedRoutedStatements = new HashMap<HashCode, Statement>();
 
     private final ShardingConnection shardingConnection;
 
@@ -41,7 +46,7 @@ public class ShardingStatement extends AbstractStatementAdapter {
     }
 
     public Collection<? extends Statement> getRoutedStatements() throws SQLException {
-        return null;
+        return cachedRoutedStatements.values();
     }
 
     @Override
