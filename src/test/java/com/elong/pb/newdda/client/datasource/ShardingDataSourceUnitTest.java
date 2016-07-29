@@ -5,10 +5,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * 支持分片的数据源 相关测试
@@ -34,6 +31,33 @@ public class ShardingDataSourceUnitTest extends AbstractTestNGSpringContextTests
             statement = shardingConnection.prepareStatement("select * from test where id = ?");
             statement.setInt(1, 1);
             rs = statement.executeQuery();
+            while (rs.next()) {
+                System.out.println("结果是:" + rs.getString("id"));
+            }
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+            if (shardingConnection != null) {
+                shardingConnection.close();
+            }
+        }
+    }
+
+    @Test
+    public void testStatement() throws SQLException {
+        Connection shardingConnection = shardingDataSource.getConnection();
+        Statement statement = null;
+        ResultSet rs = null;
+        String sql = "select * from test where id = 1";
+        try {
+            statement = null;
+            rs = null;
+            statement = shardingConnection.createStatement();
+            rs = statement.executeQuery(sql);
             while (rs.next()) {
                 System.out.println("结果是:" + rs.getString("id"));
             }

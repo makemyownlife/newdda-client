@@ -1,6 +1,7 @@
 package com.elong.pb.newdda.client.jdbc;
 
 import com.elong.pb.newdda.client.jdbc.adapter.AbstractConnectionAdapter;
+import com.elong.pb.newdda.client.router.SqlRouter;
 import com.elong.pb.newdda.client.router.rule.ShardingRule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,10 +20,13 @@ public class ShardingConnection extends AbstractConnectionAdapter {
 
     private final static Logger logger = LoggerFactory.getLogger(ShardingConnection.class);
 
-    private ShardingRule shardingRule;
+    private final ShardingRule shardingRule;
+
+    private SqlRouter sqlRouter;
 
     public ShardingConnection(ShardingRule shardingRule) {
         this.shardingRule = shardingRule;
+        this.sqlRouter = new SqlRouter(shardingRule);
     }
 
     @Override
@@ -32,7 +36,7 @@ public class ShardingConnection extends AbstractConnectionAdapter {
 
     @Override
     public Statement createStatement() throws SQLException {
-        return null;
+        return new ShardingStatement(this, sqlRouter);
     }
 
     @Override

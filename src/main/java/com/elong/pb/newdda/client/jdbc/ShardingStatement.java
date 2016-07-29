@@ -1,6 +1,7 @@
 package com.elong.pb.newdda.client.jdbc;
 
 import com.elong.pb.newdda.client.jdbc.adapter.AbstractStatementAdapter;
+import com.elong.pb.newdda.client.router.SqlRouter;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -12,6 +13,15 @@ import java.util.Collection;
  * Created by zhangyong on 2016/7/26.
  */
 public class ShardingStatement extends AbstractStatementAdapter {
+
+    private final ShardingConnection shardingConnection;
+
+    private final SqlRouter sqlRouter;
+
+    public ShardingStatement(ShardingConnection shardingConnection, SqlRouter sqlRouter) {
+        this.shardingConnection = shardingConnection;
+        this.sqlRouter = sqlRouter;
+    }
 
     public Collection<? extends Statement> getRoutedStatements() throws SQLException {
         return null;
@@ -49,7 +59,7 @@ public class ShardingStatement extends AbstractStatementAdapter {
 
     @Override
     public Connection getConnection() throws SQLException {
-        return null;
+        return shardingConnection;
     }
 
     @Override
