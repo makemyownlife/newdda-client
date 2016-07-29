@@ -1,6 +1,6 @@
 package com.elong.pb.newdda.client.jdbc.adapter;
 
-import com.elong.pb.newdda.client.jdbc.unsupported.AbstractOperationPreparedStatement;
+import com.elong.pb.newdda.client.jdbc.operation.AbstractOperationPreparedStatement;
 
 import java.io.InputStream;
 import java.io.Reader;

@@ -29,12 +29,12 @@ public abstract class AbstractDataSourceAdapter extends WrapperAdapter implement
 
     @Override
     public final int getLoginTimeout() throws SQLException {
-        throw new SQLFeatureNotSupportedException("unsupported getLoginTimeout()");
+        throw new SQLFeatureNotSupportedException("operation getLoginTimeout()");
     }
 
     @Override
     public final void setLoginTimeout(final int seconds) throws SQLException {
-        throw new SQLFeatureNotSupportedException("unsupported setLoginTimeout(int seconds)");
+        throw new SQLFeatureNotSupportedException("operation setLoginTimeout(int seconds)");
     }
 
     //=================================== special method for jdk 1.7 start ===================================

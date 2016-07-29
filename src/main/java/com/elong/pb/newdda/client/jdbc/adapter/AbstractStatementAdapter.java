@@ -1,7 +1,7 @@
 package com.elong.pb.newdda.client.jdbc.adapter;
 
 
-import com.elong.pb.newdda.client.jdbc.unsupported.AbstractUnsupportedOperationStatement;
+import com.elong.pb.newdda.client.jdbc.operation.AbstractUnsupportedOperationStatement;
 
 import java.sql.SQLException;
 import java.sql.SQLWarning;
