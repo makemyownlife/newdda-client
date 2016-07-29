@@ -1,12 +1,14 @@
 package com.elong.pb.newdda.client.jdbc.unsupported;
 
+import com.elong.pb.newdda.client.jdbc.ShardingStatement;
+
 import java.io.Reader;
 import java.sql.*;
 
 /**
  * Created by zhangyong on 2016/7/26.
  */
-public abstract class AbstractUnsupportedOperationPreparedStatement extends AbstractUnsupportedOperationStatement implements PreparedStatement {
+public abstract class AbstractOperationPreparedStatement extends ShardingStatement implements PreparedStatement {
 
     @Override
     public final ResultSetMetaData getMetaData() throws SQLException {

@@ -1,6 +1,6 @@
 package com.elong.pb.newdda.client.jdbc.adapter;
 
-import com.elong.pb.newdda.client.jdbc.unsupported.AbstractUnsupportedOperationPreparedStatement;
+import com.elong.pb.newdda.client.jdbc.unsupported.AbstractOperationPreparedStatement;
 
 import java.io.InputStream;
 import java.io.Reader;
@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by zhangyong on 2016/7/26.
  */
-public abstract class AbstractPreparedStatementAdapter extends AbstractUnsupportedOperationPreparedStatement {
+public abstract class AbstractPreparedStatementAdapter extends AbstractOperationPreparedStatement {
 
     private final List<Object> parameters = new ArrayList<Object>();
 
