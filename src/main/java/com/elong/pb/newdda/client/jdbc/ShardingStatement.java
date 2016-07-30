@@ -1,7 +1,7 @@
 package com.elong.pb.newdda.client.jdbc;
 
 import com.elong.pb.newdda.client.jdbc.adapter.AbstractStatementAdapter;
-import com.elong.pb.newdda.client.router.SqlRouter;
+import com.elong.pb.newdda.client.router.SqlRouterEngine;
 import com.google.common.hash.HashCode;
 
 import java.sql.Connection;
@@ -111,7 +111,7 @@ import java.util.Map;
  */
 public class ShardingStatement extends AbstractStatementAdapter {
 
-    //======================================================
+    //====================================================================================================================================
     private final Map<HashCode, Statement> cachedRoutedStatements = new HashMap<HashCode, Statement>();
 
     private ResultSet currentResultSet;
@@ -119,7 +119,7 @@ public class ShardingStatement extends AbstractStatementAdapter {
     //====================================================== 初始化参数  ================================================================
     private final ShardingConnection shardingConnection;
 
-    private final SqlRouter sqlRouter;
+    private final SqlRouterEngine sqlRouterEngine;
 
     private final int resultSetType;
 
@@ -129,17 +129,17 @@ public class ShardingStatement extends AbstractStatementAdapter {
 
     //====================================================== 初始化参数 ================================================================
 
-    public ShardingStatement(final ShardingConnection shardingConnection, final SqlRouter sqlRouter) throws SQLException {
-        this(shardingConnection, sqlRouter, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+    public ShardingStatement(final ShardingConnection shardingConnection, final SqlRouterEngine sqlRouterEngine) throws SQLException {
+        this(shardingConnection, sqlRouterEngine, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY, ResultSet.HOLD_CURSORS_OVER_COMMIT);
     }
 
-    public ShardingStatement(final ShardingConnection shardingConnection, final SqlRouter sqlRouter, final int resultSetType, final int resultSetConcurrency) throws SQLException {
-        this(shardingConnection, sqlRouter, resultSetType, resultSetConcurrency, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+    public ShardingStatement(final ShardingConnection shardingConnection, final SqlRouterEngine sqlRouterEngine, final int resultSetType, final int resultSetConcurrency) throws SQLException {
+        this(shardingConnection, sqlRouterEngine, resultSetType, resultSetConcurrency, ResultSet.HOLD_CURSORS_OVER_COMMIT);
     }
 
-    public ShardingStatement(final ShardingConnection shardingConnection, final SqlRouter sqlRouter, final int resultSetType, final int resultSetConcurrency, final int resultSetHoldability) {
+    public ShardingStatement(final ShardingConnection shardingConnection, final SqlRouterEngine sqlRouterEngine, final int resultSetType, final int resultSetConcurrency, final int resultSetHoldability) {
         this.shardingConnection = shardingConnection;
-        this.sqlRouter = sqlRouter;
+        this.sqlRouterEngine = sqlRouterEngine;
         this.resultSetType = resultSetType;
         this.resultSetConcurrency = resultSetConcurrency;
         this.resultSetHoldability = resultSetHoldability;
@@ -151,7 +151,7 @@ public class ShardingStatement extends AbstractStatementAdapter {
 
     @Override
     public ResultSet executeQuery(String sql) throws SQLException {
-        //若存在结果集,则关闭
+        //若存在结果集,则关闭当前的结果集
         if (null != currentResultSet && !currentResultSet.isClosed()) {
             currentResultSet.close();
         }
@@ -170,7 +170,7 @@ public class ShardingStatement extends AbstractStatementAdapter {
 
     @Override
     public ResultSet getResultSet() throws SQLException {
-        return this.currentResultSet;
+        return currentResultSet;
     }
 
     @Override

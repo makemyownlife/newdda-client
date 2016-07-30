@@ -2,7 +2,7 @@ package com.elong.pb.newdda.client.jdbc.adapter;
 
 import com.elong.pb.newdda.client.jdbc.ShardingConnection;
 import com.elong.pb.newdda.client.jdbc.operation.AbstractOperationPreparedStatement;
-import com.elong.pb.newdda.client.router.SqlRouter;
+import com.elong.pb.newdda.client.router.SqlRouterEngine;
 
 import java.io.InputStream;
 import java.io.Reader;
@@ -20,7 +20,7 @@ public abstract class AbstractPreparedStatementAdapter extends AbstractOperation
 
     private final List<Object> parameters = new ArrayList<Object>();
 
-    public AbstractPreparedStatementAdapter(final ShardingConnection shardingConnection, final SqlRouter sqlRouter, final int resultSetType, final int resultSetConcurrency, final int resultSetHoldability) throws SQLException {
+    public AbstractPreparedStatementAdapter(final ShardingConnection shardingConnection, final SqlRouterEngine sqlRouter, final int resultSetType, final int resultSetConcurrency, final int resultSetHoldability) throws SQLException {
         super(shardingConnection, sqlRouter, resultSetType, resultSetConcurrency, resultSetHoldability);
     }
 
