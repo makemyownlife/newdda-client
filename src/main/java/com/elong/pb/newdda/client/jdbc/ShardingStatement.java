@@ -111,8 +111,12 @@ import java.util.Map;
  */
 public class ShardingStatement extends AbstractStatementAdapter {
 
+    //======================================================
     private final Map<HashCode, Statement> cachedRoutedStatements = new HashMap<HashCode, Statement>();
 
+    private ResultSet currentResultSet;
+
+    //====================================================== 初始化参数  ================================================================
     private final ShardingConnection shardingConnection;
 
     private final SqlRouter sqlRouter;
@@ -122,6 +126,8 @@ public class ShardingStatement extends AbstractStatementAdapter {
     private final int resultSetConcurrency;
 
     private final int resultSetHoldability;
+
+    //====================================================== 初始化参数 ================================================================
 
     public ShardingStatement(final ShardingConnection shardingConnection, final SqlRouter sqlRouter) throws SQLException {
         this(shardingConnection, sqlRouter, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY, ResultSet.HOLD_CURSORS_OVER_COMMIT);
@@ -160,7 +166,7 @@ public class ShardingStatement extends AbstractStatementAdapter {
 
     @Override
     public ResultSet getResultSet() throws SQLException {
-        return null;
+        return this.currentResultSet;
     }
 
     @Override
