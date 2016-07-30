@@ -151,6 +151,10 @@ public class ShardingStatement extends AbstractStatementAdapter {
 
     @Override
     public ResultSet executeQuery(String sql) throws SQLException {
+        //若存在结果集,则关闭
+        if (null != currentResultSet && !currentResultSet.isClosed()) {
+            currentResultSet.close();
+        }
         return null;
     }
 
