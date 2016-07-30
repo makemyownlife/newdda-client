@@ -212,7 +212,7 @@ public class ShardingStatement extends AbstractStatementAdapter {
 
     @Override
     public Connection getConnection() throws SQLException {
-        return shardingConnection;
+        return this.shardingConnection;
     }
 
     @Override
@@ -224,7 +224,7 @@ public class ShardingStatement extends AbstractStatementAdapter {
 
     @Override
     public ResultSet getResultSet() throws SQLException {
-        return currentResultSet;
+        return this.currentResultSet;
     }
 
 }
