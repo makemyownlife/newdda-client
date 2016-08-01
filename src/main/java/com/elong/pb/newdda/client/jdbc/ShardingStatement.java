@@ -155,7 +155,6 @@ public class ShardingStatement extends AbstractStatementAdapter {
         if (null != currentResultSet && !currentResultSet.isClosed()) {
             currentResultSet.close();
         }
-
         return null;
     }
 

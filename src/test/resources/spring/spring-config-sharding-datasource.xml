@@ -98,6 +98,7 @@
 
     <!-- 分区规则 -->
     <bean id="shardingRule" class="com.elong.pb.newdda.client.router.rule.ShardingRule">
+
     </bean>
 
     <!-- 分区的统一数据源 -->
