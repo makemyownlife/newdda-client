@@ -74,4 +74,9 @@ public class ShardingDataSourceUnitTest extends AbstractTestNGSpringContextTests
         }
     }
 
+    @Test
+    public void testSqlRouterEngine() throws SQLException {
+
+    }
+
 }

@@ -22,11 +22,11 @@ public class ShardingConnection extends AbstractConnectionAdapter {
 
     private final ShardingRule shardingRule;
 
-    private SqlRouterEngine sqlRouter;
+    private SqlRouterEngine sqlRouterEngine;
 
     public ShardingConnection(ShardingRule shardingRule) {
         this.shardingRule = shardingRule;
-        this.sqlRouter = new SqlRouterEngine(shardingRule);
+        this.sqlRouterEngine = new SqlRouterEngine(shardingRule);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class ShardingConnection extends AbstractConnectionAdapter {
 
     @Override
     public Statement createStatement() throws SQLException {
-        return new ShardingStatement(this, sqlRouter);
+        return new ShardingStatement(this, sqlRouterEngine);
     }
 
     @Override
