@@ -202,17 +202,17 @@ public class ShardingStatement extends AbstractStatementAdapter {
     //======================================================================= 基本参数 start ==================================================================================
     @Override
     public int getResultSetConcurrency() throws SQLException {
-        return this.resultSetConcurrency;
+        return resultSetConcurrency;
     }
 
     @Override
     public int getResultSetType() throws SQLException {
-        return this.resultSetType;
+        return resultSetType;
     }
 
     @Override
     public Connection getConnection() throws SQLException {
-        return this.shardingConnection;
+        return shardingConnection;
     }
 
     @Override
