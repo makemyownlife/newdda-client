@@ -1,6 +1,9 @@
 package com.elong.pb.newdda.client.router;
 
+import com.elong.pb.newdda.client.exception.SQLParserException;
 import com.elong.pb.newdda.client.router.rule.ShardingRule;
+
+import java.util.List;
 
 /**
  * sql语句路由相关的内容
@@ -12,6 +15,10 @@ public class SqlRouterEngine {
 
     public SqlRouterEngine(ShardingRule shardingRule) {
         this.shardingRule = shardingRule;
+    }
+
+    public SqlRouterResult route(final String logicSql, final List<Object> parameters) throws SQLParserException {
+        return null;
     }
 
 }

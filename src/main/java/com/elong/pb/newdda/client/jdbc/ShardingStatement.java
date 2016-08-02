@@ -1,8 +1,9 @@
 package com.elong.pb.newdda.client.jdbc;
 
-import com.dangdang.ddframe.rdb.sharding.executor.StatementExecutor;
+import com.elong.pb.newdda.client.executor.StatementExecutor;
 import com.elong.pb.newdda.client.jdbc.adapter.AbstractStatementAdapter;
 import com.elong.pb.newdda.client.router.SqlRouterEngine;
+import com.elong.pb.newdda.client.router.SqlRouterResult;
 import com.google.common.hash.HashCode;
 
 import java.sql.Connection;
@@ -10,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -230,6 +232,8 @@ public class ShardingStatement extends AbstractStatementAdapter {
     //======================================================================= private method start ==================================================================
 
     public StatementExecutor generateExecutor(final String sql) throws SQLException {
+        SqlRouterResult sqlRouteResult = sqlRouterEngine.route(sql, Collections.emptyList());
+
         return null;
     }
 
