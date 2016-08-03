@@ -9,9 +9,9 @@ public enum DatabaseType {
 
     H2, MySQL, Oracle, SQLServer, DB2;
 
-    public static com.dangdang.ddframe.rdb.sharding.api.DatabaseType valueFrom(final String databaseProductName) {
+    public static DatabaseType valueFrom(final String databaseProductName) {
         try {
-            return com.dangdang.ddframe.rdb.sharding.api.DatabaseType.valueOf(databaseProductName);
+            return DatabaseType.valueOf(databaseProductName);
         } catch (final IllegalArgumentException ex) {
             throw new DatabaseTypeUnsupportedException(databaseProductName);
         }
