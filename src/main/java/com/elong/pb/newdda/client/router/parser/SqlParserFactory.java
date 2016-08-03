@@ -6,12 +6,12 @@ import com.alibaba.druid.sql.dialect.mysql.parser.MySqlStatementParser;
 import com.alibaba.druid.sql.dialect.oracle.parser.OracleStatementParser;
 import com.alibaba.druid.sql.dialect.sqlserver.parser.SQLServerStatementParser;
 import com.alibaba.druid.sql.parser.SQLStatementParser;
+import com.alibaba.druid.sql.visitor.SQLASTOutputVisitor;
 import com.elong.pb.newdda.client.constants.DatabaseType;
 import com.elong.pb.newdda.client.exception.SQLParserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -21,7 +21,7 @@ public final class SqlParserFactory {
 
     private final static Logger logger = LoggerFactory.getLogger(SqlParserFactory.class);
 
-    public static SqlParserEngine create(final DatabaseType databaseType, final String sql, final List<Object> parameters, final Collection<String> shardingColumns) throws SQLParserException {
+    public static SqlParserEngine createParserEngine(final DatabaseType databaseType, final String sql, final List<Object> parameters, final List<String> shardingColumns) throws SQLParserException {
         if (logger.isDebugEnabled()) {
             logger.debug("Logic SQL: {}", sql);
         }
@@ -30,7 +30,8 @@ public final class SqlParserFactory {
         if (logger.isDebugEnabled()) {
             logger.trace("Get {} SQL Statement", sqlStatement.getClass().getName());
         }
-        return null;
+        SqlParserEngine sqlParserEngine = new SqlParserEngine(sqlStatement, parameters, getSQLVisitor(databaseType, sqlStatement), shardingColumns);
+        return sqlParserEngine;
     }
 
     private static SQLStatementParser getSQLStatementParser(final DatabaseType databaseType, final String sql) {
@@ -49,5 +50,8 @@ public final class SqlParserFactory {
         }
     }
 
+    private static SQLASTOutputVisitor getSQLVisitor(final DatabaseType databaseType, final SQLStatement sqlStatement) {
+        return null;
+    }
 
 }
