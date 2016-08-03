@@ -1,12 +1,12 @@
 package com.elong.pb.newdda.client.router.parser;
 
 import com.alibaba.druid.sql.visitor.SQLASTOutputVisitor;
-import com.dangdang.ddframe.rdb.sharding.api.DatabaseType;
-import com.dangdang.ddframe.rdb.sharding.exception.DatabaseTypeUnsupportedException;
-import com.dangdang.ddframe.rdb.sharding.parser.visitor.basic.mysql.MySQLDeleteVisitor;
-import com.dangdang.ddframe.rdb.sharding.parser.visitor.basic.mysql.MySQLInsertVisitor;
-import com.dangdang.ddframe.rdb.sharding.parser.visitor.basic.mysql.MySQLSelectVisitor;
-import com.dangdang.ddframe.rdb.sharding.parser.visitor.basic.mysql.MySQLUpdateVisitor;
+import com.elong.pb.newdda.client.constants.DatabaseType;
+import com.elong.pb.newdda.client.exception.DatabaseTypeUnsupportedException;
+import com.elong.pb.newdda.client.router.parser.visitor.basic.MySqlDeleteVisitor;
+import com.elong.pb.newdda.client.router.parser.visitor.basic.MySqlInsertVisitor;
+import com.elong.pb.newdda.client.router.parser.visitor.basic.MySqlSelectVisitor;
+import com.elong.pb.newdda.client.router.parser.visitor.basic.MySqlUpdateVisitor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,26 +32,26 @@ public final class SqlVisitorRegistry {
     }
 
     private static void registerSelectVistor() {
-        SELECT_REGISTRY.put(DatabaseType.H2, MySQLSelectVisitor.class);
-        SELECT_REGISTRY.put(DatabaseType.MySQL, MySQLSelectVisitor.class);
+        SELECT_REGISTRY.put(DatabaseType.H2, MySqlSelectVisitor.class);
+        SELECT_REGISTRY.put(DatabaseType.MySQL, MySqlSelectVisitor.class);
         // TODO 其他数据库
     }
 
     private static void registerInsertVistor() {
-        INSERT_REGISTRY.put(DatabaseType.H2, MySQLInsertVisitor.class);
-        INSERT_REGISTRY.put(DatabaseType.MySQL, MySQLInsertVisitor.class);
+        INSERT_REGISTRY.put(DatabaseType.H2, MySqlInsertVisitor.class);
+        INSERT_REGISTRY.put(DatabaseType.MySQL, MySqlInsertVisitor.class);
         // TODO 其他数据库
     }
 
     private static void registerUpdateVistor() {
-        UPDATE_REGISTRY.put(DatabaseType.H2, MySQLUpdateVisitor.class);
-        UPDATE_REGISTRY.put(DatabaseType.MySQL, MySQLUpdateVisitor.class);
+        UPDATE_REGISTRY.put(DatabaseType.H2, MySqlUpdateVisitor.class);
+        UPDATE_REGISTRY.put(DatabaseType.MySQL, MySqlUpdateVisitor.class);
         // TODO 其他数据库
     }
 
     private static void registerDeleteVistor() {
-        DELETE_REGISTRY.put(DatabaseType.H2, MySQLDeleteVisitor.class);
-        DELETE_REGISTRY.put(DatabaseType.MySQL, MySQLDeleteVisitor.class);
+        DELETE_REGISTRY.put(DatabaseType.H2, MySqlDeleteVisitor.class);
+        DELETE_REGISTRY.put(DatabaseType.MySQL, MySqlDeleteVisitor.class);
         // TODO 其他数据库
     }
 

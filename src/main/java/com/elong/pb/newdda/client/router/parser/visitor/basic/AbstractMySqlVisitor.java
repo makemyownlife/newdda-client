@@ -1,8 +1,11 @@
 package com.elong.pb.newdda.client.router.parser.visitor.basic;
 
-public abstract class AbstractMySqlVisitor {
+import com.alibaba.druid.sql.visitor.SQLASTOutputVisitor;
 
-    public AbstractMySqlVisitor() {
+public abstract class AbstractMySqlVisitor extends SQLASTOutputVisitor {
+
+    public AbstractMySqlVisitor(Appendable appender) {
+        super(appender);
     }
 
 }

@@ -1,6 +1,6 @@
 package com.elong.pb.newdda.client.jdbc.operation;
 
-import com.dangdang.ddframe.rdb.sharding.jdbc.adapter.WrapperAdapter;
+import com.elong.pb.newdda.client.jdbc.adapter.WrapperAdapter;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
