@@ -1,6 +1,10 @@
 package com.elong.pb.newdda.client.router.parser;
 
 import com.alibaba.druid.sql.ast.SQLStatement;
+import com.alibaba.druid.sql.ast.statement.SQLDeleteStatement;
+import com.alibaba.druid.sql.ast.statement.SQLInsertStatement;
+import com.alibaba.druid.sql.ast.statement.SQLSelectStatement;
+import com.alibaba.druid.sql.ast.statement.SQLUpdateStatement;
 import com.alibaba.druid.sql.dialect.db2.parser.DB2StatementParser;
 import com.alibaba.druid.sql.dialect.mysql.parser.MySqlStatementParser;
 import com.alibaba.druid.sql.dialect.oracle.parser.OracleStatementParser;
@@ -9,6 +13,7 @@ import com.alibaba.druid.sql.parser.SQLStatementParser;
 import com.alibaba.druid.sql.visitor.SQLASTOutputVisitor;
 import com.elong.pb.newdda.client.constants.DatabaseType;
 import com.elong.pb.newdda.client.exception.SQLParserException;
+import com.elong.pb.newdda.client.router.parser.visitor.VisitorLogProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,7 +56,19 @@ public final class SqlParserFactory {
     }
 
     private static SQLASTOutputVisitor getSQLVisitor(final DatabaseType databaseType, final SQLStatement sqlStatement) {
-        return null;
+        if (sqlStatement instanceof SQLSelectStatement) {
+            return VisitorLogProxy.enhance(SqlVisitorRegistry.getSelectVistor(databaseType));
+        }
+        if (sqlStatement instanceof SQLInsertStatement) {
+            return VisitorLogProxy.enhance(SqlVisitorRegistry.getInsertVistor(databaseType));
+        }
+        if (sqlStatement instanceof SQLUpdateStatement) {
+            return VisitorLogProxy.enhance(SqlVisitorRegistry.getUpdateVistor(databaseType));
+        }
+        if (sqlStatement instanceof SQLDeleteStatement) {
+            return VisitorLogProxy.enhance(SqlVisitorRegistry.getDeleteVistor(databaseType));
+        }
+        throw new SQLParserException("Unsupported SQL statement: [%s]", sqlStatement);
     }
 
 }
