@@ -12,7 +12,7 @@ import com.alibaba.druid.sql.dialect.sqlserver.parser.SQLServerStatementParser;
 import com.alibaba.druid.sql.parser.SQLStatementParser;
 import com.alibaba.druid.sql.visitor.SQLASTOutputVisitor;
 import com.elong.pb.newdda.client.constants.DatabaseType;
-import com.elong.pb.newdda.client.exception.SQLParserException;
+import com.elong.pb.newdda.client.exception.SqlParserException;
 import com.elong.pb.newdda.client.router.parser.visitor.VisitorLogProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,7 @@ public final class SqlParserFactory {
 
     private final static Logger logger = LoggerFactory.getLogger(SqlParserFactory.class);
 
-    public static SqlParserEngine createParserEngine(final DatabaseType databaseType, final String sql, final List<Object> parameters, final List<String> shardingColumns) throws SQLParserException {
+    public static SqlParserEngine createParserEngine(final DatabaseType databaseType, final String sql, final List<Object> parameters, final List<String> shardingColumns) throws SqlParserException {
         if (logger.isDebugEnabled()) {
             logger.debug("Logic SQL: {}", sql);
         }
@@ -68,7 +68,7 @@ public final class SqlParserFactory {
         if (sqlStatement instanceof SQLDeleteStatement) {
             return VisitorLogProxy.enhance(SqlVisitorRegistry.getDeleteVistor(databaseType));
         }
-        throw new SQLParserException("Unsupported SQL statement: [%s]", sqlStatement);
+        throw new SqlParserException("Unsupported SQL statement: [%s]", sqlStatement);
     }
 
 }
