@@ -25,4 +25,14 @@ public class SelectParserUnitTest {
 
     }
 
+    @Test
+    public void testMultipleTableSelect() throws Exception {
+        String sql = "select a.id as userId , b.id as orderId from user a , order b  where a.id = b.user_id and a.id = 12";
+
+        SQLStatementParser parser = new MySqlStatementParser(sql);
+        List<SQLStatement> stmtList = parser.parseStatementList();
+        Assert.assertEquals(1, stmtList.size());
+
+    }
+
 }
