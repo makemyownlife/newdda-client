@@ -17,15 +17,18 @@ public class SqlParserEngine {
 
     private SQLASTOutputVisitor visitor;
 
-    private Collection<String> shardingColumns;
+    private List<String> shardingColumns;
 
-    public SqlParserEngine(SQLStatement sqlStatement, List<Object> parameters, SQLASTOutputVisitor visitor, final Collection<String> shardingColumns) {
+    public SqlParserEngine(SQLStatement sqlStatement, List<Object> parameters, SQLASTOutputVisitor visitor, final List<String> shardingColumns) {
         this.sqlStatement = sqlStatement;
         this.parameters = parameters;
         this.visitor = visitor;
         this.shardingColumns = shardingColumns;
     }
 
+    public SqlParserResult parse() {
+        return null;
+    }
 
 
 }
