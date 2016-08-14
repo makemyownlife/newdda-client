@@ -6,6 +6,7 @@ public abstract class AbstractMySqlVisitor extends SQLASTOutputVisitor {
 
     protected AbstractMySqlVisitor() {
         super(new SqlBuilderForVisitor());
+        super.setPrettyFormat(false);
     }
 
 }
