@@ -14,7 +14,8 @@ public class SqlVisitorRefectUnitTest {
 
     @Test
     public void createInstanceTest() {
-        Object object = VisitorLogProxy.enhance(SqlVisitorRegistry.getSelectVistor(DatabaseType.MySQL));
+        Class T = SqlVisitorRegistry.getSelectVistor(DatabaseType.MySQL);
+        Object object = VisitorLogProxy.enhance(T);
         Assert.assertNotNull(object);
     }
 

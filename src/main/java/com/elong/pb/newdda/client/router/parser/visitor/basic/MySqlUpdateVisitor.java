@@ -7,10 +7,6 @@ import com.alibaba.druid.sql.dialect.mysql.ast.statement.MySqlUpdateStatement;
  */
 public class MySqlUpdateVisitor extends AbstractMySqlVisitor{
 
-    public MySqlUpdateVisitor(Appendable appender) {
-        super(appender);
-    }
-
     public boolean visit(final MySqlUpdateStatement x) {
         return true;
     }

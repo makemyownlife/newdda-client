@@ -5,8 +5,4 @@ package com.elong.pb.newdda.client.router.parser.visitor.basic;
  */
 public class MySqlSelectVisitor extends AbstractMySqlVisitor{
 
-    public MySqlSelectVisitor(Appendable appender) {
-        super(appender);
-    }
-
 }
