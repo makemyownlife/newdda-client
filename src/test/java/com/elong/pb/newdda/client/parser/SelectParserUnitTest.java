@@ -4,6 +4,7 @@ import com.alibaba.druid.sql.SQLUtils;
 import com.alibaba.druid.sql.ast.SQLStatement;
 import com.alibaba.druid.sql.dialect.mysql.parser.MySqlStatementParser;
 import com.alibaba.druid.sql.parser.SQLStatementParser;
+import com.alibaba.druid.sql.parser.Token;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -32,7 +33,27 @@ public class SelectParserUnitTest {
         SQLStatementParser parser = new MySqlStatementParser(sql);
         List<SQLStatement> stmtList = parser.parseStatementList();
         Assert.assertEquals(1, stmtList.size());
-
     }
+
+    @Test
+    public void testMultipleTableUnionSelect() throws Exception {
+        String sql = "(select id from t1) union all (select id from t2) union all (select id from t3) ordeR By d desC limit 1 offset ?";
+        MySqlStatementParser parser = new MySqlStatementParser(sql);
+        SQLStatement stmt = parser.parseStatementList().get(0);
+        parser.match(Token.EOF);
+        String output = SQLUtils.toMySqlString(stmt);
+        Assert.assertEquals("SELECT id\n" + //
+                "FROM t1\n" + //
+                "UNION ALL\n" + //
+                "SELECT id\n" + //
+                "FROM t2\n" + //
+                "UNION ALL\n" + //
+                "(SELECT id\n" + //
+                "FROM t3)\n" + //
+                "ORDER BY d DESC\n" + //
+                "LIMIT ?, 1", output);
+    }
+
+
 
 }
