@@ -16,10 +16,11 @@ public class ShardingRule {
         return shardingColumns;
     }
 
-    private DatabaseType databaseType;
+    //默认mysql数据类型也可以配置
+    private DatabaseType databaseType = DatabaseType.MySQL;
 
     public DatabaseType getDatabaseType() {
         return databaseType;
     }
-    
+
 }
