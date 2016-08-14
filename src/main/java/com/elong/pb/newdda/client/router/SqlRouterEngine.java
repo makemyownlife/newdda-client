@@ -2,6 +2,7 @@ package com.elong.pb.newdda.client.router;
 
 import com.elong.pb.newdda.client.constants.DatabaseType;
 import com.elong.pb.newdda.client.exception.SqlParserException;
+import com.elong.pb.newdda.client.router.parser.SqlParserEngine;
 import com.elong.pb.newdda.client.router.parser.SqlParserFactory;
 import com.elong.pb.newdda.client.router.rule.ShardingRule;
 
@@ -28,7 +29,7 @@ public class SqlRouterEngine {
     }
 
     public SqlRouterResult route(final String logicSql, final List<Object> parameters) throws SqlParserException {
-        SqlParserFactory.createParserEngine(databaseType, logicSql, parameters, null);
+        SqlParserEngine sqlParserEngine = SqlParserFactory.createParserEngine(databaseType, logicSql, parameters, shardingRule.getShardingColumns());
         return null;
     }
 
