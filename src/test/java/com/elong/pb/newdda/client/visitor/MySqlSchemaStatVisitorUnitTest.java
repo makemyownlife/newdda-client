@@ -42,6 +42,7 @@ public class MySqlSchemaStatVisitorUnitTest {
         Assert.assertEquals(true, visitor.getColumns().contains(new TableStat.Column("usergroups", "name")));
     }
 
+    @Test
     public void test_1() throws Exception {
         String sql = "select a.name, b.name FROM users a, usergroups b on a.groupId = b.id where a.groupID = ?";
 
