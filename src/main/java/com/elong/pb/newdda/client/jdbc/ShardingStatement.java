@@ -116,7 +116,7 @@ public class ShardingStatement extends AbstractStatementAdapter {
     //====================================================================================================================================
     private final Map<HashCode, Statement> cachedRoutedStatements = new HashMap<HashCode, Statement>();
 
-    private ResultSet currentResultSet;
+    private ResultSet currentResultSet = null;
 
     //====================================================== 初始化参数  ================================================================
     private final ShardingConnection shardingConnection;
