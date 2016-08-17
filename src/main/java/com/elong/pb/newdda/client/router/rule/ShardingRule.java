@@ -19,8 +19,15 @@ public class ShardingRule {
         return shardingColumns;
     }
 
+
+    //======================================================================get  set method start ======================================================================
     public DatabaseType getDatabaseType() {
         return databaseType;
     }
+
+    public void setDatabaseType(DatabaseType databaseType) {
+        this.databaseType = databaseType;
+    }
+    //======================================================================get  set method end =======================================================================
 
 }
