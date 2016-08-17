@@ -13,7 +13,7 @@ public class MySqlSelectVisitor extends AbstractMySqlVisitor {
     private final static Logger logger = LoggerFactory.getLogger(MySqlSelectVisitor.class);
 
     public void preVisit(SQLObject x) {
-        logger.info("preVisit:" + x.getClass() + ":" + x);
+        System.out.println(x.getClass().getSimpleName() + ":" + x);
     }
 
     @Override
