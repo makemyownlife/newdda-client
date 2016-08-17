@@ -9,11 +9,11 @@ public enum DatabaseType {
 
     H2, MySQL, Oracle, SQLServer, DB2;
 
-    public static DatabaseType valueFrom(final String databaseProductName) {
+    public static DatabaseType valueFrom(final String databaseName) {
         try {
-            return DatabaseType.valueOf(databaseProductName);
+            return DatabaseType.valueOf(databaseName);
         } catch (final IllegalArgumentException ex) {
-            throw new DatabaseTypeUnsupportedException(databaseProductName);
+            throw new DatabaseTypeUnsupportedException(databaseName);
         }
     }
 
