@@ -50,13 +50,6 @@
             <version>18.0</version>
         </dependency>
 
-        <!-- 添加 xml解析相关的内容 -->
-        <dependency>
-            <groupId>dom4j</groupId>
-            <artifactId>dom4j</artifactId>
-            <version>1.6.1</version>
-        </dependency>
-
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
