@@ -35,7 +35,8 @@ public final class SqlParserFactory {
         if (logger.isDebugEnabled()) {
             logger.debug("Get {} SQL Statement", sqlStatement.getClass().getName());
         }
-        SqlParserEngine sqlParserEngine = new SqlParserEngine(sqlStatement, parameters, getSQLVisitor(databaseType, sqlStatement), shardingColumns);
+        SQLASTOutputVisitor sqlastOutputVisitor = getSQLVisitor(databaseType, sqlStatement);
+        SqlParserEngine sqlParserEngine = new SqlParserEngine(sqlStatement, parameters, sqlastOutputVisitor, shardingColumns);
         return sqlParserEngine;
     }
 
