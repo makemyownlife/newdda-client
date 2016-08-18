@@ -13,12 +13,27 @@ public class MySqlSelectVisitor extends AbstractMySqlVisitor {
     private final static Logger logger = LoggerFactory.getLogger(MySqlSelectVisitor.class);
 
     public void preVisit(SQLObject x) {
-        System.out.println(x.getClass().getSimpleName() + ":" + x);
+        if (logger.isDebugEnabled()) {
+            logger.debug(x.getClass().getSimpleName() + ":" + x);
+        }
     }
 
     @Override
     public boolean visit(final MySqlSelectQueryBlock x) {
-        return super.visit(x);
+        if (x.getFrom() != null) {
+            x.getFrom().setParent(x);
+            x.getFrom().accept(this);
+        }
+        if (x.getWhere() != null) {
+            x.getWhere().setParent(x);
+            x.getWhere().accept(this);
+        }
+        return false;
     }
+
+    //============================================================================   重写相关的visit astnode  start================================================================
+
+
+    //============================================================================   重写相关的visit astnode  end================================================================
 
 }

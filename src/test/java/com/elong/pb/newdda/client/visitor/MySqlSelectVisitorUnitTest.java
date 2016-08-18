@@ -44,7 +44,6 @@ public class MySqlSelectVisitorUnitTest {
 
         String output = SQLUtils.toMySqlString(statement);
         Assert.assertNotNull(output);
-
     }
 
 }
