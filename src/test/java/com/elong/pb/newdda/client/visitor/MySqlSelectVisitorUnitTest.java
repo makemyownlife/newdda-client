@@ -46,4 +46,20 @@ public class MySqlSelectVisitorUnitTest {
         Assert.assertNotNull(output);
     }
 
+    @Test
+    public void shardkeyTestInAndEqual() {
+        String sql = "select a.member_name , a.member_id , b.destination , b.start_place  FROM t_scd_order a , t_scd_order_detail b  where a.id = b.order_id and a.id in (1,2,3,4) and b.start_place = 'shanghai'";
+
+        MySqlStatementParser parser = new MySqlStatementParser(sql);
+        List<SQLStatement> statementList = parser.parseStatementList();
+        SQLStatement statement = statementList.get(0);
+
+        MySqlSelectVisitor mySqlSelectVisitor = new MySqlSelectVisitor();
+        statement.accept(mySqlSelectVisitor);
+
+        String output = SQLUtils.toMySqlString(statement);
+        Assert.assertNotNull(output);
+    }
+
+
 }
