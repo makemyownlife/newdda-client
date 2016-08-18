@@ -2,11 +2,15 @@ package com.elong.pb.newdda.client.router.parser.visitor.basic;
 
 import com.alibaba.druid.sql.ast.SQLObject;
 import com.alibaba.druid.sql.ast.expr.SQLBinaryOpExpr;
+import com.alibaba.druid.sql.ast.expr.SQLIdentifierExpr;
 import com.alibaba.druid.sql.ast.statement.SQLExprTableSource;
 import com.alibaba.druid.sql.ast.statement.SQLJoinTableSource;
+import com.alibaba.druid.sql.ast.statement.SQLTableSource;
 import com.alibaba.druid.sql.dialect.mysql.ast.statement.MySqlSelectQueryBlock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Map;
 
 /**
  * MySQL的SELECT语句访问器.
@@ -47,7 +51,17 @@ public class MySqlSelectVisitor extends AbstractMySqlVisitor {
 
     @Override
     public boolean visit(SQLExprTableSource x) {
-        return true;
+        Map<String, SQLTableSource> aliasMap = getAliasMap(x);
+        if (aliasMap != null) {
+            if (x.getAlias() != null) {
+                aliasMap.put(x.getAlias(), x);
+            }
+            if (x.getExpr() instanceof SQLIdentifierExpr) {
+                String tableName = ((SQLIdentifierExpr) x.getExpr()).getName();
+                aliasMap.put(tableName, x);
+            }
+        }
+        return false;
     }
 
     @Override

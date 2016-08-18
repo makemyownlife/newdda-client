@@ -96,7 +96,6 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
 
     @Override
     public final void printToken(final String token) {
-
     }
 
 }
