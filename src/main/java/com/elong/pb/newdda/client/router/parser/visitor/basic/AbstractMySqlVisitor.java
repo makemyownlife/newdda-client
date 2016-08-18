@@ -25,4 +25,9 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
         return sqlParserContext;
     }
 
+    @Override
+    public final void printToken(final String token) {
+
+    }
+
 }
