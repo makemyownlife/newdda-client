@@ -6,5 +6,4 @@ package com.elong.pb.newdda.client.router;
  */
 public class SqlRouterResult {
 
-
 }

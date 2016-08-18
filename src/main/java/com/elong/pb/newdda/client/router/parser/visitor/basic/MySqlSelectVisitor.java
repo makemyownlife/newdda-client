@@ -73,6 +73,12 @@ public class MySqlSelectVisitor extends AbstractMySqlVisitor {
         x.getLeft().accept(this);
         x.getRight().accept(this);
 
+        // x:a.id = b.order_id AND a.id IN (1, 2, 3, 4)  则 column 为null
+        String column = getColumn(x.getLeft());
+        boolean isValue = isValue(x.getRight());
+        if (column != null && isValue) {
+
+        }
 
         return false;
     }
