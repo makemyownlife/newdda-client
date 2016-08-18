@@ -1,7 +1,6 @@
 package com.elong.pb.newdda.client.router.rule;
 
 import com.elong.pb.newdda.client.constants.DatabaseType;
-
 import java.util.List;
 
 /**
@@ -13,12 +12,11 @@ public class ShardingRule {
     //默认mysql数据类型也可以配置
     private DatabaseType databaseType = DatabaseType.MySQL;
 
-    private List<String> shardingColumns;
+    private List<Object> shardingColumns;
 
-    public List<String> getShardingColumns() {
+    public List<Object> getShardingColumns() {
         return shardingColumns;
     }
-
 
     //======================================================================get  set method start ======================================================================
     public DatabaseType getDatabaseType() {

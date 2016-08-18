@@ -26,7 +26,7 @@ public final class SqlParserFactory {
 
     private final static Logger logger = LoggerFactory.getLogger(SqlParserFactory.class);
 
-    public static SqlParserEngine createParserEngine(final DatabaseType databaseType, final String sql, final List<Object> parameters, final List<String> shardingColumns) throws SqlParserException {
+    public static SqlParserEngine createParserEngine(final DatabaseType databaseType, final String sql, final List<Object> parameters, final List<Object> shardingColumns) throws SqlParserException {
         if (logger.isDebugEnabled()) {
             logger.debug("Logic SQL: {}", sql);
         }
