@@ -66,7 +66,15 @@ public class MySqlSelectVisitor extends AbstractMySqlVisitor {
 
     @Override
     public boolean visit(SQLBinaryOpExpr x) {
-        return true;
+        //既然我活了下来就不能白白活着 -- 梅长苏
+        x.getLeft().setParent(x);
+        x.getRight().setParent(x);
+
+        x.getLeft().accept(this);
+        x.getRight().accept(this);
+
+
+        return false;
     }
 
     //============================================================================   重写相关的visit astnode  end================================================================

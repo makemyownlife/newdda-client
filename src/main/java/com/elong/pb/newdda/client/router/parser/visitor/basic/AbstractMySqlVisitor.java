@@ -1,6 +1,11 @@
 package com.elong.pb.newdda.client.router.parser.visitor.basic;
 
+import com.alibaba.druid.sql.ast.SQLExpr;
 import com.alibaba.druid.sql.ast.SQLObject;
+import com.alibaba.druid.sql.ast.expr.SQLIdentifierExpr;
+import com.alibaba.druid.sql.ast.expr.SQLLiteralExpr;
+import com.alibaba.druid.sql.ast.expr.SQLPropertyExpr;
+import com.alibaba.druid.sql.ast.expr.SQLVariantRefExpr;
 import com.alibaba.druid.sql.ast.statement.SQLDeleteStatement;
 import com.alibaba.druid.sql.ast.statement.SQLSelectQueryBlock;
 import com.alibaba.druid.sql.ast.statement.SQLTableSource;
@@ -15,15 +20,15 @@ import java.util.Map;
 
 public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements SqlVisitor {
 
-    public static final String ATTR_DB           = "sharding.db";
+    public static final String ATTR_DB = "sharding.db";
 
-    public static final String ATTR_PARTITION    = "sharding.partition";
+    public static final String ATTR_PARTITION = "sharding.partition";
 
     public static final String ATTR_TABLE_SOURCE = "sharding.tableSource";
 
-    public static final String ATTR_ALIAS        = "sharding.alias";
+    public static final String ATTR_ALIAS = "sharding.alias";
 
-    public static final String ATTR_TABLES       = "sharding.tables";
+    public static final String ATTR_TABLES = "sharding.tables";
 
     private SqlParserContext sqlParserContext;
 
@@ -79,6 +84,20 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
             return ((SQLUpdateStatement) x).getTableSource();
         }
         return getDefaultTableSource(x.getParent());
+    }
+
+    public static boolean isValue(SQLExpr x) {
+        return x instanceof SQLLiteralExpr || x instanceof SQLVariantRefExpr;
+    }
+
+    public static String getColumn(SQLExpr x) {
+        if (x instanceof SQLPropertyExpr) {
+            return ((SQLPropertyExpr) x).getName();
+        }
+        if (x instanceof SQLIdentifierExpr) {
+            return ((SQLIdentifierExpr) x).getName();
+        }
+        return null;
     }
 
     //===================================================================get method  start========================================================================
