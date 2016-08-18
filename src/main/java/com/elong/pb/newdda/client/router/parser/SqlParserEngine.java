@@ -37,7 +37,6 @@ public class SqlParserEngine {
         visitor.setParameters(parameters);
         sqlStatement.accept(visitor);
 
-        //
         return null;
     }
 
