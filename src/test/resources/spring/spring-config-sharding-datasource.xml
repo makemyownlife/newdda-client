@@ -98,7 +98,8 @@
 
     <!-- 分区规则 -->
     <bean id="shardingRule" class="com.elong.pb.newdda.client.router.rule.ShardingRule">
-
+        <!-- 默认是mysql相关 start -->
+        <property name="databaseType" value="MySQL"/>
     </bean>
 
     <!-- 分区的统一数据源 -->
