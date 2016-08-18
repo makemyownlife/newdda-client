@@ -17,7 +17,7 @@ public class MySqlSelectVisitor extends AbstractMySqlVisitor {
 
     public void preVisit(SQLObject x) {
         if (logger.isDebugEnabled()) {
-            logger.debug(x.getClass().getSimpleName() + ":" + x);
+            System.out.println(x.getClass().getSimpleName() + ":" + x);
         }
     }
 
