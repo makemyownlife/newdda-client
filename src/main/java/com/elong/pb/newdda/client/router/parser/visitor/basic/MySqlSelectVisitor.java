@@ -1,8 +1,10 @@
 package com.elong.pb.newdda.client.router.parser.visitor.basic;
 
 import com.alibaba.druid.sql.ast.SQLObject;
+import com.alibaba.druid.sql.ast.expr.SQLBinaryOpExpr;
+import com.alibaba.druid.sql.ast.statement.SQLExprTableSource;
+import com.alibaba.druid.sql.ast.statement.SQLJoinTableSource;
 import com.alibaba.druid.sql.dialect.mysql.ast.statement.MySqlSelectQueryBlock;
-import com.sun.tools.corba.se.idl.constExpr.BinaryExpr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,8 +35,25 @@ public class MySqlSelectVisitor extends AbstractMySqlVisitor {
     }
 
     //============================================================================   重写相关的visit astnode  start================================================================
+    @Override
+    public boolean visit(SQLJoinTableSource x) {
+        x.getLeft().setParent(x);
+        x.getRight().setParent(x);
+        if (x.getCondition() != null) {
+            x.getCondition().setParent(x);
+        }
+        return true;
+    }
 
+    @Override
+    public boolean visit(SQLExprTableSource x) {
+        return true;
+    }
 
+    @Override
+    public boolean visit(SQLBinaryOpExpr x) {
+        return true;
+    }
 
     //============================================================================   重写相关的visit astnode  end================================================================
 
