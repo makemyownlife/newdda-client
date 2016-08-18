@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
  * 解析的上下文
  * Created by zhangyong on 2016/8/18.
  */
-public class ParseContext {
+public class SqlParserContext {
 
-    private final static Logger logger = LoggerFactory.getLogger(ParseContext.class);
+    private final static Logger logger = LoggerFactory.getLogger(SqlParserContext.class);
 
 }
