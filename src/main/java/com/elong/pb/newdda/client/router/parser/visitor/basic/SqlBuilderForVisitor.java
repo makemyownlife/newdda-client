@@ -1,11 +1,16 @@
 package com.elong.pb.newdda.client.router.parser.visitor.basic;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 
 /**
  * Created by zhangyong on 2016/8/14.
  */
 public class SqlBuilderForVisitor implements Appendable {
+
+    private final static Logger logger = LoggerFactory.getLogger(SqlBuilderForVisitor.class);
 
     @Override
     public Appendable append(CharSequence csq) throws IOException {

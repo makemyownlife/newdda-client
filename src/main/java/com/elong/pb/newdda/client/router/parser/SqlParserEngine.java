@@ -34,8 +34,11 @@ public class SqlParserEngine {
         SqlVisitor sqlVisitor = (SqlVisitor) visitor;
         SqlParserContext sqlParserContext = sqlVisitor.getSqlParserContext();
         sqlParserContext.setShardingColumns(shardingColumns);
+        //ast parser是将输入文本转换为ast（抽象语法树），parser有包括两个部分，Parser和Lexer，其中Lexer实现词法分析，Parser实现语法分析。
+        //AST是Abstract Syntax Tree的缩写，也就是抽象语法树。AST是parser输出的结果。Visitor是遍历AST的手段，是处理AST最方便的模式，Visitor是一个接口，有缺省什么都没做的实现VistorAdapter
         visitor.setParameters(parameters);
         sqlStatement.accept(visitor);
+
 
         return null;
     }
