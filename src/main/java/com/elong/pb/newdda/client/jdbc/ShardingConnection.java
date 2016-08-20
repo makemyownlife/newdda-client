@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 分区的链接
@@ -24,6 +26,8 @@ public class ShardingConnection extends AbstractConnectionAdapter {
 
     private SqlRouterEngine sqlRouterEngine;
 
+    private final Map<String, Connection> connectionMap = new HashMap<String, Connection>();
+
     public ShardingConnection(ShardingRule shardingRule) {
         this.shardingRule = shardingRule;
         this.sqlRouterEngine = new SqlRouterEngine(shardingRule);
@@ -31,7 +35,7 @@ public class ShardingConnection extends AbstractConnectionAdapter {
 
     @Override
     protected Collection<Connection> getConnections() {
-        return null;
+        return connectionMap.values();
     }
 
     @Override
