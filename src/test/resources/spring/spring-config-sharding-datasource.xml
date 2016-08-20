@@ -13,7 +13,7 @@
 
     <context:annotation-config/>
 
-    <bean id="dataSource1-master" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+    <bean id="dataSource1" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://10.100.19.203:3306/pb_account1"/>
         <property name="username" value="root"/>
@@ -25,19 +25,7 @@
         <property name="minEvictableIdleTimeMillis" value="300000"/>
     </bean>
 
-    <bean id="dataSource1-slave" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://10.100.19.203:3306/pb_account1"/>
-        <property name="username" value="root"/>
-        <property name="password" value="ilxw"/>
-        <property name="initialSize" value="5"/>
-        <property name="minIdle" value="3"/>
-        <property name="maxActive" value="45"/>
-        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
-        <property name="minEvictableIdleTimeMillis" value="300000"/>
-    </bean>
-
-    <bean id="dataSource2-master" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+    <bean id="dataSource2" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://10.100.19.203:3306/pb_account2"/>
         <property name="username" value="root"/>
@@ -49,31 +37,7 @@
         <property name="minEvictableIdleTimeMillis" value="300000"/>
     </bean>
 
-    <bean id="dataSource2-slave" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://10.100.19.203:3306/pb_account2"/>
-        <property name="username" value="root"/>
-        <property name="password" value="ilxw"/>
-        <property name="initialSize" value="5"/>
-        <property name="minIdle" value="3"/>
-        <property name="maxActive" value="45"/>
-        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
-        <property name="minEvictableIdleTimeMillis" value="300000"/>
-    </bean>
-
-    <bean id="dataSource3-master" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://10.100.19.203:3306/pb_account3"/>
-        <property name="username" value="root"/>
-        <property name="password" value="ilxw"/>
-        <property name="initialSize" value="5"/>
-        <property name="minIdle" value="3"/>
-        <property name="maxActive" value="45"/>
-        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
-        <property name="minEvictableIdleTimeMillis" value="300000"/>
-    </bean>
-
-    <bean id="dataSource3-slave" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+    <bean id="dataSource3" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://10.100.19.203:3306/pb_account3"/>
         <property name="username" value="root"/>
@@ -87,24 +51,51 @@
 
     <!-- 分区1  -->
     <bean id="sharding1" class="com.elong.pb.newdda.client.datasource.MasterSlaveDataSource">
-        <constructor-arg index="0" value="sharding1"/>
-        <constructor-arg index="1" ref="dataSource1-master"/>
-        <property name="slaveDataSources">
-            <list>
-                <ref local="dataSource1-slave"/>
-            </list>
-        </property>
+        <!-- 分片名 -->
+        <property name="name" value="sharding1"/>
+        <!-- 主库 -->
+        <property name="masterDataSource" ref="dataSource1"/>
+        <!-- 从库 暂略去 -->
+    </bean>
+
+    <!-- 分区2 -->
+    <bean id="sharding2" class="com.elong.pb.newdda.client.datasource.MasterSlaveDataSource">
+        <!-- 分片名 -->
+        <property name="name" value="sharding2"/>
+        <!-- 主库 -->
+        <property name="masterDataSource" ref="dataSource2"/>
+        <!-- 从库 暂略去 -->
+    </bean>
+
+    <!-- 分区2 -->
+    <bean id="sharding3" class="com.elong.pb.newdda.client.datasource.MasterSlaveDataSource">
+        <!-- 分片名 -->
+        <property name="name" value="sharding3"/>
+        <!-- 主库 -->
+        <property name="masterDataSource" ref="dataSource3"/>
+        <!-- 从库 暂略去 -->
     </bean>
 
     <!-- 分区规则 -->
     <bean id="shardingRule" class="com.elong.pb.newdda.client.router.rule.ShardingRule">
         <!-- 默认是mysql相关 start -->
         <property name="databaseType" value="MySQL"/>
+        <!-- 涉及到分库的表 -->
+        <property name="tableRules">
+            <list>
+                <bean class="com.elong.pb.newdda.client.router.rule.TableRule">
+                    <!-- 表名 -->
+                    <property name="tableName" value="test"/>
+                    <!-- 分区关键字 -->
+                    <property name="shardingKey" value="user_id"/>
+                </bean>
+            </list>
+        </property>
     </bean>
 
     <!-- 分区的统一数据源 -->
     <bean id="shardingDataSource" class="com.elong.pb.newdda.client.datasource.ShardingDataSource">
-        <constructor-arg index="0" ref="shardingRule" />
+        <constructor-arg index="0" ref="shardingRule"/>
     </bean>
 
 </beans>

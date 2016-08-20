@@ -24,5 +24,5 @@ public class TableRule {
     public void setShardingKey(String shardingKey) {
         this.shardingKey = shardingKey;
     }
-    
+
 }

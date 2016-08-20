@@ -17,17 +17,20 @@ public class MasterSlaveDataSource {
 
     private List<DataSource> slaveDataSources;
 
-    public MasterSlaveDataSource(String name, DataSource masterDataSource) {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
-        this.masterDataSource = masterDataSource;
     }
 
     public DataSource getMasterDataSource() {
         return masterDataSource;
     }
 
-    public String getName() {
-        return name;
+    public void setMasterDataSource(DataSource masterDataSource) {
+        this.masterDataSource = masterDataSource;
     }
 
     public List<DataSource> getSlaveDataSources() {
