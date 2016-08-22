@@ -102,12 +102,12 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
         if (tableSource != null) {
             return tableSource;
         }
-        SQLTableSource defaltTableSource = getDefaultTableSource(x.getParent());
-        if (defaltTableSource instanceof SQLExprTableSource) {
-            SQLExpr expr = ((SQLExprTableSource) defaltTableSource).getExpr();
+        SQLTableSource defaultTableSource = getDefaultTableSource(x.getParent());
+        if (defaultTableSource instanceof SQLExprTableSource) {
+            SQLExpr expr = ((SQLExprTableSource) defaultTableSource).getExpr();
             if (expr instanceof SQLIdentifierExpr) {
-                x.putAttribute(ATTR_TABLE_SOURCE, defaltTableSource);
-                return defaltTableSource;
+                x.putAttribute(ATTR_TABLE_SOURCE, defaultTableSource);
+                return defaultTableSource;
             }
         }
         return null;

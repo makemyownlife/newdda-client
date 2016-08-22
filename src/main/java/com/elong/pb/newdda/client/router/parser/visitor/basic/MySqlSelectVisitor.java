@@ -64,6 +64,16 @@ public class MySqlSelectVisitor extends AbstractMySqlVisitor {
         return false;
     }
 
+    //便宜表名 并且加入到到本地缓存中
+    @Override
+    public boolean visit(SQLIdentifierExpr x) {
+        SQLTableSource tableSource = getTableSource(x.getName(), x.getParent());
+        if (tableSource != null) {
+            x.putAttribute(ATTR_TABLE_SOURCE, tableSource);
+        }
+        return false;
+    }
+
     @Override
     public boolean visit(SQLBinaryOpExpr x) {
         //既然我活了下来就不能白白活着 -- 梅长苏
@@ -78,6 +88,7 @@ public class MySqlSelectVisitor extends AbstractMySqlVisitor {
         boolean isValue = isValue(x.getRight());
         if (column != null && isValue) {
             SQLTableSource tableSource = getBinaryOpExprLeftOrRightTableSource(x.getLeft());
+            System.out.println(tableSource);
         }
 
         return false;
