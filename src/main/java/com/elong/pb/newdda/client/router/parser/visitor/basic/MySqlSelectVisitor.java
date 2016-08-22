@@ -67,6 +67,7 @@ public class MySqlSelectVisitor extends AbstractMySqlVisitor {
     //便宜表名 并且加入到到本地缓存中
     @Override
     public boolean visit(SQLIdentifierExpr x) {
+        System.out.println("SQLIdentifierExpr:" + x);
         SQLTableSource tableSource = getTableSource(x.getName(), x.getParent());
         if (tableSource != null) {
             x.putAttribute(ATTR_TABLE_SOURCE, tableSource);
@@ -76,7 +77,7 @@ public class MySqlSelectVisitor extends AbstractMySqlVisitor {
 
     @Override
     public boolean visit(SQLBinaryOpExpr x) {
-
+        System.out.println("SQLBinaryOpExpr:" + x);
         //既然我活了下来就不能白白活着 -- 梅长苏
         x.getLeft().setParent(x);
         x.getRight().setParent(x);
