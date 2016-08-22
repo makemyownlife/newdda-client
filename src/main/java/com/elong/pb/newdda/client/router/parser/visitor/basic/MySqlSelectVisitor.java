@@ -21,7 +21,7 @@ public class MySqlSelectVisitor extends AbstractMySqlVisitor {
 
     public void preVisit(SQLObject x) {
         if (logger.isDebugEnabled()) {
-            System.out.println(x.getClass().getSimpleName() + ":" + x);
+
         }
     }
 
@@ -76,6 +76,7 @@ public class MySqlSelectVisitor extends AbstractMySqlVisitor {
 
     @Override
     public boolean visit(SQLBinaryOpExpr x) {
+
         //既然我活了下来就不能白白活着 -- 梅长苏
         x.getLeft().setParent(x);
         x.getRight().setParent(x);
@@ -88,7 +89,6 @@ public class MySqlSelectVisitor extends AbstractMySqlVisitor {
         boolean isValue = isValue(x.getRight());
         if (column != null && isValue) {
             SQLTableSource tableSource = getBinaryOpExprLeftOrRightTableSource(x.getLeft());
-            System.out.println(tableSource);
         }
 
         return false;
