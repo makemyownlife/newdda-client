@@ -6,10 +6,7 @@ import com.alibaba.druid.sql.ast.expr.SQLIdentifierExpr;
 import com.alibaba.druid.sql.ast.expr.SQLLiteralExpr;
 import com.alibaba.druid.sql.ast.expr.SQLPropertyExpr;
 import com.alibaba.druid.sql.ast.expr.SQLVariantRefExpr;
-import com.alibaba.druid.sql.ast.statement.SQLDeleteStatement;
-import com.alibaba.druid.sql.ast.statement.SQLSelectQueryBlock;
-import com.alibaba.druid.sql.ast.statement.SQLTableSource;
-import com.alibaba.druid.sql.ast.statement.SQLUpdateStatement;
+import com.alibaba.druid.sql.ast.statement.*;
 import com.alibaba.druid.sql.dialect.mysql.visitor.MySqlOutputVisitor;
 import com.elong.pb.newdda.client.constants.DatabaseType;
 import com.elong.pb.newdda.client.router.parser.visitor.SqlParserContext;
@@ -96,6 +93,22 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
         }
         if (x instanceof SQLIdentifierExpr) {
             return ((SQLIdentifierExpr) x).getName();
+        }
+        return null;
+    }
+
+    public static SQLTableSource getBinaryOpExprLeftOrRightTableSource(SQLExpr x) {
+        SQLTableSource tableSource = (SQLTableSource) x.getAttribute(ATTR_TABLE_SOURCE);
+        if (tableSource != null) {
+            return tableSource;
+        }
+        SQLTableSource defaltTableSource = getDefaultTableSource(x.getParent());
+        if (defaltTableSource instanceof SQLExprTableSource) {
+            SQLExpr expr = ((SQLExprTableSource) defaltTableSource).getExpr();
+            if (expr instanceof SQLIdentifierExpr) {
+                x.putAttribute(ATTR_TABLE_SOURCE, defaltTableSource);
+                return defaltTableSource;
+            }
         }
         return null;
     }

@@ -77,7 +77,7 @@ public class MySqlSelectVisitor extends AbstractMySqlVisitor {
         String column = getColumn(x.getLeft());
         boolean isValue = isValue(x.getRight());
         if (column != null && isValue) {
-
+            SQLTableSource tableSource = getBinaryOpExprLeftOrRightTableSource(x.getLeft());
         }
 
         return false;
