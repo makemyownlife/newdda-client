@@ -61,5 +61,20 @@ public class MySqlSelectVisitorUnitTest {
         Assert.assertNotNull(output);
     }
 
+    @Test
+    public void shardKeySingleTable() {
+        String sql = "select amember_name , member_id  FROM t_scd_order  where start_place = 'shanghai'";
+
+        MySqlStatementParser parser = new MySqlStatementParser(sql);
+        List<SQLStatement> statementList = parser.parseStatementList();
+        SQLStatement statement = statementList.get(0);
+
+        MySqlSelectVisitor mySqlSelectVisitor = new MySqlSelectVisitor();
+        statement.accept(mySqlSelectVisitor);
+
+        String output = SQLUtils.toMySqlString(statement);
+        Assert.assertNotNull(output);
+    }
+
 
 }
