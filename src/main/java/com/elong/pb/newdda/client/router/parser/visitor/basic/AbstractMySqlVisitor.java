@@ -98,7 +98,14 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
     }
 
     public static SQLTableSource getBinaryOpExprLeftOrRightTableSource(SQLExpr x) {
-        SQLTableSource tableSource = (SQLTableSource) x.getAttribute(ATTR_TABLE_SOURCE);
+        SQLIdentifierExpr identifierExpr = null;
+        if (x instanceof SQLPropertyExpr) {
+            identifierExpr = (SQLIdentifierExpr)((SQLPropertyExpr) x).getOwner();
+        }
+        if (x instanceof SQLIdentifierExpr) {
+            identifierExpr = (SQLIdentifierExpr) x;
+        }
+        SQLTableSource tableSource = (SQLTableSource) identifierExpr.getAttribute(ATTR_TABLE_SOURCE);
         if (tableSource != null) {
             return tableSource;
         }
