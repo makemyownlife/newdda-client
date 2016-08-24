@@ -67,7 +67,7 @@
         <!-- 从库 暂略去 -->
     </bean>
 
-    <!-- 分区2 -->
+    <!-- 分区3 -->
     <bean id="sharding3" class="com.elong.pb.newdda.client.datasource.MasterSlaveDataSource">
         <!-- 分片名 -->
         <property name="name" value="sharding3"/>
@@ -91,6 +91,7 @@
                 </bean>
             </list>
         </property>
+        <!-- 分区算法 -->
     </bean>
 
     <!-- 分区的统一数据源 -->
