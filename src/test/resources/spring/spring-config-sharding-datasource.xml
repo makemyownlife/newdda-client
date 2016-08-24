@@ -50,7 +50,7 @@
     </bean>
 
     <!-- 分区1  -->
-    <bean id="sharding1" class="com.elong.pb.newdda.client.datasource.MasterSlaveDataSource">
+    <bean class="com.elong.pb.newdda.client.datasource.MasterSlaveDataSource">
         <!-- 分片名 -->
         <property name="name" value="sharding1"/>
         <!-- 主库 -->
@@ -59,7 +59,7 @@
     </bean>
 
     <!-- 分区2 -->
-    <bean id="sharding2" class="com.elong.pb.newdda.client.datasource.MasterSlaveDataSource">
+    <bean class="com.elong.pb.newdda.client.datasource.MasterSlaveDataSource">
         <!-- 分片名 -->
         <property name="name" value="sharding2"/>
         <!-- 主库 -->
@@ -68,7 +68,7 @@
     </bean>
 
     <!-- 分区3 -->
-    <bean id="sharding3" class="com.elong.pb.newdda.client.datasource.MasterSlaveDataSource">
+    <bean class="com.elong.pb.newdda.client.datasource.MasterSlaveDataSource">
         <!-- 分片名 -->
         <property name="name" value="sharding3"/>
         <!-- 主库 -->
@@ -92,6 +92,26 @@
             </list>
         </property>
         <!-- 分区算法 -->
+        <property name="shardingAlgorithm">
+            <bean class="com.elong.pb.newdda.client.router.rule.ShardingRangeAlgorithm">
+                <!-- 分区列表 -->
+                <property name="dataSourceList">
+                    <list>
+                        <value>sharding1</value>
+                        <value>sharding2</value>
+                        <value>sharding3</value>
+                    </list>
+                </property>
+                <!-- 分区范围 -->
+                <property name="rangeList">
+                    <list>
+                        <value>0,255</value>
+                        <value>256,511</value>
+                        <value>512,1023</value>
+                    </list>
+                </property>
+            </bean>
+        </property>
     </bean>
 
     <!-- 分区的统一数据源 -->

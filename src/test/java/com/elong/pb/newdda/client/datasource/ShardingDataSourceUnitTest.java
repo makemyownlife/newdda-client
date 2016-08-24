@@ -1,8 +1,11 @@
 package com.elong.pb.newdda.client.datasource;
 
+import com.alibaba.fastjson.JSON;
+import com.elong.pb.newdda.client.router.rule.ShardingRule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.sql.*;
@@ -19,6 +22,9 @@ public class ShardingDataSourceUnitTest extends AbstractTestNGSpringContextTests
 
     @Autowired
     private ShardingDataSource shardingDataSource;
+
+    @Autowired
+    private ShardingRule shardingRule;
 
     @Test
     public void testShardDataSource() throws SQLException {
@@ -72,6 +78,12 @@ public class ShardingDataSourceUnitTest extends AbstractTestNGSpringContextTests
                 shardingConnection.close();
             }
         }
+    }
+
+    @Test
+    public void testShardingRule() {
+        String abc = JSON.toJSONString(shardingRule);
+        Assert.assertNotNull(abc);
     }
 
     @Test
