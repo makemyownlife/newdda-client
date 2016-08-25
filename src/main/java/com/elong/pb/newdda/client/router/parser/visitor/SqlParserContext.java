@@ -14,15 +14,18 @@ public class SqlParserContext {
 
     private final static Logger logger = LoggerFactory.getLogger(SqlParserContext.class);
 
-    private final SqlParserResult parsedResult = new SqlParserResult();
-
     private List<Object> shardingColumns;
 
+    private final SqlParserResult parsedResult = new SqlParserResult();
 
     //============================================================set get method start ===================================================
 
     public void setShardingColumns(List<Object> shardingColumns) {
         this.shardingColumns = shardingColumns;
+    }
+
+    public SqlParserResult getParsedResult() {
+        return this.parsedResult;
     }
 
     //============================================================set get method end ===================================================
