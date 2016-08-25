@@ -3,10 +3,6 @@ package com.elong.pb.newdda.client.router.parser;
 import com.alibaba.druid.sql.visitor.SQLASTOutputVisitor;
 import com.elong.pb.newdda.client.constants.DatabaseType;
 import com.elong.pb.newdda.client.exception.DatabaseTypeUnsupportedException;
-import com.elong.pb.newdda.client.router.parser.visitor.basic.MySqlDeleteVisitor;
-import com.elong.pb.newdda.client.router.parser.visitor.basic.MySqlInsertVisitor;
-import com.elong.pb.newdda.client.router.parser.visitor.basic.MySqlSelectVisitor;
-import com.elong.pb.newdda.client.router.parser.visitor.basic.MySqlUpdateVisitor;
 
 import java.util.HashMap;
 import java.util.Map;

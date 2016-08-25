@@ -1,4 +1,4 @@
-package com.elong.pb.newdda.client.router.parser.visitor.basic;
+package com.elong.pb.newdda.client.router.parser.visitor.basic.mysql;
 
 import com.alibaba.druid.sql.dialect.mysql.ast.statement.MySqlDeleteStatement;
 

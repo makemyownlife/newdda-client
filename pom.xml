@@ -45,12 +45,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>18.0</version>
-        </dependency>
-
-        <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
             <version>1.9.2</version>
@@ -124,6 +118,12 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.16</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.dangdang</groupId>
+            <artifactId>sharding-jdbc-core</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
     </dependencies>

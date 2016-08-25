@@ -1,5 +1,6 @@
 package com.elong.pb.newdda.client.router.parser.visitor;
 
+import com.elong.pb.newdda.client.router.parser.SqlParserResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,10 +14,17 @@ public class SqlParserContext {
 
     private final static Logger logger = LoggerFactory.getLogger(SqlParserContext.class);
 
+    private final SqlParserResult parsedResult = new SqlParserResult();
+
     private List<Object> shardingColumns;
+
+
+    //============================================================set get method start ===================================================
 
     public void setShardingColumns(List<Object> shardingColumns) {
         this.shardingColumns = shardingColumns;
     }
+
+    //============================================================set get method end ===================================================
 
 }
