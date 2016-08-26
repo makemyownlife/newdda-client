@@ -39,7 +39,9 @@ public class SqlParserEngine {
         visitor.setParameters(parameters);
         sqlStatement.accept(visitor);
 
-        return null;
+        //急躁 、易怒是我情绪上的弱点 ,加油 ~~~~~
+        SqlParserResult sqlParserResult = sqlParserContext.getSqlParsedResult();
+        return sqlParserResult;
     }
 
 }
