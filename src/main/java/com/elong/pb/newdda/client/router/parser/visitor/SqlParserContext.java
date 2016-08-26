@@ -16,7 +16,7 @@ public class SqlParserContext {
 
     private List<Object> shardingColumns;
 
-    private final SqlParserResult parsedResult = new SqlParserResult();
+    private final SqlParserResult sqlParserResult = new SqlParserResult();
 
     //============================================================set get method start ===================================================
 
@@ -24,8 +24,8 @@ public class SqlParserContext {
         this.shardingColumns = shardingColumns;
     }
 
-    public SqlParserResult getParsedResult() {
-        return this.parsedResult;
+    public SqlParserResult getSqlParsedResult() {
+        return this.sqlParserResult;
     }
 
     //============================================================set get method end ===================================================
