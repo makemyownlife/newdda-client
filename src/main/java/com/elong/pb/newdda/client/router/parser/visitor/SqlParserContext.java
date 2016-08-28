@@ -16,6 +16,8 @@ public class SqlParserContext {
 
     private List<Object> shardingColumns;
 
+    private boolean hasOrCondition = false;
+
     private final SqlParserResult sqlParserResult = new SqlParserResult();
 
     //============================================================set get method start ===================================================
@@ -26,6 +28,14 @@ public class SqlParserContext {
 
     public SqlParserResult getSqlParsedResult() {
         return this.sqlParserResult;
+    }
+
+    public boolean isHasOrCondition() {
+        return hasOrCondition;
+    }
+
+    public void setHasOrCondition(boolean hasOrCondition) {
+        this.hasOrCondition = hasOrCondition;
     }
 
     //============================================================set get method end ===================================================

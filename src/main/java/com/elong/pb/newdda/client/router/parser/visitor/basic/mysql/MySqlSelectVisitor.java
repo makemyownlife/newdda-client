@@ -10,6 +10,7 @@ import com.alibaba.druid.sql.dialect.mysql.ast.statement.MySqlSelectQueryBlock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -90,7 +91,17 @@ public class MySqlSelectVisitor extends AbstractMySqlVisitor {
             SQLTableSource tableSource = getBinaryOpExprLeftOrRightTableSource(x.getLeft());
         }
 
-        return false;
+        switch (x.getOperator()) {
+            case BooleanOr:
+                getSqlParserContext().setHasOrCondition(true);
+                break;
+            case Equality:
+                break;
+            default:
+                break;
+        }
+
+        return super.visit(x);
     }
 
     //============================================================================   重写相关的visit astnode  end================================================================
