@@ -2,10 +2,7 @@ package com.elong.pb.newdda.client.router.parser.visitor.basic.mysql;
 
 import com.alibaba.druid.sql.ast.SQLExpr;
 import com.alibaba.druid.sql.ast.SQLObject;
-import com.alibaba.druid.sql.ast.expr.SQLIdentifierExpr;
-import com.alibaba.druid.sql.ast.expr.SQLLiteralExpr;
-import com.alibaba.druid.sql.ast.expr.SQLPropertyExpr;
-import com.alibaba.druid.sql.ast.expr.SQLVariantRefExpr;
+import com.alibaba.druid.sql.ast.expr.*;
 import com.alibaba.druid.sql.ast.statement.*;
 import com.alibaba.druid.sql.dialect.mysql.visitor.MySqlOutputVisitor;
 import com.elong.pb.newdda.client.constants.DatabaseType;
@@ -34,6 +31,52 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
         super(new SqlBuilderForVisitor());
         super.setPrettyFormat(false);
         this.sqlParserContext = new SqlParserContext();
+    }
+
+    @Override
+    public boolean visit(SQLExprTableSource x) {
+        Map<String, SQLTableSource> aliasMap = getAliasMap(x);
+        if (aliasMap != null) {
+            if (x.getAlias() != null) {
+                aliasMap.put(x.getAlias(), x);
+            }
+            if (x.getExpr() instanceof SQLIdentifierExpr) {
+                String tableName = ((SQLIdentifierExpr) x.getExpr()).getName();
+                aliasMap.put(tableName, x);
+            }
+        }
+        return false;
+    }
+
+    //便宜表名 并且加入到到本地缓存中
+    @Override
+    public boolean visit(SQLIdentifierExpr x) {
+        SQLTableSource tableSource = getTableSource(x.getName(), x.getParent());
+        if (tableSource != null) {
+            x.putAttribute(ATTR_TABLE_SOURCE, tableSource);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean visit(SQLBinaryOpExpr x) {
+        //既然我活了下来就不能白白活着 -- 梅长苏
+        x.getLeft().setParent(x);
+        x.getRight().setParent(x);
+
+        x.getLeft().accept(this);
+        x.getRight().accept(this);
+
+        switch (x.getOperator()) {
+            case BooleanOr:
+                sqlParserContext.setHasOrCondition(true);
+                break;
+            case Equality:
+                break;
+            default:
+                break;
+        }
+        return super.visit(x);
     }
 
     public static SQLTableSource getTableSource(String name, SQLObject parent) {
