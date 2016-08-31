@@ -2,7 +2,6 @@ package com.elong.pb.newdda.client.router.parser;
 
 import com.alibaba.druid.sql.ast.SQLStatement;
 import com.alibaba.druid.sql.visitor.SQLASTOutputVisitor;
-import com.elong.pb.newdda.client.router.parser.visitor.SqlParserContext;
 import com.elong.pb.newdda.client.router.parser.visitor.SqlVisitor;
 import com.google.common.base.Preconditions;
 

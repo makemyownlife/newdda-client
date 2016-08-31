@@ -1,8 +1,7 @@
-package com.elong.pb.newdda.client.router.parser.visitor;
+package com.elong.pb.newdda.client.router.parser;
 
 import com.alibaba.druid.sql.ast.SQLExpr;
 import com.elong.pb.newdda.client.constants.DatabaseType;
-import com.elong.pb.newdda.client.router.parser.SqlParserResult;
 import com.elong.pb.newdda.client.router.result.router.Condition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,10 +22,14 @@ public class SqlParserContext {
 
     private final SqlParserResult sqlParserResult = new SqlParserResult();
 
-
     public void addCondition(final SQLExpr expr, final Condition.BinaryOperator operator, final List<SQLExpr> valueExprs, final DatabaseType databaseType, final List<Object> paramters) {
 
     }
+
+    //=========================================================== private method start =======================================================
+
+
+    //=========================================================== private method end =======================================================
 
     //============================================================set get method start ===================================================
 
