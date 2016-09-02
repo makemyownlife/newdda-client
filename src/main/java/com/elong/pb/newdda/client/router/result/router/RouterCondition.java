@@ -5,38 +5,37 @@ package com.elong.pb.newdda.client.router.result.router;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Condition {
+public final class RouterCondition {
     
-    private final Column column;
+    private final RouterColumn routerColumn;
     
     private final BinaryOperator operator;
 
-    public Condition(Condition.Column column, Condition.BinaryOperator operator) {
-        this.column = column;
+    public RouterCondition(RouterCondition.RouterColumn column, RouterCondition.BinaryOperator operator) {
+        this.routerColumn = column;
         this.operator = operator;
     }
     
     private final List<Comparable<?>> values = new ArrayList<Comparable<?>>();
     
-    public static final class Column {
+    public static final class RouterColumn {
         
         private final String columnName;
         
         private final String tableName;
 
-        public Column(String columnName, String tableName) {
+        public RouterColumn(String columnName, String tableName) {
             this.columnName = columnName;
             this.tableName = tableName;
         }
 
         public String getColumnName() {
-            return this.columnName;
+            return columnName;
         }
 
         public String getTableName() {
-            return this.tableName;
+            return tableName;
         }
-
     }
     
     public enum BinaryOperator {

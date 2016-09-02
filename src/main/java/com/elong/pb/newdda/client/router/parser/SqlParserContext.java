@@ -1,11 +1,8 @@
 package com.elong.pb.newdda.client.router.parser;
 
 import com.alibaba.druid.sql.ast.SQLExpr;
-import com.alibaba.druid.sql.ast.expr.SQLIdentifierExpr;
-import com.alibaba.druid.sql.ast.expr.SQLPropertyExpr;
 import com.elong.pb.newdda.client.constants.DatabaseType;
-import com.elong.pb.newdda.client.router.result.router.Condition;
-import com.google.common.base.Optional;
+import com.elong.pb.newdda.client.router.result.router.RouterCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +22,7 @@ public class SqlParserContext {
 
     private final SqlParserResult sqlParserResult = new SqlParserResult();
 
-    public void addCondition(final SQLExpr expr, final Condition.BinaryOperator operator, final List<SQLExpr> valueExprs, final DatabaseType databaseType, final List<Object> paramters) {
+    public void addCondition(final SQLExpr expr, final RouterCondition.BinaryOperator operator, final List<SQLExpr> valueExprs, final DatabaseType databaseType, final List<Object> paramters) {
 
     }
 
