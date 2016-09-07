@@ -3,10 +3,12 @@ package com.elong.pb.newdda.client.router.parser;
 import com.alibaba.druid.sql.ast.SQLExpr;
 import com.alibaba.druid.sql.ast.expr.SQLIdentifierExpr;
 import com.alibaba.druid.sql.ast.expr.SQLPropertyExpr;
+import com.alibaba.druid.sql.ast.statement.SQLExprTableSource;
 import com.elong.pb.newdda.client.constants.DatabaseType;
 import com.elong.pb.newdda.client.router.result.router.BinaryOperator;
 import com.elong.pb.newdda.client.router.result.router.RouterColumn;
 import com.elong.pb.newdda.client.router.result.router.RouterTable;
+import com.elong.pb.newdda.client.util.SQLUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,9 +30,14 @@ public class SqlParserContext {
 
     public void addCondition(final SQLExpr expr, final BinaryOperator operator, final List<SQLExpr> valueExprs, final DatabaseType databaseType, final List<Object> paramters) {
         RouterColumn routerColumn = getRouterColumn(expr);
-        if (routerColumn == null) {
-            return;
-        }
+    }
+
+    public RouterTable addTable(final SQLExprTableSource x) {
+        String tableName = SQLUtil.getExactlyValue(x.getExpr().toString());
+        String alias = SQLUtil.getExactlyValue(x.getAlias());
+        RouterTable result = new RouterTable(tableName, alias);
+        sqlParserResult.getRouteContext().getTables().add(result);
+        return result;
     }
 
     //=========================================================== private method start ==========================================================

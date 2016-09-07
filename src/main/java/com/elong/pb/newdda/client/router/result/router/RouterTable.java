@@ -11,8 +11,8 @@ public class RouterTable {
     private final String alias;
 
     public RouterTable(final String name, final String alias) {
-       this.name = name;
-        this.alias =alias;
+        this.name = name;
+        this.alias = alias;
     }
 
     public String getName() {

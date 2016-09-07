@@ -48,6 +48,7 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
             }
         }
 
+        sqlParserContext.addTable(x);
         return false;
     }
 
@@ -99,6 +100,8 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
                 return tableSource;
             }
         }
+
+
         return null;
     }
 
