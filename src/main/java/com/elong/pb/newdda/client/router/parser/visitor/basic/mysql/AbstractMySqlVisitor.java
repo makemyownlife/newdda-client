@@ -10,7 +10,6 @@ import com.elong.pb.newdda.client.router.parser.SqlParserContext;
 import com.elong.pb.newdda.client.router.parser.visitor.SqlVisitor;
 import com.elong.pb.newdda.client.router.parser.visitor.basic.SqlBuilderForVisitor;
 import com.elong.pb.newdda.client.router.result.router.BinaryOperator;
-import com.elong.pb.newdda.client.router.result.router.RouterCondition;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -48,6 +47,7 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
                 aliasMap.put(tableName, x);
             }
         }
+
         return false;
     }
 
@@ -75,7 +75,7 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
                 sqlParserContext.setHasOrCondition(true);
                 break;
             case Equality:
-                sqlParserContext.addCondition(x.getLeft(),  BinaryOperator.EQUAL, Arrays.asList(x.getRight()), getDatabaseType(), getParameters());
+                sqlParserContext.addCondition(x.getLeft(), BinaryOperator.EQUAL, Arrays.asList(x.getRight()), getDatabaseType(), getParameters());
                 sqlParserContext.addCondition(x.getRight(), BinaryOperator.EQUAL, Arrays.asList(x.getLeft()), getDatabaseType(), getParameters());
                 break;
             default:
@@ -150,7 +150,7 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
     public static SQLTableSource getBinaryOpExprLeftOrRightTableSource(SQLExpr x) {
         SQLIdentifierExpr identifierExpr = null;
         if (x instanceof SQLPropertyExpr) {
-            identifierExpr = (SQLIdentifierExpr)((SQLPropertyExpr) x).getOwner();
+            identifierExpr = (SQLIdentifierExpr) ((SQLPropertyExpr) x).getOwner();
         }
         if (x instanceof SQLIdentifierExpr) {
             identifierExpr = (SQLIdentifierExpr) x;

@@ -6,6 +6,7 @@ import com.alibaba.druid.sql.ast.expr.SQLPropertyExpr;
 import com.elong.pb.newdda.client.constants.DatabaseType;
 import com.elong.pb.newdda.client.router.result.router.BinaryOperator;
 import com.elong.pb.newdda.client.router.result.router.RouterColumn;
+import com.elong.pb.newdda.client.router.result.router.RouterTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,23 +27,41 @@ public class SqlParserContext {
     private final SqlParserResult sqlParserResult = new SqlParserResult();
 
     public void addCondition(final SQLExpr expr, final BinaryOperator operator, final List<SQLExpr> valueExprs, final DatabaseType databaseType, final List<Object> paramters) {
-
+        RouterColumn routerColumn = getRouterColumn(expr);
+        if (routerColumn == null) {
+            return;
+        }
     }
 
-    //=========================================================== private method start =======================================================
-    private RouterColumn getColumn(final SQLExpr expr) {
+    //=========================================================== private method start ==========================================================
+
+    private RouterColumn getRouterColumn(final SQLExpr expr) {
         if (expr instanceof SQLPropertyExpr) {
-            return null;
+            return getColumnWithQualifiedName((SQLPropertyExpr) expr);
         }
         if (expr instanceof SQLIdentifierExpr) {
-            return null;
+            return getColumnWithoutAlias((SQLIdentifierExpr) expr);
         }
+        return null;
+    }
+
+    private RouterColumn getColumnWithQualifiedName(final SQLPropertyExpr expr) {
+
+        return null;
+    }
+
+    private RouterColumn getColumnWithoutAlias(final SQLIdentifierExpr expr) {
+        return null;
+    }
+
+    private RouterTable findTable(final String tableNameOrAlias) {
         return null;
     }
 
     //=========================================================== private method end =======================================================
 
-    //============================================================set get method start ===================================================
+
+    //============================================================set get method start =====================================================
 
     public void setShardingColumns(List<Object> shardingColumns) {
         this.shardingColumns = shardingColumns;
@@ -60,6 +79,6 @@ public class SqlParserContext {
         this.hasOrCondition = hasOrCondition;
     }
 
-    //============================================================set get method end ===================================================
+    //============================================================set get method end ========================================================
 
 }
