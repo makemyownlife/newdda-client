@@ -9,6 +9,7 @@ import com.elong.pb.newdda.client.constants.DatabaseType;
 import com.elong.pb.newdda.client.router.parser.SqlParserContext;
 import com.elong.pb.newdda.client.router.parser.visitor.SqlVisitor;
 import com.elong.pb.newdda.client.router.parser.visitor.basic.SqlBuilderForVisitor;
+import com.elong.pb.newdda.client.router.result.router.BinaryOperator;
 import com.elong.pb.newdda.client.router.result.router.RouterCondition;
 
 import java.util.Arrays;
@@ -74,8 +75,8 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
                 sqlParserContext.setHasOrCondition(true);
                 break;
             case Equality:
-                sqlParserContext.addCondition(x.getLeft(), RouterCondition.BinaryOperator.EQUAL, Arrays.asList(x.getRight()), getDatabaseType(), getParameters());
-                sqlParserContext.addCondition(x.getRight(), RouterCondition.BinaryOperator.EQUAL, Arrays.asList(x.getLeft()), getDatabaseType(), getParameters());
+                sqlParserContext.addCondition(x.getLeft(),  BinaryOperator.EQUAL, Arrays.asList(x.getRight()), getDatabaseType(), getParameters());
+                sqlParserContext.addCondition(x.getRight(), BinaryOperator.EQUAL, Arrays.asList(x.getLeft()), getDatabaseType(), getParameters());
                 break;
             default:
                 break;
