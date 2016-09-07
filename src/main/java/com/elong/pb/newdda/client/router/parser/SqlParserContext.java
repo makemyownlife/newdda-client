@@ -53,7 +53,8 @@ public class SqlParserContext {
     }
 
     private RouterColumn getColumnWithQualifiedName(final SQLPropertyExpr expr) {
-
+        String aliasName = ((SQLIdentifierExpr) expr.getOwner()).getName();
+        RouterTable table = findTable(aliasName);
         return null;
     }
 
@@ -61,12 +62,30 @@ public class SqlParserContext {
         return null;
     }
 
-    private RouterTable findTable(final String tableNameOrAlias) {
+    private RouterTable findTableFromName(final String name) {
+        for (RouterTable each : sqlParserResult.getRouteContext().getTables()) {
+            if (each.getName().equalsIgnoreCase(SQLUtil.getExactlyValue(name))) {
+                return each;
+            }
+        }
         return null;
     }
 
-    //=========================================================== private method end =======================================================
+    private RouterTable findTableFromAlias(final String alias) {
+        for (RouterTable each : sqlParserResult.getRouteContext().getTables()) {
+            if (each.getAlias() != null && each.getAlias().equalsIgnoreCase(SQLUtil.getExactlyValue(alias))) {
+                return each;
+            }
+        }
+        return null;
+    }
 
+    private RouterTable findTable(final String tableNameOrAlias) {
+        RouterTable routerTable = findTableFromName(tableNameOrAlias);
+        return routerTable == null ? routerTable : findTableFromAlias(tableNameOrAlias);
+    }
+
+    //=========================================================== private method end =======================================================
 
     //============================================================set get method start =====================================================
 
@@ -86,6 +105,6 @@ public class SqlParserContext {
         this.hasOrCondition = hasOrCondition;
     }
 
-    //============================================================set get method end ========================================================
+    //============================================================set get method end ==========================================================
 
 }
