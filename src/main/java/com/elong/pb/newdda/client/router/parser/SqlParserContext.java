@@ -22,11 +22,21 @@ public class SqlParserContext {
 
     private final static Logger logger = LoggerFactory.getLogger(SqlParserContext.class);
 
+    private RouterTable routerTable;
+
     private List<Object> shardingColumns;
 
     private boolean hasOrCondition = false;
 
     private final SqlParserResult sqlParserResult = new SqlParserResult();
+
+    public void setCurrentTable(final String currentTableName, final String currentAlias) {
+        String exactlyAlias = SQLUtil.getExactlyValue(currentAlias);
+        String exactlyTableName = SQLUtil.getExactlyValue(currentTableName);
+        RouterTable table = new RouterTable(exactlyTableName, exactlyAlias);
+        sqlParserResult.getRouteContext().getTables().add(table);
+        routerTable = table;
+    }
 
     public void addCondition(final SQLExpr expr, final BinaryOperator operator, final List<SQLExpr> valueExprs, final DatabaseType databaseType, final List<Object> paramters) {
         RouterColumn routerColumn = getRouterColumn(expr);

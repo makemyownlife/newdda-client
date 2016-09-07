@@ -1,8 +1,10 @@
 package com.elong.pb.newdda.client.router.parser.visitor.basic.mysql;
 
 import com.alibaba.druid.sql.ast.SQLObject;
+import com.alibaba.druid.sql.ast.statement.SQLExprTableSource;
 import com.alibaba.druid.sql.ast.statement.SQLJoinTableSource;
 import com.alibaba.druid.sql.dialect.mysql.ast.statement.MySqlSelectQueryBlock;
+import com.google.common.base.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +22,10 @@ public class MySqlSelectVisitor extends AbstractMySqlVisitor {
 
     @Override
     public boolean visit(final MySqlSelectQueryBlock x) {
+        if (x.getFrom() instanceof SQLExprTableSource) {
+            SQLExprTableSource tableExpr = (SQLExprTableSource) x.getFrom();
+            getSqlParserContext().setCurrentTable(tableExpr.getExpr().toString(),tableExpr.getAlias());
+        }
         if (x.getFrom() != null) {
             x.getFrom().setParent(x);
             x.getFrom().accept(this);

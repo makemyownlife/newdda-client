@@ -8,6 +8,7 @@ import com.alibaba.druid.sql.dialect.mysql.ast.statement.MySqlInsertStatement;
 public class MySqlInsertVisitor extends AbstractMySqlVisitor {
 
     public boolean visit(final MySqlInsertStatement x) {
+        getSqlParserContext().setCurrentTable(x.getTableName().toString(), x.getAlias());
         return true;
     }
 
