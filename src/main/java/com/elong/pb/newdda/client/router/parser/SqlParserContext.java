@@ -54,8 +54,12 @@ public class SqlParserContext {
 
     private RouterColumn getColumnWithQualifiedName(final SQLPropertyExpr expr) {
         String aliasName = ((SQLIdentifierExpr) expr.getOwner()).getName();
-        RouterTable table = findTable(aliasName);
-        return null;
+        RouterTable routerTable = findTable(aliasName);
+        if (routerTable == null) {
+            return null;
+        }
+        RouterColumn routerColumn = createColumn(expr.getName(), routerTable.getName());
+        return routerColumn;
     }
 
     private RouterColumn getColumnWithoutAlias(final SQLIdentifierExpr expr) {
@@ -83,6 +87,10 @@ public class SqlParserContext {
     private RouterTable findTable(final String tableNameOrAlias) {
         RouterTable routerTable = findTableFromName(tableNameOrAlias);
         return routerTable == null ? routerTable : findTableFromAlias(tableNameOrAlias);
+    }
+
+    private RouterColumn createColumn(final String columnName, final String tableName) {
+        return new RouterColumn(SQLUtil.getExactlyValue(columnName), SQLUtil.getExactlyValue(tableName));
     }
 
     //=========================================================== private method end =======================================================
