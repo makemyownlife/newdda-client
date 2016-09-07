@@ -30,6 +30,7 @@ public class SqlParserEngine {
     public SqlParserResult parse() {
         //判断验证参数
         Preconditions.checkArgument(visitor instanceof SqlVisitor);
+
         SqlVisitor sqlVisitor = (SqlVisitor) visitor;
         SqlParserContext sqlParserContext = sqlVisitor.getSqlParserContext();
         sqlParserContext.setShardingColumns(shardingColumns);
