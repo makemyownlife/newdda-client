@@ -1,8 +1,11 @@
 package com.elong.pb.newdda.client.router.parser;
 
 import com.alibaba.druid.sql.ast.SQLExpr;
+import com.alibaba.druid.sql.ast.expr.SQLIdentifierExpr;
+import com.alibaba.druid.sql.ast.expr.SQLPropertyExpr;
 import com.elong.pb.newdda.client.constants.DatabaseType;
 import com.elong.pb.newdda.client.router.result.router.RouterCondition;
+import com.google.common.base.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +30,15 @@ public class SqlParserContext {
     }
 
     //=========================================================== private method start =======================================================
-
+    private RouterCondition.RouterColumn getColumn(final SQLExpr expr) {
+        if (expr instanceof SQLPropertyExpr) {
+            return  getColumnWithQualifiedName((SQLPropertyExpr) expr);
+        }
+        if (expr instanceof SQLIdentifierExpr) {
+            return getColumnWithoutAlias((SQLIdentifierExpr) expr);
+        }
+        return null;
+    }
 
     //=========================================================== private method end =======================================================
 
