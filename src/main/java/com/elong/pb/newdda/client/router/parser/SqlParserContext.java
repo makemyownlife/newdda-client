@@ -46,6 +46,7 @@ public class SqlParserContext {
         if(routerColumn == null ) {
             return;
         }
+
     }
 
     public RouterTable addTable(final SQLExprTableSource x) {
@@ -79,7 +80,7 @@ public class SqlParserContext {
     }
 
     private RouterColumn getColumnWithoutAlias(final SQLIdentifierExpr expr) {
-        return null;
+         return (null != routerTable )? createColumn(expr.getName(), routerTable.getName()) : null;
     }
 
     private RouterTable findTableFromName(final String name) {
@@ -102,7 +103,7 @@ public class SqlParserContext {
 
     private RouterTable findTable(final String tableNameOrAlias) {
         RouterTable routerTable = findTableFromName(tableNameOrAlias);
-        return routerTable == null ? routerTable : findTableFromAlias(tableNameOrAlias);
+        return routerTable == null ? findTableFromAlias(tableNameOrAlias) : routerTable;
     }
 
     private RouterColumn createColumn(final String columnName, final String tableName) {
