@@ -22,4 +22,11 @@ public class RouterColumn {
         return tableName;
     }
 
+    public String toString(){
+        StringBuffer sb = new StringBuffer();
+        sb.append("columnName:").append(columnName)
+                .append(" tableName:").append(tableName);
+        return sb.toString();
+    }
+
 }

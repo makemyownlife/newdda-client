@@ -40,6 +40,12 @@ public class SqlParserContext {
 
     public void addCondition(final SQLExpr expr, final BinaryOperator operator, final List<SQLExpr> valueExprs, final DatabaseType databaseType, final List<Object> paramters) {
         RouterColumn routerColumn = getRouterColumn(expr);
+        if(logger.isDebugEnabled()) {
+            logger.debug(" routerColumn : {}" , routerColumn);
+        }
+        if(routerColumn == null ) {
+            return;
+        }
     }
 
     public RouterTable addTable(final SQLExprTableSource x) {
