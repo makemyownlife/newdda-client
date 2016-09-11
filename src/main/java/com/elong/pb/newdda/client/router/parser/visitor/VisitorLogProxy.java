@@ -19,4 +19,5 @@ public final class VisitorLogProxy {
             throw new ShardingJdbcException(e);
         }
     }
+
 }
