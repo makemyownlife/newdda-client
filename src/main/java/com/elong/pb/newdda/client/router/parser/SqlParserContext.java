@@ -103,7 +103,9 @@ public class SqlParserContext {
 
     private RouterTable findTable(final String tableNameOrAlias) {
         RouterTable routerTable = findTableFromName(tableNameOrAlias);
-        return routerTable == null ? findTableFromAlias(tableNameOrAlias) : routerTable;
+        return routerTable == null ?
+                findTableFromAlias(tableNameOrAlias) :
+                routerTable;
     }
 
     private RouterColumn createColumn(final String columnName, final String tableName) {

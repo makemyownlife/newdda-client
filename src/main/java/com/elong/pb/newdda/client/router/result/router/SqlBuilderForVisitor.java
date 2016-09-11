@@ -1,4 +1,4 @@
-package com.elong.pb.newdda.client.router.parser.visitor.basic;
+package com.elong.pb.newdda.client.router.result.router;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +19,7 @@ public class SqlBuilderForVisitor implements Appendable {
 
     @Override
     public Appendable append(CharSequence csq, int start, int end) throws IOException {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
