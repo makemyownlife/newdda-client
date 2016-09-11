@@ -40,13 +40,12 @@ public class SqlParserContext {
 
     public void addCondition(final SQLExpr expr, final BinaryOperator operator, final List<SQLExpr> valueExprs, final DatabaseType databaseType, final List<Object> paramters) {
         RouterColumn routerColumn = getRouterColumn(expr);
-        if(logger.isDebugEnabled()) {
-            logger.debug(" routerColumn : {}" , routerColumn);
-        }
-        if(routerColumn == null ) {
+        if (routerColumn == null) {
             return;
         }
-
+        if (logger.isDebugEnabled()) {
+            logger.debug(" routerColumn : {}", routerColumn);
+        }
     }
 
     public RouterTable addTable(final SQLExprTableSource x) {
@@ -80,7 +79,7 @@ public class SqlParserContext {
     }
 
     private RouterColumn getColumnWithoutAlias(final SQLIdentifierExpr expr) {
-         return (null != routerTable )? createColumn(expr.getName(), routerTable.getName()) : null;
+        return (null != routerTable) ? createColumn(expr.getName(), routerTable.getName()) : null;
     }
 
     private RouterTable findTableFromName(final String name) {
