@@ -44,7 +44,7 @@ public class SqlParserContext {
             return;
         }
         if (logger.isDebugEnabled()) {
-            logger.debug(" routerColumn : {}", routerColumn);
+            logger.debug("routerColumn:{}", routerColumn);
         }
     }
 
@@ -108,7 +108,10 @@ public class SqlParserContext {
     }
 
     private RouterColumn createColumn(final String columnName, final String tableName) {
-        return new RouterColumn(SQLUtil.getExactlyValue(columnName), SQLUtil.getExactlyValue(tableName));
+        return new RouterColumn(
+                SQLUtil.getExactlyValue(columnName),
+                SQLUtil.getExactlyValue(tableName)
+        );
     }
 
     //=========================================================== private method end =======================================================

@@ -4,7 +4,6 @@ import com.alibaba.druid.sql.ast.SQLObject;
 import com.alibaba.druid.sql.ast.statement.SQLExprTableSource;
 import com.alibaba.druid.sql.ast.statement.SQLJoinTableSource;
 import com.alibaba.druid.sql.dialect.mysql.ast.statement.MySqlSelectQueryBlock;
-import com.google.common.base.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +16,7 @@ public class MySqlSelectVisitor extends AbstractMySqlVisitor {
 
     public void preVisit(SQLObject x) {
         if (logger.isDebugEnabled()) {
+
         }
     }
 
