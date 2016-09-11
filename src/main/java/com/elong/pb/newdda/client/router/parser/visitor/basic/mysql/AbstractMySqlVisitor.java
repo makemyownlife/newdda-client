@@ -100,8 +100,6 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
                 return tableSource;
             }
         }
-
-
         return null;
     }
 
@@ -184,10 +182,20 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
         return sqlParserContext;
     }
 
+    /**
+     * 获取SQL构建器.
+     * SQL构建器
+     */
+    @Override
+    public SqlBuilderForVisitor getSqlBuilder() {
+        return (SqlBuilderForVisitor) appender;
+    }
+
     //===================================================================get method end========================================================================
 
     @Override
     public final void printToken(final String token) {
+
     }
 
 }

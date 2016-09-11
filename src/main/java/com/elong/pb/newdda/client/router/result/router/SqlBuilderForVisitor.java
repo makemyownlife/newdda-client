@@ -41,7 +41,6 @@ public class SqlBuilderForVisitor implements Appendable {
         return this;
     }
 
-    @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
         for (Object each : segments) {
