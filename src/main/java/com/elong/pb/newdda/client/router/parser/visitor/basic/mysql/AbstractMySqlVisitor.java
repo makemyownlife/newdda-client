@@ -1,7 +1,6 @@
 package com.elong.pb.newdda.client.router.parser.visitor.basic.mysql;
 
-import com.alibaba.druid.sql.ast.SQLExpr;
-import com.alibaba.druid.sql.ast.SQLObject;
+import com.alibaba.druid.sql.ast.SQLHint;
 import com.alibaba.druid.sql.ast.expr.*;
 import com.alibaba.druid.sql.ast.statement.*;
 import com.alibaba.druid.sql.dialect.mysql.visitor.MySqlOutputVisitor;
@@ -9,11 +8,11 @@ import com.elong.pb.newdda.client.constants.DatabaseType;
 import com.elong.pb.newdda.client.router.parser.SqlParserContext;
 import com.elong.pb.newdda.client.router.parser.visitor.SqlVisitor;
 import com.elong.pb.newdda.client.router.result.router.BinaryOperator;
+import com.elong.pb.newdda.client.router.result.router.RouterTable;
 import com.elong.pb.newdda.client.router.result.router.SqlBuilderForVisitor;
+import com.elong.pb.newdda.client.util.SQLUtil;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements SqlVisitor {
 
@@ -27,7 +26,16 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
 
     @Override
     public boolean visit(SQLExprTableSource x) {
-        sqlParserContext.addTable(x);
+        RouterTable routerTable = sqlParserContext.addTable(x);
+        printToken(routerTable.getName());
+        if (routerTable.getAlias() != null) {
+            print(' ');
+            print(routerTable.getAlias());
+        }
+        for (SQLHint each : x.getHints()) {
+            print(' ');
+            each.accept(this);
+        }
         return false;
     }
 
@@ -60,6 +68,7 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
         return super.visit(x);
     }
 
+
     //===================================================================get method  start========================================================================
     @Override
     public final DatabaseType getDatabaseType() {
@@ -80,11 +89,11 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
         return (SqlBuilderForVisitor) appender;
     }
 
-    //===================================================================get method end========================================================================
-
     @Override
     public final void printToken(final String token) {
-
+        getSqlBuilder().appendToken(SQLUtil.getExactlyValue(token));
     }
+
+    //===================================================================get method end========================================================================
 
 }
