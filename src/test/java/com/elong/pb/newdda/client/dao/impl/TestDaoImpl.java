@@ -1,7 +1,8 @@
 package com.elong.pb.newdda.client.dao.impl;
 
 import com.elong.pb.newdda.client.dao.TestDao;
-import com.elong.pb.newdda.client.plugin.MyBatisBaseDao;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
+
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ import java.util.List;
  * Time: 13:08
  * To change this template use File | Settings | File Templates.
  */
-public class TestDaoImpl extends MyBatisBaseDao implements TestDao {
+public class TestDaoImpl extends SqlSessionDaoSupport implements TestDao {
 
     public List query() {
         return getSqlSession().selectList("test.query" ,1);
