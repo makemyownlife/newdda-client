@@ -6,7 +6,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 /**
  * Created by zhangyong on 2016/8/14.
@@ -17,11 +19,61 @@ public class SqlBuilderForVisitor implements Appendable {
 
     private final Collection<Object> segments = new LinkedList<Object>();
 
+    private final Map<String, StringToken> tokenMap = new HashMap<String, StringToken>();
+
     private StringBuilder currentSegment;
 
     public SqlBuilderForVisitor() {
         this.currentSegment = new StringBuilder();
         this.segments.add(currentSegment);
+    }
+
+    /**
+     * 增加占位符.
+     *
+     * @param token 占位符
+     * @return SQL构建器
+     */
+    public SqlBuilderForVisitor appendToken(final String token) {
+        return appendToken(token, true);
+    }
+
+    /**
+     * 增加占位符.
+     *
+     * @param token 占位符
+     * @param isSetValue 是否设置占位值
+     * @return SQL构建器
+     */
+    public SqlBuilderForVisitor appendToken(final String token, final boolean isSetValue) {
+        StringToken stringToken;
+        if (tokenMap.containsKey(token)) {
+            stringToken = tokenMap.get(token);
+        } else {
+            stringToken = new StringToken();
+            if (isSetValue) {
+                stringToken.value = token;
+            }
+            tokenMap.put(token, stringToken);
+        }
+        segments.add(stringToken);
+        currentSegment = new StringBuilder();
+        segments.add(currentSegment);
+        return this;
+    }
+
+    /**
+     * 用实际的值替代占位符.
+     *
+     * @param originToken 占位符
+     * @param newToken 实际的值
+     * @return SQL构建器
+     */
+    public SqlBuilderForVisitor buildSQL(final String originToken, final String newToken) {
+        if (tokenMap.containsKey(originToken)) {
+            tokenMap.get(originToken).value = newToken;
+        }
+        return this;
     }
 
     @Override
@@ -51,6 +103,27 @@ public class SqlBuilderForVisitor implements Appendable {
             }
         }
         return result.toString();
+    }
+
+    /**
+     * 复制构建器.
+     *
+     * @return 新的构建器
+     */
+    public SqlBuilderForVisitor cloneBuilder() {
+        SqlBuilderForVisitor result = new SqlBuilderForVisitor();
+        for (Object each : segments) {
+            if (each instanceof StringToken) {
+                StringToken token = (StringToken) each;
+                StringToken newToken = new StringToken();
+                newToken.value = token.value;
+                result.segments.add(newToken);
+                result.tokenMap.put(newToken.value, newToken);
+            } else {
+                result.segments.add(each);
+            }
+        }
+        return result;
     }
 
     /**
