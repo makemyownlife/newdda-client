@@ -40,11 +40,6 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
     }
 
     @Override
-    public boolean visit(SQLIdentifierExpr x) {
-        return false;
-    }
-
-    @Override
     public boolean visit(SQLBinaryOpExpr x) {
         //既然我活了下来就不能白白活着 -- 梅长苏
         x.getLeft().setParent(x);
@@ -68,6 +63,22 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
         return super.visit(x);
     }
 
+    public final boolean visit(final SQLPropertyExpr x) {
+        if (!(x.getParent() instanceof SQLBinaryOpExpr) && !(x.getParent() instanceof SQLSelectItem)) {
+            return super.visit(x);
+        }
+        if (!(x.getOwner() instanceof SQLIdentifierExpr)) {
+            return super.visit(x);
+        }
+        String tableOrAliasName = ((SQLIdentifierExpr) x.getOwner()).getLowerName();
+        if (getSqlParserContext().isBinaryOperateWithAlias(x, tableOrAliasName)) {
+            return super.visit(x);
+        }
+        printToken(tableOrAliasName);
+        print(".");
+        print(x.getName());
+        return false;
+    }
 
     //===================================================================get method  start========================================================================
     @Override

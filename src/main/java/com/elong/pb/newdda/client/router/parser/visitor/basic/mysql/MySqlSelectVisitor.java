@@ -16,7 +16,6 @@ public class MySqlSelectVisitor extends AbstractMySqlVisitor {
 
     public void preVisit(SQLObject x) {
         if (logger.isDebugEnabled()) {
-
         }
     }
 
@@ -24,17 +23,9 @@ public class MySqlSelectVisitor extends AbstractMySqlVisitor {
     public boolean visit(final MySqlSelectQueryBlock x) {
         if (x.getFrom() instanceof SQLExprTableSource) {
             SQLExprTableSource tableExpr = (SQLExprTableSource) x.getFrom();
-            getSqlParserContext().setCurrentTable(tableExpr.getExpr().toString(),tableExpr.getAlias());
+            getSqlParserContext().setCurrentTable(tableExpr.getExpr().toString(), tableExpr.getAlias());
         }
-        if (x.getFrom() != null) {
-            x.getFrom().setParent(x);
-            x.getFrom().accept(this);
-        }
-        if (x.getWhere() != null) {
-            x.getWhere().setParent(x);
-            x.getWhere().accept(this);
-        }
-        return false;
+        return super.visit(x);
     }
 
     //============================================================================   重写相关的visit astnode  start================================================================
@@ -47,7 +38,6 @@ public class MySqlSelectVisitor extends AbstractMySqlVisitor {
         }
         return true;
     }
-
     //============================================================================   重写相关的visit astnode  end================================================================
 
 }

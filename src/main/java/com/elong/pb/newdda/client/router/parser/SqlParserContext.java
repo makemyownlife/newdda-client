@@ -1,6 +1,7 @@
 package com.elong.pb.newdda.client.router.parser;
 
 import com.alibaba.druid.sql.ast.SQLExpr;
+import com.alibaba.druid.sql.ast.expr.SQLBinaryOpExpr;
 import com.alibaba.druid.sql.ast.expr.SQLIdentifierExpr;
 import com.alibaba.druid.sql.ast.expr.SQLPropertyExpr;
 import com.alibaba.druid.sql.ast.statement.SQLExprTableSource;
@@ -54,6 +55,21 @@ public class SqlParserContext {
         RouterTable result = new RouterTable(tableName, alias);
         sqlParserResult.getRouteContext().getTables().add(result);
         return result;
+    }
+
+    /**
+     * 判断SQL表达式是否为二元操作且带有别名.
+     *
+     * @param x                待判断的SQL表达式
+     * @param tableOrAliasName 表名称或别名
+     * @return 是否为二元操作且带有别名
+     */
+    public boolean isBinaryOperateWithAlias(final SQLPropertyExpr x, final String tableOrAliasName) {
+        RouterTable routerTable = findTableFromAlias(SQLUtil.getExactlyValue(tableOrAliasName));
+        if (routerTable == null) {
+            return false;
+        }
+        return (x.getParent() instanceof SQLBinaryOpExpr);
     }
 
     //=========================================================== private method start ==========================================================
