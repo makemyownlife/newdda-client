@@ -42,12 +42,6 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
     @Override
     public boolean visit(SQLBinaryOpExpr x) {
         //既然我活了下来就不能白白活着 -- 梅长苏
-        x.getLeft().setParent(x);
-        x.getRight().setParent(x);
-
-        x.getLeft().accept(this);
-        x.getRight().accept(this);
-
         switch (x.getOperator()) {
             case BooleanOr:
                 sqlParserContext.setHasOrCondition(true);
@@ -59,7 +53,6 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
             default:
                 break;
         }
-
         return super.visit(x);
     }
 
