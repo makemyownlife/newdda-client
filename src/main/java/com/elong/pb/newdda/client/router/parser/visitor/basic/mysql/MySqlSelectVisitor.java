@@ -1,8 +1,8 @@
 package com.elong.pb.newdda.client.router.parser.visitor.basic.mysql;
 
 import com.alibaba.druid.sql.ast.SQLObject;
+import com.alibaba.druid.sql.ast.expr.SQLVariantRefExpr;
 import com.alibaba.druid.sql.ast.statement.SQLExprTableSource;
-import com.alibaba.druid.sql.ast.statement.SQLJoinTableSource;
 import com.alibaba.druid.sql.dialect.mysql.ast.statement.MySqlSelectQueryBlock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,16 +28,16 @@ public class MySqlSelectVisitor extends AbstractMySqlVisitor {
         return super.visit(x);
     }
 
-    //============================================================================   重写相关的visit astnode  start================================================================
+    /**
+     * 父类使用<tt>@@</tt>代替<tt>?</tt>,此处直接输出参数占位符<tt>?</tt>
+     *
+     * @param x 变量表达式
+     * @return false 终止遍历AST
+     */
     @Override
-    public boolean visit(SQLJoinTableSource x) {
-        x.getLeft().setParent(x);
-        x.getRight().setParent(x);
-        if (x.getCondition() != null) {
-            x.getCondition().setParent(x);
-        }
-        return true;
+    public final boolean visit(final SQLVariantRefExpr x) {
+        print(x.getName());
+        return false;
     }
-    //============================================================================   重写相关的visit astnode  end================================================================
 
 }
