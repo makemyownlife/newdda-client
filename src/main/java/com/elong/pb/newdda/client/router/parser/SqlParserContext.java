@@ -13,6 +13,7 @@ import com.elong.pb.newdda.client.util.SQLUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,6 +48,7 @@ public class SqlParserContext {
         if (logger.isDebugEnabled()) {
             logger.debug("routerColumn:{}", routerColumn);
         }
+        List<ValuePair> values = new ArrayList<ValuePair>(valueExprs.size());
     }
 
     public RouterTable addTable(final SQLExprTableSource x) {
@@ -151,5 +153,26 @@ public class SqlParserContext {
     }
 
     //============================================================set get method end ==========================================================
+
+    private static class ValuePair {
+
+        private final Comparable<?> value;
+
+        private final Integer paramIndex;
+
+        public ValuePair(Comparable<?> value, Integer paramIndex) {
+            this.value = value;
+            this.paramIndex = paramIndex;
+        }
+
+        public Comparable<?> getValue() {
+            return value;
+        }
+
+        public Integer getParamIndex() {
+            return paramIndex;
+        }
+
+    }
 
 }
