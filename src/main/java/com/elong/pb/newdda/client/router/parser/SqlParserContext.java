@@ -1,11 +1,17 @@
 package com.elong.pb.newdda.client.router.parser;
 
 import com.alibaba.druid.sql.ast.SQLExpr;
+import com.alibaba.druid.sql.ast.SQLObject;
 import com.alibaba.druid.sql.ast.expr.SQLBinaryOpExpr;
 import com.alibaba.druid.sql.ast.expr.SQLIdentifierExpr;
+import com.alibaba.druid.sql.ast.expr.SQLMethodInvokeExpr;
 import com.alibaba.druid.sql.ast.expr.SQLPropertyExpr;
 import com.alibaba.druid.sql.ast.statement.SQLExprTableSource;
+import com.alibaba.druid.sql.visitor.SQLEvalVisitor;
+import com.alibaba.druid.sql.visitor.SQLEvalVisitorUtils;
+import com.alibaba.druid.util.JdbcUtils;
 import com.elong.pb.newdda.client.constants.DatabaseType;
+import com.elong.pb.newdda.client.router.parser.visitor.basic.mysql.MySqlEvalVisitor;
 import com.elong.pb.newdda.client.router.result.router.BinaryOperator;
 import com.elong.pb.newdda.client.router.result.router.RouterColumn;
 import com.elong.pb.newdda.client.router.result.router.RouterTable;
@@ -40,7 +46,7 @@ public class SqlParserContext {
         routerTable = table;
     }
 
-    public void addCondition(final SQLExpr expr, final BinaryOperator operator, final List<SQLExpr> valueExprs, final DatabaseType databaseType, final List<Object> paramters) {
+    public void addCondition(final SQLExpr expr, final BinaryOperator operator, final List<SQLExpr> valueExprList, final DatabaseType databaseType, final List<Object> paramters) {
         RouterColumn routerColumn = getRouterColumn(expr);
         if (routerColumn == null) {
             return;
@@ -48,7 +54,16 @@ public class SqlParserContext {
         if (logger.isDebugEnabled()) {
             logger.debug("routerColumn:{}", routerColumn);
         }
-        List<ValuePair> values = new ArrayList<ValuePair>(valueExprs.size());
+        List<ValuePair> values = new ArrayList<ValuePair>(valueExprList.size());
+        for (SQLExpr each : valueExprList) {
+           ValuePair evalValue = evalExpression(databaseType, each, paramters);
+            if (null != evalValue) {
+                values.add(evalValue);
+            }
+        }
+        if (values.isEmpty()) {
+            return;
+        }
     }
 
     public RouterTable addTable(final SQLExprTableSource x) {
@@ -130,6 +145,37 @@ public class SqlParserContext {
                 SqlUtil.getExactlyValue(columnName),
                 SqlUtil.getExactlyValue(tableName)
         );
+    }
+
+    private ValuePair evalExpression(final DatabaseType databaseType, final SQLObject sqlObject, final List<Object> parameters) {
+        if (sqlObject instanceof SQLMethodInvokeExpr) {
+            // TODO 解析函数中的sharingValue不支持
+            return null;
+        }
+        SQLEvalVisitor visitor;
+        if(JdbcUtils.MYSQL.equals(databaseType.name().toLowerCase()) || JdbcUtils.H2.equals(databaseType.name().toLowerCase())) {
+            visitor = new MySqlEvalVisitor();
+        } else {
+            visitor = SQLEvalVisitorUtils.createEvalVisitor(databaseType.name());
+        }
+        visitor.setParameters(parameters);
+        sqlObject.accept(visitor);
+        Object value = SQLEvalVisitorUtils.getValue(sqlObject);
+        if (null == value) {
+            // TODO 对于NULL目前解析为空字符串,此处待考虑解决方法
+            return null;
+        }
+        Comparable<?> finalValue;
+        if (value instanceof Comparable<?>) {
+            finalValue = (Comparable<?>) value;
+        } else {
+            finalValue = "";
+        }
+        Integer index = (Integer) sqlObject.getAttribute(MySqlEvalVisitor.EVAL_VAR_INDEX);
+        if (null == index) {
+            index = -1;
+        }
+        return new ValuePair(finalValue, index);
     }
 
     //=========================================================== private method end =======================================================
