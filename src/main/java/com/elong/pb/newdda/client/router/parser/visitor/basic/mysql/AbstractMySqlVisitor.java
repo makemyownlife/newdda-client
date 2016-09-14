@@ -10,7 +10,7 @@ import com.elong.pb.newdda.client.router.parser.visitor.SqlVisitor;
 import com.elong.pb.newdda.client.router.result.router.BinaryOperator;
 import com.elong.pb.newdda.client.router.result.router.RouterTable;
 import com.elong.pb.newdda.client.router.result.router.SqlBuilderForVisitor;
-import com.elong.pb.newdda.client.util.SQLUtil;
+import com.elong.pb.newdda.client.util.SqlUtil;
 
 import java.util.Arrays;
 
@@ -95,7 +95,7 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
 
     @Override
     public final void printToken(final String token) {
-        getSqlBuilder().appendToken(SQLUtil.getExactlyValue(token));
+        getSqlBuilder().appendToken(SqlUtil.getExactlyValue(token));
     }
 
     //===================================================================get method end========================================================================

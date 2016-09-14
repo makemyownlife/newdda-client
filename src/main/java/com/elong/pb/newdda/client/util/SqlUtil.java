@@ -5,7 +5,7 @@ import com.google.common.base.CharMatcher;
 /**
  * SQL工具类.
  */
-public class SQLUtil {
+public class SqlUtil {
 
     /**
      * 去掉SQL表达式的特殊字符.

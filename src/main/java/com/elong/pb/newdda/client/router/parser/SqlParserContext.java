@@ -9,7 +9,7 @@ import com.elong.pb.newdda.client.constants.DatabaseType;
 import com.elong.pb.newdda.client.router.result.router.BinaryOperator;
 import com.elong.pb.newdda.client.router.result.router.RouterColumn;
 import com.elong.pb.newdda.client.router.result.router.RouterTable;
-import com.elong.pb.newdda.client.util.SQLUtil;
+import com.elong.pb.newdda.client.util.SqlUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,8 +33,8 @@ public class SqlParserContext {
     private final SqlParserResult sqlParserResult = new SqlParserResult();
 
     public void setCurrentTable(final String currentTableName, final String currentAlias) {
-        String exactlyAlias = SQLUtil.getExactlyValue(currentAlias);
-        String exactlyTableName = SQLUtil.getExactlyValue(currentTableName);
+        String exactlyAlias = SqlUtil.getExactlyValue(currentAlias);
+        String exactlyTableName = SqlUtil.getExactlyValue(currentTableName);
         RouterTable table = new RouterTable(exactlyTableName, exactlyAlias);
         sqlParserResult.getRouteContext().getTables().add(table);
         routerTable = table;
@@ -52,8 +52,8 @@ public class SqlParserContext {
     }
 
     public RouterTable addTable(final SQLExprTableSource x) {
-        String tableName = SQLUtil.getExactlyValue(x.getExpr().toString());
-        String alias = SQLUtil.getExactlyValue(x.getAlias());
+        String tableName = SqlUtil.getExactlyValue(x.getExpr().toString());
+        String alias = SqlUtil.getExactlyValue(x.getAlias());
         RouterTable result = new RouterTable(tableName, alias);
         sqlParserResult.getRouteContext().getTables().add(result);
         return result;
@@ -67,7 +67,7 @@ public class SqlParserContext {
      * @return 是否为二元操作且带有别名
      */
     public boolean isBinaryOperateWithAlias(final SQLPropertyExpr x, final String tableOrAliasName) {
-        RouterTable routerTable = findTableFromAlias(SQLUtil.getExactlyValue(tableOrAliasName));
+        RouterTable routerTable = findTableFromAlias(SqlUtil.getExactlyValue(tableOrAliasName));
         if (routerTable == null) {
             return false;
         }
@@ -102,7 +102,7 @@ public class SqlParserContext {
 
     private RouterTable findTableFromName(final String name) {
         for (RouterTable each : sqlParserResult.getRouteContext().getTables()) {
-            if (each.getName().equalsIgnoreCase(SQLUtil.getExactlyValue(name))) {
+            if (each.getName().equalsIgnoreCase(SqlUtil.getExactlyValue(name))) {
                 return each;
             }
         }
@@ -111,7 +111,7 @@ public class SqlParserContext {
 
     private RouterTable findTableFromAlias(final String alias) {
         for (RouterTable each : sqlParserResult.getRouteContext().getTables()) {
-            if (each.getAlias() != null && each.getAlias().equalsIgnoreCase(SQLUtil.getExactlyValue(alias))) {
+            if (each.getAlias() != null && each.getAlias().equalsIgnoreCase(SqlUtil.getExactlyValue(alias))) {
                 return each;
             }
         }
@@ -127,8 +127,8 @@ public class SqlParserContext {
 
     private RouterColumn createColumn(final String columnName, final String tableName) {
         return new RouterColumn(
-                SQLUtil.getExactlyValue(columnName),
-                SQLUtil.getExactlyValue(tableName)
+                SqlUtil.getExactlyValue(columnName),
+                SqlUtil.getExactlyValue(tableName)
         );
     }
 
