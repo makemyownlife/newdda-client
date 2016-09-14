@@ -5,12 +5,12 @@ import java.util.LinkedHashSet;
 
 public class RouterContext {
 
-    private final Collection<RouterTable> tables = new LinkedHashSet<RouterTable>();
+    private final Collection<RouterTable> routerTables = new LinkedHashSet<RouterTable>();
 
     private SqlStatementType sqlStatementType;
 
-    public Collection<RouterTable> getTables() {
-        return tables;
+    public Collection<RouterTable> getRouterTables() {
+        return routerTables;
     }
 
     public SqlStatementType getSqlStatementType() {

@@ -16,6 +16,7 @@ import com.elong.pb.newdda.client.router.result.router.BinaryOperator;
 import com.elong.pb.newdda.client.router.result.router.RouterColumn;
 import com.elong.pb.newdda.client.router.result.router.RouterTable;
 import com.elong.pb.newdda.client.util.SqlUtil;
+import com.google.common.base.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +31,7 @@ public class SqlParserContext {
 
     private final static Logger logger = LoggerFactory.getLogger(SqlParserContext.class);
 
-    private RouterTable routerTable;
+    private RouterTable currentRouterTable;
 
     private List<Object> shardingColumns;
 
@@ -41,9 +42,9 @@ public class SqlParserContext {
     public void setCurrentTable(final String currentTableName, final String currentAlias) {
         String exactlyAlias = SqlUtil.getExactlyValue(currentAlias);
         String exactlyTableName = SqlUtil.getExactlyValue(currentTableName);
-        RouterTable table = new RouterTable(exactlyTableName, exactlyAlias);
-        sqlParserResult.getRouteContext().getTables().add(table);
-        routerTable = table;
+        RouterTable routerTable = new RouterTable(exactlyTableName, exactlyAlias);
+        sqlParserResult.getRouteContext().getRouterTables().add(routerTable);
+        this.currentRouterTable = routerTable;
     }
 
     public void addCondition(final SQLExpr expr, final BinaryOperator operator, final List<SQLExpr> valueExprList, final DatabaseType databaseType, final List<Object> paramters) {
@@ -70,7 +71,7 @@ public class SqlParserContext {
         String tableName = SqlUtil.getExactlyValue(x.getExpr().toString());
         String alias = SqlUtil.getExactlyValue(x.getAlias());
         RouterTable result = new RouterTable(tableName, alias);
-        sqlParserResult.getRouteContext().getTables().add(result);
+        sqlParserResult.getRouteContext().getRouterTables().add(result);
         return result;
     }
 
@@ -112,11 +113,11 @@ public class SqlParserContext {
     }
 
     private RouterColumn getColumnWithoutAlias(final SQLIdentifierExpr expr) {
-        return (null != routerTable) ? createColumn(expr.getName(), routerTable.getName()) : null;
+        return (null != currentRouterTable) ? createColumn(expr.getName(), currentRouterTable.getName()) : null;
     }
 
     private RouterTable findTableFromName(final String name) {
-        for (RouterTable each : sqlParserResult.getRouteContext().getTables()) {
+        for (RouterTable each : sqlParserResult.getRouteContext().getRouterTables()) {
             if (each.getName().equalsIgnoreCase(SqlUtil.getExactlyValue(name))) {
                 return each;
             }
@@ -125,7 +126,7 @@ public class SqlParserContext {
     }
 
     private RouterTable findTableFromAlias(final String alias) {
-        for (RouterTable each : sqlParserResult.getRouteContext().getTables()) {
+        for (RouterTable each : sqlParserResult.getRouteContext().getRouterTables()) {
             if (each.getAlias() != null && each.getAlias().equalsIgnoreCase(SqlUtil.getExactlyValue(alias))) {
                 return each;
             }
@@ -176,6 +177,10 @@ public class SqlParserContext {
             index = -1;
         }
         return new ValuePair(finalValue, index);
+    }
+
+    private void addCondition(final RouterColumn routerColumn, final BinaryOperator operator, final List<ValuePair> valuePairs) {
+
     }
 
     //=========================================================== private method end =======================================================
