@@ -181,6 +181,7 @@ public class SqlParserContext {
 
     private void addCondition(final RouterColumn routerColumn, final BinaryOperator operator, final List<ValuePair> valuePairs) {
 
+
     }
 
     //=========================================================== private method end =======================================================
