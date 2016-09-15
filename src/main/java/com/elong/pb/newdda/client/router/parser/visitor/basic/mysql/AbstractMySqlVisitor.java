@@ -9,7 +9,7 @@ import com.elong.pb.newdda.client.router.parser.SqlParserContext;
 import com.elong.pb.newdda.client.router.parser.visitor.SqlVisitor;
 import com.elong.pb.newdda.client.router.result.router.BinaryOperator;
 import com.elong.pb.newdda.client.router.result.router.RouterTable;
-import com.elong.pb.newdda.client.router.result.router.SqlBuilderForVisitor;
+import com.elong.pb.newdda.client.router.result.router.SqlAppender;
 import com.elong.pb.newdda.client.util.SqlUtil;
 
 import java.util.Arrays;
@@ -19,7 +19,7 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
     private SqlParserContext sqlParserContext;
 
     protected AbstractMySqlVisitor() {
-        super(new SqlBuilderForVisitor());
+        super(new SqlAppender());
         super.setPrettyFormat(false);
         this.sqlParserContext = new SqlParserContext();
     }
@@ -89,8 +89,8 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
      * SQL构建器
      */
     @Override
-    public SqlBuilderForVisitor getSqlBuilder() {
-        return (SqlBuilderForVisitor) appender;
+    public SqlAppender getSqlBuilder() {
+        return (SqlAppender) appender;
     }
 
     @Override

@@ -13,9 +13,9 @@ import java.util.Map;
 /**
  * Created by zhangyong on 2016/8/14.
  */
-public class SqlBuilderForVisitor implements Appendable {
+public class SqlAppender implements Appendable {
 
-    private final static Logger logger = LoggerFactory.getLogger(SqlBuilderForVisitor.class);
+    private final static Logger logger = LoggerFactory.getLogger(SqlAppender.class);
 
     private final Collection<Object> segments = new LinkedList<Object>();
 
@@ -23,7 +23,7 @@ public class SqlBuilderForVisitor implements Appendable {
 
     private StringBuilder currentSegment;
 
-    public SqlBuilderForVisitor() {
+    public SqlAppender() {
         this.currentSegment = new StringBuilder();
         this.segments.add(currentSegment);
     }
@@ -34,7 +34,7 @@ public class SqlBuilderForVisitor implements Appendable {
      * @param token 占位符
      * @return SQL构建器
      */
-    public SqlBuilderForVisitor appendToken(final String token) {
+    public SqlAppender appendToken(final String token) {
         return appendToken(token, true);
     }
 
@@ -45,7 +45,7 @@ public class SqlBuilderForVisitor implements Appendable {
      * @param isSetValue 是否设置占位值
      * @return SQL构建器
      */
-    public SqlBuilderForVisitor appendToken(final String token, final boolean isSetValue) {
+    public SqlAppender appendToken(final String token, final boolean isSetValue) {
         StringToken stringToken;
         if (tokenMap.containsKey(token)) {
             stringToken = tokenMap.get(token);
@@ -69,7 +69,7 @@ public class SqlBuilderForVisitor implements Appendable {
      * @param newToken 实际的值
      * @return SQL构建器
      */
-    public SqlBuilderForVisitor buildSQL(final String originToken, final String newToken) {
+    public SqlAppender buildSQL(final String originToken, final String newToken) {
         if (tokenMap.containsKey(originToken)) {
             tokenMap.get(originToken).value = newToken;
         }
@@ -110,8 +110,8 @@ public class SqlBuilderForVisitor implements Appendable {
      *
      * @return 新的构建器
      */
-    public SqlBuilderForVisitor cloneBuilder() {
-        SqlBuilderForVisitor result = new SqlBuilderForVisitor();
+    public SqlAppender cloneBuilder() {
+        SqlAppender result = new SqlAppender();
         for (Object each : segments) {
             if (each instanceof StringToken) {
                 StringToken token = (StringToken) each;

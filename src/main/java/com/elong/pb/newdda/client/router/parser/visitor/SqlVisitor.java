@@ -2,7 +2,7 @@ package com.elong.pb.newdda.client.router.parser.visitor;
 
 import com.elong.pb.newdda.client.constants.DatabaseType;
 import com.elong.pb.newdda.client.router.parser.SqlParserContext;
-import com.elong.pb.newdda.client.router.result.router.SqlBuilderForVisitor;
+import com.elong.pb.newdda.client.router.result.router.SqlAppender;
 
 /**
  * Created by zhangyong on 2016/8/18.
@@ -27,7 +27,7 @@ public interface SqlVisitor {
      * 获取SQL构建器.
      * SQL构建器
      */
-    SqlBuilderForVisitor getSqlBuilder();
+    SqlAppender getSqlBuilder();
 
     /**
      * 打印替换标记.
