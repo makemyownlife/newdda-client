@@ -39,6 +39,9 @@ public class SqlParserEngine {
         visitor.setParameters(parameters);
         sqlStatement.accept(visitor);
 
+        //将当前解析的条件对象归并入解析结果
+        sqlParserContext.mergeCurrentConditionContext();
+
         //急躁 、易怒是我情绪上的弱点 ,加油 ~~~~~
         SqlParserResult sqlParserResult = sqlParserContext.getSqlParsedResult();
         return sqlParserResult;

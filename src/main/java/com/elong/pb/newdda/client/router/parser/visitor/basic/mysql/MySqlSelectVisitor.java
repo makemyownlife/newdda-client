@@ -28,6 +28,11 @@ public class MySqlSelectVisitor extends AbstractMySqlVisitor {
         return super.visit(x);
     }
 
+    @Override
+    public void endVisit(final MySqlSelectQueryBlock x) {
+        super.endVisit(x);
+    }
+
     /**
      * 父类使用<tt>@@</tt>代替<tt>?</tt>,此处直接输出参数占位符<tt>?</tt>
      *

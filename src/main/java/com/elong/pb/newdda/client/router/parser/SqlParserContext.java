@@ -13,6 +13,7 @@ import com.alibaba.druid.util.JdbcUtils;
 import com.elong.pb.newdda.client.constants.DatabaseType;
 import com.elong.pb.newdda.client.router.parser.visitor.basic.mysql.MySqlEvalVisitor;
 import com.elong.pb.newdda.client.router.result.router.BinaryOperator;
+import com.elong.pb.newdda.client.router.result.router.ConditionContext;
 import com.elong.pb.newdda.client.router.result.router.RouterColumn;
 import com.elong.pb.newdda.client.router.result.router.RouterTable;
 import com.elong.pb.newdda.client.util.SqlUtil;
@@ -36,6 +37,8 @@ public class SqlParserContext {
     private List<Object> shardingColumns;
 
     private boolean hasOrCondition = false;
+
+    private final ConditionContext currentConditionContext = new ConditionContext();
 
     private final SqlParserResult sqlParserResult = new SqlParserResult();
 
@@ -65,6 +68,7 @@ public class SqlParserContext {
         if (values.isEmpty()) {
             return;
         }
+        addCondition(routerColumn,operator,values);
     }
 
     public RouterTable addTable(final SQLExprTableSource x) {
@@ -89,6 +93,21 @@ public class SqlParserContext {
         }
         return (x.getParent() instanceof SQLBinaryOpExpr);
     }
+
+    /**
+     * 将当前解析的条件对象归并入解析结果
+     */
+    public void mergeCurrentConditionContext() {
+        if (!sqlParserResult.getRouteContext().getRouterTables().isEmpty()) {
+            if (sqlParserResult.getConditionContexts().isEmpty()) {
+                sqlParserResult.getConditionContexts().add(currentConditionContext);
+            }
+            return;
+        }
+        //是否需要解析子解析上下文 ? 不太能理解
+
+    }
+
 
     //=========================================================== private method start ==========================================================
 
