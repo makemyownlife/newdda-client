@@ -89,13 +89,13 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
      * SQL构建器
      */
     @Override
-    public SqlAppender getSqlBuilder() {
+    public SqlAppender getSqlAppender() {
         return (SqlAppender) appender;
     }
 
     @Override
     public final void printToken(final String token) {
-        getSqlBuilder().appendToken(SqlUtil.getExactlyValue(token));
+        getSqlAppender().appendToken(SqlUtil.getExactlyValue(token));
     }
 
     //===================================================================get method end========================================================================

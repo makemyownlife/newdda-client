@@ -9,6 +9,10 @@ public class RouterContext {
 
     private SqlStatementType sqlStatementType;
 
+    private SqlAppender sqlAppender;
+
+    //====================================================================================================================get set method  start==========================================================
+
     public Collection<RouterTable> getRouterTables() {
         return routerTables;
     }
@@ -20,5 +24,11 @@ public class RouterContext {
     public void setSqlStatementType(SqlStatementType sqlStatementType) {
         this.sqlStatementType = sqlStatementType;
     }
+
+    public void setSqlAppender(SqlAppender sqlAppender) {
+        this.sqlAppender = sqlAppender;
+    }
+
+    //====================================================================================================================get set method  end==========================================================
 
 }

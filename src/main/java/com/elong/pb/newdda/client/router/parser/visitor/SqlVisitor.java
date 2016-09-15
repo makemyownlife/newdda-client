@@ -27,7 +27,7 @@ public interface SqlVisitor {
      * 获取SQL构建器.
      * SQL构建器
      */
-    SqlAppender getSqlBuilder();
+    SqlAppender getSqlAppender();
 
     /**
      * 打印替换标记.

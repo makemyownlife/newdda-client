@@ -1,8 +1,14 @@
 package com.elong.pb.newdda.client.router.parser;
 
 import com.alibaba.druid.sql.ast.SQLStatement;
+import com.alibaba.druid.sql.ast.statement.SQLDeleteStatement;
+import com.alibaba.druid.sql.ast.statement.SQLInsertStatement;
+import com.alibaba.druid.sql.ast.statement.SQLSelectStatement;
+import com.alibaba.druid.sql.ast.statement.SQLUpdateStatement;
 import com.alibaba.druid.sql.visitor.SQLASTOutputVisitor;
+import com.elong.pb.newdda.client.exception.SqlParserException;
 import com.elong.pb.newdda.client.router.parser.visitor.SqlVisitor;
+import com.elong.pb.newdda.client.router.result.router.SqlStatementType;
 import com.google.common.base.Preconditions;
 
 import java.util.List;
@@ -44,7 +50,25 @@ public class SqlParserEngine {
 
         //急躁 、易怒是我情绪上的弱点 ,加油 ~~~~~
         SqlParserResult sqlParserResult = sqlParserContext.getSqlParsedResult();
+        sqlParserResult.getRouteContext().setSqlAppender(sqlVisitor.getSqlAppender());
+        sqlParserResult.getRouteContext().setSqlStatementType(getType());
         return sqlParserResult;
+    }
+
+    private SqlStatementType getType() {
+        if (sqlStatement instanceof SQLSelectStatement) {
+            return SqlStatementType.SELECT;
+        }
+        if (sqlStatement instanceof SQLInsertStatement) {
+            return SqlStatementType.INSERT;
+        }
+        if (sqlStatement instanceof SQLUpdateStatement) {
+            return SqlStatementType.UPDATE;
+        }
+        if (sqlStatement instanceof SQLDeleteStatement) {
+            return SqlStatementType.DELETE;
+        }
+        throw new SqlParserException("Unsupported SQL statement: [%s]", sqlStatement);
     }
 
 }
