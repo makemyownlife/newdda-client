@@ -52,6 +52,7 @@ public class SqlParserEngine {
         SqlParserResult sqlParserResult = sqlParserContext.getSqlParsedResult();
         sqlParserResult.getRouteContext().setSqlAppender(sqlVisitor.getSqlAppender());
         sqlParserResult.getRouteContext().setSqlStatementType(getType());
+
         return sqlParserResult;
     }
 

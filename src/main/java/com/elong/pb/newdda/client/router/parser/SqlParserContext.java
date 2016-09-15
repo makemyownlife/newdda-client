@@ -17,7 +17,6 @@ import com.elong.pb.newdda.client.router.result.router.ConditionContext;
 import com.elong.pb.newdda.client.router.result.router.RouterColumn;
 import com.elong.pb.newdda.client.router.result.router.RouterTable;
 import com.elong.pb.newdda.client.util.SqlUtil;
-import com.google.common.base.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -105,7 +104,6 @@ public class SqlParserContext {
             return;
         }
         //是否需要解析子解析上下文 ? 不太能理解
-
     }
 
 
