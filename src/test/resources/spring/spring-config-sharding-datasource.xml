@@ -92,8 +92,8 @@
             </list>
         </property>
         <!-- 分区算法 -->
-        <property name="shardingAlgorithm">
-            <bean class="com.elong.pb.newdda.client.router.rule.ShardingRangeAlgorithm">
+        <property name="algorithm">
+            <bean class="com.elong.pb.newdda.client.router.rule.RangeAlgorithm">
                 <!-- 分区列表 -->
                 <property name="dataSourceList">
                     <list>

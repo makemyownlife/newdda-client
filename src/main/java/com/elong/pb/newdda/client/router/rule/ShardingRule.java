@@ -14,7 +14,7 @@ public class ShardingRule {
     //默认mysql数据类型也可以配置
     private DatabaseType databaseType = DatabaseType.MySQL;
 
-    private ShardingAlgorithm shardingAlgorithm;
+    private Algorithm algorithm;
 
     private List<TableRule> tableRules;
 
@@ -41,12 +41,12 @@ public class ShardingRule {
         this.tableRules = tableRules;
     }
 
-    public ShardingAlgorithm getShardingAlgorithm() {
-        return shardingAlgorithm;
+    public Algorithm getAlgorithm() {
+        return algorithm;
     }
 
-    public void setShardingAlgorithm(ShardingAlgorithm shardingAlgorithm) {
-        this.shardingAlgorithm = shardingAlgorithm;
+    public void setAlgorithm(Algorithm algorithm) {
+        this.algorithm = algorithm;
     }
 
 //======================================================================get  set method end =======================================================================

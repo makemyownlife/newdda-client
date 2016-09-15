@@ -9,9 +9,9 @@ import java.util.List;
  * 分区算法
  * Created by zhangyong on 2016/8/20.
  */
-public class ShardingRangeAlgorithm implements ShardingAlgorithm {
+public class RangeAlgorithm implements Algorithm {
 
-    private final static Logger logger = LoggerFactory.getLogger(ShardingRangeAlgorithm.class);
+    private final static Logger logger = LoggerFactory.getLogger(RangeAlgorithm.class);
 
     //数据源列表
     private List<String> dataSourceList;
