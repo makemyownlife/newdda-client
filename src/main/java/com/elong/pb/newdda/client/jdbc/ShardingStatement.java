@@ -127,12 +127,10 @@ public class ShardingStatement extends AbstractStatementAdapter {
     }
 
     //======================================================================= 基本参数 end ==================================================================================
-
     @Override
     public ResultSet getResultSet() throws SQLException {
         return currentResultSet;
     }
-
     //======================================================================= private method start ==================================================================
 
     public StatementExecutor generateExecutor(final String sql) throws SQLException {

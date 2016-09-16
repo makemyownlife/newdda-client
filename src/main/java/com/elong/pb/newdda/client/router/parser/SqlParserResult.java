@@ -1,5 +1,6 @@
 package com.elong.pb.newdda.client.router.parser;
 
+import com.elong.pb.newdda.client.router.result.merge.MergeContext;
 import com.elong.pb.newdda.client.router.result.router.ConditionContext;
 import com.elong.pb.newdda.client.router.result.router.RouterContext;
 
@@ -16,6 +17,8 @@ public class SqlParserResult {
 
     private final List<ConditionContext> conditionContexts = new ArrayList<ConditionContext>();
 
+    private final MergeContext mergeContext = new MergeContext();
+
     public RouterContext getRouteContext() {
         return routeContext;
     }
@@ -24,4 +27,8 @@ public class SqlParserResult {
         return conditionContexts;
     }
 
+    public MergeContext getMergeContext() {
+        return mergeContext;
+    }
+    
 }
