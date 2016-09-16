@@ -12,10 +12,7 @@ import com.alibaba.druid.sql.visitor.SQLEvalVisitorUtils;
 import com.alibaba.druid.util.JdbcUtils;
 import com.elong.pb.newdda.client.constants.DatabaseType;
 import com.elong.pb.newdda.client.router.parser.visitor.basic.mysql.MySqlEvalVisitor;
-import com.elong.pb.newdda.client.router.result.router.BinaryOperator;
-import com.elong.pb.newdda.client.router.result.router.ConditionContext;
-import com.elong.pb.newdda.client.router.result.router.RouterColumn;
-import com.elong.pb.newdda.client.router.result.router.RouterTable;
+import com.elong.pb.newdda.client.router.result.router.*;
 import com.elong.pb.newdda.client.util.SqlUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,7 +56,7 @@ public class SqlParserContext {
         }
         List<ValuePair> values = new ArrayList<ValuePair>(valueExprList.size());
         for (SQLExpr each : valueExprList) {
-           ValuePair evalValue = evalExpression(databaseType, each, paramters);
+            ValuePair evalValue = evalExpression(databaseType, each, paramters);
             if (null != evalValue) {
                 values.add(evalValue);
             }
@@ -67,7 +64,7 @@ public class SqlParserContext {
         if (values.isEmpty()) {
             return;
         }
-        addCondition(routerColumn,operator,values);
+        addCondition(routerColumn, operator, values);
     }
 
     public RouterTable addTable(final SQLExprTableSource x) {
@@ -171,7 +168,7 @@ public class SqlParserContext {
             return null;
         }
         SQLEvalVisitor visitor;
-        if(JdbcUtils.MYSQL.equals(databaseType.name().toLowerCase()) || JdbcUtils.H2.equals(databaseType.name().toLowerCase())) {
+        if (JdbcUtils.MYSQL.equals(databaseType.name().toLowerCase()) || JdbcUtils.H2.equals(databaseType.name().toLowerCase())) {
             visitor = new MySqlEvalVisitor();
         } else {
             visitor = SQLEvalVisitorUtils.createEvalVisitor(databaseType.name());
@@ -197,8 +194,17 @@ public class SqlParserContext {
     }
 
     private void addCondition(final RouterColumn routerColumn, final BinaryOperator operator, final List<ValuePair> valuePairs) {
-
-
+        RouterCondition routerCondition = currentConditionContext.find(routerColumn.getTableName(), routerColumn.getColumnName(), operator);
+        if (routerCondition == null) {
+            routerCondition = new RouterCondition(routerColumn, operator);
+            currentConditionContext.add(routerCondition);
+        }
+        for (ValuePair each : valuePairs) {
+            routerCondition.getValues().add(each.value);
+            if (each.paramIndex > -1) {
+                routerCondition.getValueIndices().add(each.paramIndex);
+            }
+        }
     }
 
     //=========================================================== private method end =======================================================

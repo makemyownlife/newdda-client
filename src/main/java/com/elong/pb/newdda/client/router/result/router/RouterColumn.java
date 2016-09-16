@@ -22,10 +22,18 @@ public class RouterColumn {
         return tableName;
     }
 
-    public String toString(){
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (this.columnName == null ? 0 : this.columnName.hashCode());
+        result = prime * result + (this.tableName == null ? 0 : this.tableName.hashCode());
+        return result;
+    }
+
+    public String toString() {
         StringBuffer sb = new StringBuffer();
-        sb.append("columnName:").append(columnName)
-                .append(" tableName:").append(tableName);
+        sb.append("columnName:").append(columnName).append(" tableName:").append(tableName);
         return sb.toString();
     }
 
