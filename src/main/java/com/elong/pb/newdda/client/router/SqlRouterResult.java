@@ -31,4 +31,8 @@ public final class SqlRouterResult {
         return mergeContext;
     }
 
+    public Set<SqlExecutionUnit> getExecutionUnits() {
+        return executionUnits;
+    }
+
 }

@@ -29,6 +29,10 @@ public class RouterContext {
         this.sqlAppender = sqlAppender;
     }
 
+    public SqlAppender getSqlAppender() {
+        return sqlAppender;
+    }
+
     //====================================================================================================================get set method  end==========================================================
 
 }

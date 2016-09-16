@@ -1,16 +1,22 @@
 package com.elong.pb.newdda.client.router;
 
 import com.elong.pb.newdda.client.constants.DatabaseType;
+import com.elong.pb.newdda.client.exception.ShardingJdbcException;
 import com.elong.pb.newdda.client.exception.SqlParserException;
 import com.elong.pb.newdda.client.router.parser.SqlParserEngine;
 import com.elong.pb.newdda.client.router.parser.SqlParserFactory;
 import com.elong.pb.newdda.client.router.parser.SqlParserResult;
 import com.elong.pb.newdda.client.router.result.merge.MergeContext;
-import com.elong.pb.newdda.client.router.result.router.RouterContext;
+import com.elong.pb.newdda.client.router.result.router.*;
 import com.elong.pb.newdda.client.router.rule.ShardingRule;
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Sets;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * sql语句路由相关的内容
@@ -37,9 +43,48 @@ public class SqlRouterEngine {
 
         RouterContext routerContext = sqlParserResult.getRouteContext();
         MergeContext mergeContext = sqlParserResult.getMergeContext();
+        List<ConditionContext> conditionContextList = sqlParserResult.getConditionContexts();
 
-        SqlRouterResult sqlRouterResult = new SqlRouterResult(routerContext.getSqlStatementType(), mergeContext);
+        SqlStatementType sqlStatementType = routerContext.getSqlStatementType();
+        SqlAppender sqlAppender = routerContext.getSqlAppender();
+
+        SqlRouterResult sqlRouterResult = new SqlRouterResult(sqlStatementType, mergeContext);
+
+        for (ConditionContext conditionContext : conditionContextList) {
+            Collection<RouterTable> routerTables = routerContext.getRouterTables();
+            //通过google util 得到逻辑列表
+            Set<String> logicTables = Sets.newLinkedHashSet(Collections2.transform(routerTables, new Function<RouterTable, String>() {
+                @Override
+                public String apply(final RouterTable input) {
+                    return input.getName();
+                }
+            }));
+            //路由sql得到执行节点
+            Collection<SqlExecutionUnit> eachResult = routeSQL(
+                    conditionContext,
+                    logicTables,
+                    sqlAppender,
+                    sqlStatementType
+            );
+            if (eachResult != null && !eachResult.isEmpty()) {
+                sqlRouterResult.getExecutionUnits().addAll(eachResult);
+            }
+        }
+
+        processLimit(sqlRouterResult.getExecutionUnits(), sqlParserResult, parameters);
+
+        if (sqlRouterResult.getExecutionUnits().isEmpty()) {
+            throw new ShardingJdbcException("Sharding-JDBC: cannot route any result, please check your sharding rule.");
+        }
         return sqlRouterResult;
+    }
+
+    private Collection<SqlExecutionUnit> routeSQL(final ConditionContext conditionContext, final Set<String> logicTables, final SqlAppender sqlAppender, final SqlStatementType type) {
+        return null;
+    }
+
+    private void processLimit(final Set<SqlExecutionUnit> sqlExecutionUnits, final SqlParserResult parsedResult, final List<Object> parameters) {
+
     }
 
 }

@@ -2,25 +2,27 @@ package com.elong.pb.newdda.client.jdbc;
 
 import com.elong.pb.newdda.client.executor.StatementExecutor;
 import com.elong.pb.newdda.client.jdbc.adapter.AbstractStatementAdapter;
+import com.elong.pb.newdda.client.router.SqlExecutionUnit;
 import com.elong.pb.newdda.client.router.SqlRouterEngine;
 import com.elong.pb.newdda.client.router.SqlRouterResult;
+import com.elong.pb.newdda.client.router.result.merge.MergeContext;
+import com.elong.pb.newdda.client.router.result.merge.ResultSetFactory;
 import com.google.common.hash.HashCode;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ShardingStatement extends AbstractStatementAdapter {
 
-    //====================================================================================================================================
+    //=========================================================  当前的结果  ===================================================================
     private final Map<HashCode, Statement> cachedRoutedStatements = new HashMap<HashCode, Statement>();
 
     private ResultSet currentResultSet = null;
+
+    private MergeContext mergeContext = null;
 
     //====================================================== 初始化参数 start  ================================================================
     private final ShardingConnection shardingConnection;
@@ -62,7 +64,9 @@ public class ShardingStatement extends AbstractStatementAdapter {
             currentResultSet.close();
         }
         StatementExecutor statementExecutor = generateExecutor(sql);
-        return null;
+        List<ResultSet> resultSetsList = statementExecutor.executeQuery();
+        currentResultSet = ResultSetFactory.getResultSet(resultSetsList, mergeContext);
+        return currentResultSet;
     }
 
     @Override
@@ -134,8 +138,16 @@ public class ShardingStatement extends AbstractStatementAdapter {
     //======================================================================= private method start ==================================================================
 
     public StatementExecutor generateExecutor(final String sql) throws SQLException {
+        StatementExecutor statementExecutor = new StatementExecutor();
         SqlRouterResult sqlRouteResult = sqlRouterEngine.route(sql, Collections.emptyList());
-        return null;
+
+        this.mergeContext = sqlRouteResult.getMergeContext();
+
+        for (SqlExecutionUnit each : sqlRouteResult.getExecutionUnits()) {
+
+        }
+
+        return statementExecutor;
     }
 
     //======================================================================= private method end ==================================================================
