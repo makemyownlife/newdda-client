@@ -43,15 +43,19 @@ public class RouterTable {
         if (this.name == null && other.getName() != null) {
             return false;
         }
-        if(!this.name.equals(other.getName())) {
-            return false;
+        if (this.name != null) {
+            if (!this.name.equals(other.getName())) {
+                return false;
+            }
         }
 
         if (this.alias == null && other.getAlias() != null) {
             return false;
         }
-        if(!this.alias.equals(other.getAlias())) {
-            return false;
+        if (this.alias != null) {
+            if (!this.alias.equals(other.getAlias())) {
+                return false;
+            }
         }
 
         return true;
