@@ -92,7 +92,7 @@ public class SqlRouterEngine {
         return shardingAction.doSharding();
     }
 
-    private void processLimit(final Set<SqlExecutionUnit> sqlExecutionUnits, final SqlParserResult parsedResult, final List<Object> parameters) {
+    private void processLimit(final Set<SqlExecutionUnit> executionUnits, final SqlParserResult parsedResult, final List<Object> parameters) {
 
     }
 
