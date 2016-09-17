@@ -58,7 +58,7 @@ public class ShardingDataSourceUnitTest extends AbstractTestNGSpringContextTests
         Connection shardingConnection = shardingDataSource.getConnection();
         Statement statement = null;
         ResultSet rs = null;
-        String sql = "select * from test where user_id = 1";
+        String sql = "select * from test where user_id = 1 and user_name = 'zhangyong' and user_id > 2";
         try {
             statement = null;
             rs = null;

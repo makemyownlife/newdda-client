@@ -4,9 +4,13 @@ import com.elong.pb.newdda.client.router.SqlExecutionUnit;
 import com.elong.pb.newdda.client.router.result.router.ConditionContext;
 import com.elong.pb.newdda.client.router.result.router.SqlAppender;
 import com.elong.pb.newdda.client.router.result.router.SqlStatementType;
+import com.elong.pb.newdda.client.router.rule.Algorithm;
 import com.elong.pb.newdda.client.router.rule.ShardingRule;
+import com.elong.pb.newdda.client.router.rule.TableRule;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -35,7 +39,16 @@ public class DefaultShardingAction implements ShardingAction {
 
     @Override
     public Collection<SqlExecutionUnit> doSharding() {
-        return null;
+        Collection<SqlExecutionUnit> result = new ArrayList<SqlExecutionUnit>();
+
+        //所有的表规则(表以及列)
+        List<TableRule> tableRuleList = shardingRule.getTableRules();
+        //分区算法
+        Algorithm algorithm = shardingRule.getAlgorithm();
+        //分区算法涉及到的数据库
+        List<String> dataSourceList = algorithm.getDataSourceList();
+
+        return result;
     }
 
 }
