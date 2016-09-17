@@ -11,6 +11,7 @@ import java.util.List;
  */
 public class MasterSlaveDataSource {
 
+    //数据源唯一的标示
     private String name;
 
     private DataSource masterDataSource;
