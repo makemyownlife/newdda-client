@@ -3,6 +3,8 @@ package com.elong.pb.newdda.client.router;
 import com.elong.pb.newdda.client.constants.DatabaseType;
 import com.elong.pb.newdda.client.exception.ShardingJdbcException;
 import com.elong.pb.newdda.client.exception.SqlParserException;
+import com.elong.pb.newdda.client.router.action.DefaultShardingAction;
+import com.elong.pb.newdda.client.router.action.ShardingAction;
 import com.elong.pb.newdda.client.router.parser.SqlParserEngine;
 import com.elong.pb.newdda.client.router.parser.SqlParserFactory;
 import com.elong.pb.newdda.client.router.parser.SqlParserResult;
@@ -79,8 +81,15 @@ public class SqlRouterEngine {
         return sqlRouterResult;
     }
 
-    private Collection<SqlExecutionUnit> routeSQL(final ConditionContext conditionContext, final Set<String> logicTables, final SqlAppender sqlAppender, final SqlStatementType type) {
-        return null;
+    private Collection<SqlExecutionUnit> routeSQL(final ConditionContext conditionContext, final Set<String> logicTables, final SqlAppender sqlAppender, final SqlStatementType sqlStatementType) {
+        ShardingAction shardingAction = new DefaultShardingAction(
+                shardingRule,
+                conditionContext,
+                logicTables,
+                sqlAppender,
+                sqlStatementType
+        );
+        return shardingAction.doSharding();
     }
 
     private void processLimit(final Set<SqlExecutionUnit> sqlExecutionUnits, final SqlParserResult parsedResult, final List<Object> parameters) {
