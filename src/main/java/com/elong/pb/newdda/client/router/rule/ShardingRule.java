@@ -1,7 +1,9 @@
 package com.elong.pb.newdda.client.router.rule;
 
 import com.elong.pb.newdda.client.constants.DatabaseType;
+import com.elong.pb.newdda.client.datasource.DataSourceContainer;
 
+import javax.activation.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,8 @@ public class ShardingRule {
 
     //默认mysql数据类型也可以配置
     private DatabaseType databaseType = DatabaseType.MySQL;
+
+    private DataSourceContainer dataSourceContainer;
 
     private Algorithm algorithm;
 
@@ -49,6 +53,14 @@ public class ShardingRule {
         this.algorithm = algorithm;
     }
 
-//======================================================================get  set method end =======================================================================
+    public DataSourceContainer getDataSourceContainer() {
+        return dataSourceContainer;
+    }
+
+    public void setDataSourceContainer(DataSourceContainer dataSourceContainer) {
+        this.dataSourceContainer = dataSourceContainer;
+    }
+
+    //======================================================================get  set method end =======================================================================
 
 }

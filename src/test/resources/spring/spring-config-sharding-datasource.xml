@@ -76,10 +76,16 @@
         <!-- 从库 暂略去 -->
     </bean>
 
+    <bean  id="dataSourceContainer"  class="com.elong.pb.newdda.client.datasource.DataSourceContainer">
+
+    </bean>
+
     <!-- 分区规则 -->
     <bean id="shardingRule" class="com.elong.pb.newdda.client.router.rule.ShardingRule">
         <!-- 默认是mysql相关 start -->
         <property name="databaseType" value="MySQL"/>
+        <!-- 涉及到的数据库容器 -->
+        <property name="dataSourceContainer" ref="dataSourceContainer" />
         <!-- 涉及到分库的表 -->
         <property name="tableRules">
             <list>
