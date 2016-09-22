@@ -50,7 +50,7 @@
     </bean>
 
     <!-- 分区1  -->
-    <bean class="com.elong.pb.newdda.client.datasource.MasterSlaveDataSource">
+    <bean id="sharding1" class="com.elong.pb.newdda.client.datasource.MasterSlaveDataSource">
         <!-- 分片名 -->
         <property name="name" value="sharding1"/>
         <!-- 主库 -->
@@ -59,7 +59,7 @@
     </bean>
 
     <!-- 分区2 -->
-    <bean class="com.elong.pb.newdda.client.datasource.MasterSlaveDataSource">
+    <bean id="sharding2" class="com.elong.pb.newdda.client.datasource.MasterSlaveDataSource">
         <!-- 分片名 -->
         <property name="name" value="sharding2"/>
         <!-- 主库 -->
@@ -68,7 +68,7 @@
     </bean>
 
     <!-- 分区3 -->
-    <bean class="com.elong.pb.newdda.client.datasource.MasterSlaveDataSource">
+    <bean id="sharding3" class="com.elong.pb.newdda.client.datasource.MasterSlaveDataSource">
         <!-- 分片名 -->
         <property name="name" value="sharding3"/>
         <!-- 主库 -->
@@ -78,6 +78,16 @@
 
     <!-- 数据源容器 -->
     <bean id="dataSourceContainer" class="com.elong.pb.newdda.client.datasource.DataSourceContainer">
+        <property name="masterSlaveDataSourceList">
+            <list>
+                <!-- 分区1 -->
+                <ref bean="sharding1"/>
+                <!-- 分区2 -->
+                <ref bean="sharding2"/>
+                <!-- 分区3 -->
+                <ref bean="sharding3"/>
+            </list>
+        </property>
     </bean>
 
     <!-- 分区规则 -->
