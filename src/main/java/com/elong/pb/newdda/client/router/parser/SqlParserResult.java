@@ -19,6 +19,8 @@ public class SqlParserResult {
 
     private final MergeContext mergeContext = new MergeContext();
 
+    //===================================================================== get set method start ======================================================================
+
     public RouterContext getRouteContext() {
         return routeContext;
     }
@@ -30,5 +32,7 @@ public class SqlParserResult {
     public MergeContext getMergeContext() {
         return mergeContext;
     }
-    
+
+    //===================================================================== get set method end ======================================================================
+
 }
