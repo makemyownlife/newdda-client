@@ -1,8 +1,5 @@
 package com.elong.pb.newdda.client.datasource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,18 +11,29 @@ import java.util.Map;
  */
 public class DataSourceContainer {
 
-    private final static Logger logger = LoggerFactory.getLogger(DataSourceContainer.class);
+    //所有的数据源
+    private Map<String, MasterSlaveDataSource> container;
+
+    public Map<String, MasterSlaveDataSource> getContainer() {
+        if (container == null) {
+            synchronized (DataSourceContainer.class) {
+                container = new HashMap<String, MasterSlaveDataSource>();
+                for (MasterSlaveDataSource masterSlaveDataSource : masterSlaveDataSourceList) {
+                    container.put(masterSlaveDataSource.getName(), masterSlaveDataSource);
+                }
+            }
+        }
+        return container;
+    }
 
     //主从数据源列表
     private List<MasterSlaveDataSource> masterSlaveDataSourceList = new ArrayList<MasterSlaveDataSource>();
-
-    //所有的数据源
-    private final Map<String, MasterSlaveDataSource> container = new HashMap<String, MasterSlaveDataSource>();
 
     //===============================================================get set method start =========================================================================
     public List<MasterSlaveDataSource> getMasterSlaveDataSourceList() {
         return masterSlaveDataSourceList;
     }
+
     public void setMasterSlaveDataSourceList(List<MasterSlaveDataSource> masterSlaveDataSourceList) {
         this.masterSlaveDataSourceList = masterSlaveDataSourceList;
     }

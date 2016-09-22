@@ -49,43 +49,34 @@
         <property name="minEvictableIdleTimeMillis" value="300000"/>
     </bean>
 
-    <!-- 分区1  -->
-    <bean id="sharding1" class="com.elong.pb.newdda.client.datasource.MasterSlaveDataSource">
-        <!-- 分片名 -->
-        <property name="name" value="sharding1"/>
-        <!-- 主库 -->
-        <property name="masterDataSource" ref="dataSource1"/>
-        <!-- 从库 暂略去 -->
-    </bean>
-
-    <!-- 分区2 -->
-    <bean id="sharding2" class="com.elong.pb.newdda.client.datasource.MasterSlaveDataSource">
-        <!-- 分片名 -->
-        <property name="name" value="sharding2"/>
-        <!-- 主库 -->
-        <property name="masterDataSource" ref="dataSource2"/>
-        <!-- 从库 暂略去 -->
-    </bean>
-
-    <!-- 分区3 -->
-    <bean id="sharding3" class="com.elong.pb.newdda.client.datasource.MasterSlaveDataSource">
-        <!-- 分片名 -->
-        <property name="name" value="sharding3"/>
-        <!-- 主库 -->
-        <property name="masterDataSource" ref="dataSource3"/>
-        <!-- 从库 暂略去 -->
-    </bean>
-
     <!-- 数据源容器 -->
     <bean id="dataSourceContainer" class="com.elong.pb.newdda.client.datasource.DataSourceContainer">
         <property name="masterSlaveDataSourceList">
             <list>
                 <!-- 分区1 -->
-                <ref bean="sharding1"/>
+                <bean class="com.elong.pb.newdda.client.datasource.MasterSlaveDataSource">
+                    <!-- 分片名 -->
+                    <property name="name" value="sharding1"/>
+                    <!-- 主库 -->
+                    <property name="masterDataSource" ref="dataSource1"/>
+                    <!-- 从库 暂略去 -->
+                </bean>
                 <!-- 分区2 -->
-                <ref bean="sharding2"/>
+                <bean class="com.elong.pb.newdda.client.datasource.MasterSlaveDataSource">
+                    <!-- 分片名 -->
+                    <property name="name" value="sharding2"/>
+                    <!-- 主库 -->
+                    <property name="masterDataSource" ref="dataSource2"/>
+                    <!-- 从库 暂略去 -->
+                </bean>
                 <!-- 分区3 -->
-                <ref bean="sharding3"/>
+                <bean class="com.elong.pb.newdda.client.datasource.MasterSlaveDataSource">
+                    <!-- 分片名 -->
+                    <property name="name" value="sharding3"/>
+                    <!-- 主库 -->
+                    <property name="masterDataSource" ref="dataSource3"/>
+                    <!-- 从库 暂略去 -->
+                </bean>
             </list>
         </property>
     </bean>
