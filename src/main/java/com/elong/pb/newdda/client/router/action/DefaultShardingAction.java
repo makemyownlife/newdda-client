@@ -47,7 +47,6 @@ public class DefaultShardingAction implements ShardingAction {
         Algorithm algorithm = shardingRule.getAlgorithm();
         //分区算法涉及到的数据库
         List<String> dataSourceList = algorithm.getDataSourceList();
-
         return result;
     }
 
