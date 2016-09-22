@@ -2,9 +2,7 @@ package com.elong.pb.newdda.client.router.action;
 
 import com.elong.pb.newdda.client.datasource.MasterSlaveDataSource;
 import com.elong.pb.newdda.client.router.SqlExecutionUnit;
-import com.elong.pb.newdda.client.router.result.router.ConditionContext;
-import com.elong.pb.newdda.client.router.result.router.SqlAppender;
-import com.elong.pb.newdda.client.router.result.router.SqlStatementType;
+import com.elong.pb.newdda.client.router.result.router.*;
 import com.elong.pb.newdda.client.router.rule.Algorithm;
 import com.elong.pb.newdda.client.router.rule.ShardingRule;
 import com.elong.pb.newdda.client.router.rule.TableRule;
@@ -39,8 +37,6 @@ public class DefaultShardingAction implements ShardingAction {
     public Collection<SqlExecutionUnit> doSharding() {
         Collection<SqlExecutionUnit> result = new ArrayList<SqlExecutionUnit>();
 
-        //数据源容器
-        Map<String, MasterSlaveDataSource> container = shardingRule.getDataSourceContainer().getContainer();
         //所有的表规则(表以及列)
         List<TableRule> tableRuleList = shardingRule.getTableRules();
         //分区算法
@@ -49,7 +45,12 @@ public class DefaultShardingAction implements ShardingAction {
         List<String> dataSourceList = algorithm.getDataSourceList();
 
         //计算位于哪一个分区
-
+        Collection<RouterCondition> conditions = conditionContext.getAllConditions();
+        for(RouterCondition condition : conditions) {
+            if(condition.getOperator() == BinaryOperator.EQUAL) {
+                RouterColumn routerColumn = condition.getRouterColumn();
+            }
+        }
         return result;
     }
 
