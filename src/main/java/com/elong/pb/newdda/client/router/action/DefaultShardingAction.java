@@ -48,11 +48,28 @@ public class DefaultShardingAction implements ShardingAction {
         for(RouterCondition condition : conditions) {
             //暂时先计算 = 不考虑其他的条件符
             if(condition.getOperator() == BinaryOperator.EQUAL) {
-                RouterColumn routerColumn = condition.getRouterColumn();
+                boolean isHit = hitTableColumn(condition , tableRuleList);
+                if(isHit) {
+                }
             }
         }
 
         return result;
+    }
+
+    //判断是否命中相关的表
+    private boolean hitTableColumn(RouterCondition condition ,List<TableRule>  tableRuleList) {
+        RouterColumn routerColumn = condition.getRouterColumn();
+        String tableName = routerColumn.getTableName();
+        String columnName = routerColumn.getColumnName();
+        boolean isHit = false;
+        for(TableRule tableRule : tableRuleList) {
+            if(tableRule.getShardingKey().equals(columnName) && tableRule.getTableName().equals(tableName)) {
+                isHit = true;
+                break;
+            }
+        }
+        return isHit;
     }
 
 }

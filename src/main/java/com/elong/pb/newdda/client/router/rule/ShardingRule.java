@@ -16,6 +16,9 @@ public class ShardingRule {
     //默认mysql数据类型也可以配置
     private DatabaseType databaseType = DatabaseType.MySQL;
 
+    //查询不到路由到所有的数据库或者表
+    private boolean selectNoneRouteAll = false;
+
     private DataSourceContainer dataSourceContainer;
 
     private Algorithm algorithm;
@@ -61,6 +64,15 @@ public class ShardingRule {
         this.dataSourceContainer = dataSourceContainer;
     }
 
-    //======================================================================get  set method end =======================================================================
+    public boolean isSelectNoneRouteAll() {
+        return selectNoneRouteAll;
+    }
+
+    public void setSelectNoneRouteAll(boolean selectNoneRouteAll) {
+        this.selectNoneRouteAll = selectNoneRouteAll;
+    }
+
+
+//======================================================================get  set method end =======================================================================
 
 }
