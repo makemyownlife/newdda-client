@@ -1,6 +1,5 @@
 package com.elong.pb.newdda.client.router.action;
 
-import com.elong.pb.newdda.client.datasource.MasterSlaveDataSource;
 import com.elong.pb.newdda.client.router.SqlExecutionUnit;
 import com.elong.pb.newdda.client.router.result.router.*;
 import com.elong.pb.newdda.client.router.rule.Algorithm;
@@ -47,10 +46,12 @@ public class DefaultShardingAction implements ShardingAction {
         //计算位于哪一个分区
         Collection<RouterCondition> conditions = conditionContext.getAllConditions();
         for(RouterCondition condition : conditions) {
+            //暂时先计算 = 不考虑其他的条件符
             if(condition.getOperator() == BinaryOperator.EQUAL) {
                 RouterColumn routerColumn = condition.getRouterColumn();
             }
         }
+
         return result;
     }
 
