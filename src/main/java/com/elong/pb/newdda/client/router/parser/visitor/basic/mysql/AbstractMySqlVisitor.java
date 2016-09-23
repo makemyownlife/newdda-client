@@ -73,6 +73,12 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
         return false;
     }
 
+    @Override
+    public boolean visit(final SQLBetweenExpr x) {
+        sqlParserContext.addCondition(x.getTestExpr(), BinaryOperator.BETWEEN, Arrays.asList(x.getBeginExpr(), x.getEndExpr()), getDatabaseType(), getParameters());
+        return super.visit(x);
+    }
+
     //===================================================================get method  start========================================================================
     @Override
     public final DatabaseType getDatabaseType() {
