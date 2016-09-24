@@ -47,11 +47,10 @@ public class DefaultShardingAction implements ShardingAction {
         Collection<RouterCondition> conditions = conditionContext.getAllConditions();
         for(RouterCondition condition : conditions) {
             //暂时先计算 = 不考虑其他的条件符
-            if(condition.getOperator() == BinaryOperator.EQUAL) {
-                boolean isHit = hitTableColumn(condition , tableRuleList);
-                if(isHit) {
-                }
+            if(condition.getOperator() != BinaryOperator.EQUAL) {
+                continue;
             }
+            boolean isHit = hitTableColumn(condition , tableRuleList);
         }
 
         return result;

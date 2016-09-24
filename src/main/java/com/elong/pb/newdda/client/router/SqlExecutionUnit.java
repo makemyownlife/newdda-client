@@ -14,7 +14,7 @@ public class SqlExecutionUnit {
 
     public SqlExecutionUnit(final String dataSource, final SqlAppender sqlAppender) {
         this.dataSource = dataSource;
-        this.sqlAppender = sqlAppender;
+        this.sqlAppender = sqlAppender.cloneBuilder();
     }
 
     @Override
