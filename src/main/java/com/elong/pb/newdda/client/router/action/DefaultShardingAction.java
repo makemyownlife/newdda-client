@@ -34,41 +34,7 @@ public class DefaultShardingAction implements ShardingAction {
 
     @Override
     public Collection<SqlExecutionUnit> doSharding() {
-        Collection<SqlExecutionUnit> result = new ArrayList<SqlExecutionUnit>();
-
-        //所有的表规则(表以及列)
-        List<TableRule> tableRuleList = shardingRule.getTableRules();
-        //分区算法
-        Algorithm algorithm = shardingRule.getAlgorithm();
-        //分区算法涉及到的数据库
-        List<String> dataSourceList = algorithm.getDataSourceList();
-
-        //计算位于哪一个分区
-        Collection<RouterCondition> conditions = conditionContext.getAllConditions();
-        for(RouterCondition condition : conditions) {
-            //暂时先计算 = 不考虑其他的条件符
-            if(condition.getOperator() != BinaryOperator.EQUAL) {
-                continue;
-            }
-            boolean isHit = hitTableColumn(condition , tableRuleList);
-        }
-
-        return result;
-    }
-
-    //判断是否命中相关的表
-    private boolean hitTableColumn(RouterCondition condition ,List<TableRule>  tableRuleList) {
-        RouterColumn routerColumn = condition.getRouterColumn();
-        String tableName = routerColumn.getTableName();
-        String columnName = routerColumn.getColumnName();
-        boolean isHit = false;
-        for(TableRule tableRule : tableRuleList) {
-            if(tableRule.getShardingKey().equals(columnName) && tableRule.getTableName().equals(tableName)) {
-                isHit = true;
-                break;
-            }
-        }
-        return isHit;
+        return null;
     }
 
 }
