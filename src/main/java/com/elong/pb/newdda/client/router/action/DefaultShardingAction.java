@@ -37,13 +37,12 @@ public class DefaultShardingAction implements ShardingAction {
         Collection<RouterCondition> conditions = conditionContext.getAllConditions();
         //判断该sql位于哪一个库,以及相关的表的替换
         for(RouterCondition condition : conditions){
-            //判断该表 该列是否命中, 若命中, 则返回 该表对应的数据源
+            //判断该表 该列是否命中, 若命中, 则返回该表对应的数据源
             ShardingValue shardingValue = constructShardingValue(shardingRule , condition);
-            if(shardingValue != null) {
+            if(shardingValue != null){
 
             }
         }
-
         return null;
     }
 
@@ -73,9 +72,18 @@ public class DefaultShardingAction implements ShardingAction {
             return null;
         }
 
-
-
-        return null;
+        List<Comparable<?>> conditionValues = condition.getValues();
+        switch (condition.getOperator()) {
+            case EQUAL:
+            case IN:
+                if (1 == conditionValues.size()) {
+                    return new ShardingValue<Comparable<?>>(condition.getRouterColumn().getTableName(), condition.getRouterColumn().getColumnName(), conditionValues.get(0));
+                }
+                return new ShardingValue<Comparable<?>>(condition.getRouterColumn().getTableName(), condition.getRouterColumn().getColumnName(), conditionValues);
+              //TODO BETWEEN ? 暂时不处理 2016-09-30相关 第二版开发
+            default:
+                throw new UnsupportedOperationException(condition.getOperator().getExpression());
+        }
     }
 
     //======================================================================== private method end ========================================================================

@@ -10,11 +10,14 @@ public class SqlExecutionUnit {
 
     private final String dataSource;
 
+    private String sql;
+
     private final SqlAppender sqlAppender;
 
     public SqlExecutionUnit(final String dataSource, final SqlAppender sqlAppender) {
         this.dataSource = dataSource;
         this.sqlAppender = sqlAppender.cloneBuilder();
+        this.sql = sqlAppender.toSQL();
     }
 
     @Override
@@ -22,13 +25,14 @@ public class SqlExecutionUnit {
         final int prime = 31;
         int result = 1;
         result = prime * result + (this.dataSource == null ? 0 : this.dataSource.hashCode());
+        result = prime * result + (this.sql == null ? 0 : this.sql.hashCode());
         return result;
     }
 
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("route sql to db: [").append(dataSource).append("] sql:[").append(sqlAppender).append("]");
+        builder.append("route sql to db: [").append(dataSource).append("] sql:[").append(sql).append("]");
         return builder.toString();
     }
 

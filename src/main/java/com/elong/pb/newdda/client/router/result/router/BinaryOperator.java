@@ -18,4 +18,8 @@ public enum BinaryOperator {
         return expression;
     }
 
+    public String getExpression() {
+        return expression;
+    }
+
 }
