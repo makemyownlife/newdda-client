@@ -75,8 +75,8 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
 
     @Override
     public boolean visit(final SQLBetweenExpr x) {
-        // TODO: 路由使用
-        sqlParserContext.addCondition(x.getTestExpr(), BinaryOperator.BETWEEN, Arrays.asList(x.getBeginExpr(), x.getEndExpr()), getDatabaseType(), getParameters());
+        // TODO: 路由使用 暂时不处理相关的内容 第一版仅仅支持 = 操作符 sorry
+        //sqlParserContext.addCondition(x.getTestExpr(), BinaryOperator.BETWEEN, Arrays.asList(x.getBeginExpr(), x.getEndExpr()), getDatabaseType(), getParameters());
         return super.visit(x);
     }
 

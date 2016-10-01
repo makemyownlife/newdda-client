@@ -1,5 +1,7 @@
 package com.elong.pb.newdda.client.router.rule;
 
+import com.elong.pb.newdda.client.router.action.ShardingValue;
+
 import java.util.List;
 
 /**
@@ -9,5 +11,7 @@ import java.util.List;
 public interface Algorithm {
 
     List<String> getDataSourceList();
+
+    AlgorithmResult doAlgorithm(ShardingValue shardingValue);
 
 }

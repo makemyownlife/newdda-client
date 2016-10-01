@@ -3,6 +3,7 @@ package com.elong.pb.newdda.client.router.action;
 import com.elong.pb.newdda.client.router.SqlExecutionUnit;
 import com.elong.pb.newdda.client.router.result.router.*;
 import com.elong.pb.newdda.client.router.rule.Algorithm;
+import com.elong.pb.newdda.client.router.rule.AlgorithmResult;
 import com.elong.pb.newdda.client.router.rule.ShardingRule;
 import com.elong.pb.newdda.client.router.rule.TableRule;
 
@@ -34,12 +35,16 @@ public class DefaultShardingAction implements ShardingAction {
 
     @Override
     public Collection<SqlExecutionUnit> doSharding() {
+        //分区的结果
+        List<SqlExecutionUnit> result = new ArrayList<SqlExecutionUnit>();
+
         Collection<RouterCondition> conditions = conditionContext.getAllConditions();
         //判断该sql位于哪一个库,以及相关的表的替换
         for(RouterCondition condition : conditions){
             //判断该表 该列是否命中, 若命中, 则返回该表对应的数据源
             ShardingValue shardingValue = constructShardingValue(shardingRule , condition);
             if(shardingValue != null){
+                AlgorithmResult algorithmResult = shardingRule.getAlgorithm().doAlgorithm(shardingValue);
 
             }
         }
@@ -79,7 +84,6 @@ public class DefaultShardingAction implements ShardingAction {
                 if (1 == conditionValues.size()) {
                     return new ShardingValue<Comparable<?>>(condition.getRouterColumn().getTableName(), condition.getRouterColumn().getColumnName(), conditionValues.get(0));
                 }
-                return new ShardingValue<Comparable<?>>(condition.getRouterColumn().getTableName(), condition.getRouterColumn().getColumnName(), conditionValues);
               //TODO BETWEEN ? 暂时不处理 2016-09-30相关 第二版开发
             default:
                 throw new UnsupportedOperationException(condition.getOperator().getExpression());

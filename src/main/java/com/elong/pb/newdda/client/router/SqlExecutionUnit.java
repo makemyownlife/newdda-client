@@ -12,7 +12,7 @@ public class SqlExecutionUnit {
 
     private String sql;
 
-    private final SqlAppender sqlAppender;
+    private SqlAppender sqlAppender;
 
     public SqlExecutionUnit(final String dataSource, final SqlAppender sqlAppender) {
         this.dataSource = dataSource;
@@ -35,5 +35,11 @@ public class SqlExecutionUnit {
         builder.append("route sql to db: [").append(dataSource).append("] sql:[").append(sql).append("]");
         return builder.toString();
     }
+
+    //====================================================set method start ====================================================
+    public void setSql(String sql) {
+        this.sql = sql;
+    }
+    //====================================================set method end  =====================================================
 
 }

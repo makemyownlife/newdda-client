@@ -1,5 +1,6 @@
 package com.elong.pb.newdda.client.router.rule;
 
+import com.elong.pb.newdda.client.router.action.ShardingValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +23,11 @@ public class RangeAlgorithm implements Algorithm {
     //================================================================set  set method  start ====================================================================
     public List<String> getDataSourceList() {
         return dataSourceList;
+    }
+
+    @Override
+    public AlgorithmResult doAlgorithm(ShardingValue shardingValue) {
+        return null;
     }
 
     public void setDataSourceList(List<String> dataSourceList) {
