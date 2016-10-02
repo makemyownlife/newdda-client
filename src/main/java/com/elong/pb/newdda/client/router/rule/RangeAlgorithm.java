@@ -27,6 +27,7 @@ public class RangeAlgorithm implements Algorithm {
 
     @Override
     public AlgorithmResult doAlgorithm(ShardingValue shardingValue) {
+        Object obj = shardingValue.getValue();
         return null;
     }
 
