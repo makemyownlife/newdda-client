@@ -150,6 +150,8 @@ public class ShardingStatement extends AbstractStatementAdapter {
         return statementExecutor;
     }
 
+
+
     //======================================================================= private method end ==================================================================
 
 }
