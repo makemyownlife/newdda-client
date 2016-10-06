@@ -139,12 +139,15 @@ public class ShardingStatement extends AbstractStatementAdapter {
 
     public StatementExecutor generateExecutor(final String sql) throws SQLException {
         StatementExecutor statementExecutor = new StatementExecutor();
-        SqlRouterResult sqlRouteResult = sqlRouterEngine.route(sql, Collections.emptyList());
 
+        SqlRouterResult sqlRouteResult = sqlRouterEngine.route(sql, Collections.emptyList());
         this.mergeContext = sqlRouteResult.getMergeContext();
 
         for (SqlExecutionUnit each : sqlRouteResult.getExecutionUnits()) {
-
+            String dataSource = each.getDataSource();
+            Connection connection = shardingConnection.getConnection(
+                            dataSource ,
+                            sqlRouteResult.getSqlStatementType());
         }
 
         return statementExecutor;

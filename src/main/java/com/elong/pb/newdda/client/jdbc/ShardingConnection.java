@@ -1,12 +1,16 @@
 package com.elong.pb.newdda.client.jdbc;
 
+import com.elong.pb.newdda.client.datasource.DataSourceContainer;
+import com.elong.pb.newdda.client.datasource.MasterSlaveDataSource;
 import com.elong.pb.newdda.client.jdbc.adapter.AbstractConnectionAdapter;
 import com.elong.pb.newdda.client.router.SqlRouterEngine;
 import com.elong.pb.newdda.client.router.result.router.SqlStatementType;
 import com.elong.pb.newdda.client.router.rule.ShardingRule;
+import com.google.common.base.Joiner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.Collection;
 import java.util.HashMap;
@@ -92,9 +96,21 @@ public class ShardingConnection extends AbstractConnectionAdapter {
 
     //======================================================== 通过数据源名称 以及 sql类型取得链接 ========================================================
     public Connection getConnection(final String dataSourceName, final SqlStatementType sqlStatementType) throws SQLException {
-        Connection connection = null;
+        Connection connection = getConnectionInternal(dataSourceName , sqlStatementType);
         return connection;
     }
 
+    private Connection getConnectionInternal(final String dataSourceName, final SqlStatementType sqlStatementType) throws SQLException {
+        if (connectionMap.containsKey(dataSourceName)) {
+            return connectionMap.get(dataSourceName);
+        }
+        DataSourceContainer dataSourceContainer = shardingRule.getDataSourceContainer();
+        MasterSlaveDataSource masterSlaveDataSource = dataSourceContainer.getContainer().get(dataSourceName);
+        //TODO第一版默认取主库
+        DataSource dataSource = masterSlaveDataSource.getMasterDataSource();
+        Connection result = dataSource.getConnection();
+        connectionMap.put(dataSourceName, result);
+        return result;
+    }
 
 }
