@@ -2,6 +2,7 @@ package com.elong.pb.newdda.client.jdbc;
 
 import com.elong.pb.newdda.client.jdbc.adapter.AbstractConnectionAdapter;
 import com.elong.pb.newdda.client.router.SqlRouterEngine;
+import com.elong.pb.newdda.client.router.result.router.SqlStatementType;
 import com.elong.pb.newdda.client.router.rule.ShardingRule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,9 +89,12 @@ public class ShardingConnection extends AbstractConnectionAdapter {
         return null;
     }
 
-    //============================================================== validate sharding rule start ==================================================================
 
+    //======================================================== 通过数据源名称 以及 sql类型取得链接 ========================================================
+    public Connection getConnection(final String dataSourceName, final SqlStatementType sqlStatementType) throws SQLException {
+        Connection connection = null;
+        return connection;
+    }
 
-    //============================================================== validate sharding rule end ==================================================================
 
 }
