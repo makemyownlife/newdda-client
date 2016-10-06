@@ -1,13 +1,16 @@
 package com.elong.pb.newdda.client.jdbc;
 
 import com.elong.pb.newdda.client.executor.StatementExecutor;
+import com.elong.pb.newdda.client.executor.wrapper.StatementExecutorWrapper;
 import com.elong.pb.newdda.client.jdbc.adapter.AbstractStatementAdapter;
 import com.elong.pb.newdda.client.router.SqlExecutionUnit;
 import com.elong.pb.newdda.client.router.SqlRouterEngine;
 import com.elong.pb.newdda.client.router.SqlRouterResult;
 import com.elong.pb.newdda.client.router.result.merge.MergeContext;
 import com.elong.pb.newdda.client.router.result.merge.ResultSetFactory;
+import com.google.common.base.Charsets;
 import com.google.common.hash.HashCode;
+import com.google.common.hash.Hashing;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -148,12 +151,32 @@ public class ShardingStatement extends AbstractStatementAdapter {
             Connection connection = shardingConnection.getConnection(
                             dataSource ,
                             sqlRouteResult.getSqlStatementType());
+            Statement statement = getStatement(connection , sql);
+            statementExecutor.addStatement(new StatementExecutorWrapper(statement, each));
         }
 
         return statementExecutor;
     }
 
+    protected Statement getStatement(final Connection connection, final String sql) throws SQLException {
+        HashCode hashCode =  Hashing.md5().newHasher().putInt(connection.hashCode()).putString(sql, Charsets.UTF_8).hash();
+        if (cachedRoutedStatements.containsKey(hashCode)) {
+            return cachedRoutedStatements.get(hashCode);
+        }
+        Statement statement = generateStatement(connection, sql);
+        cachedRoutedStatements.put(hashCode, statement);
+        return statement;
+    }
 
+    protected Statement generateStatement(final Connection connection, final String sql) throws SQLException {
+        Statement result;
+        if (0 == resultSetHoldability) {
+            result = connection.createStatement(resultSetType, resultSetConcurrency);
+        } else {
+            result = connection.createStatement(resultSetType, resultSetConcurrency, resultSetHoldability);
+        }
+        return result;
+    }
 
     //======================================================================= private method end ==================================================================
 

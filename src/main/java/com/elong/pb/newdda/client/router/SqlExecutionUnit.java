@@ -46,6 +46,10 @@ public class SqlExecutionUnit {
         return dataSource;
     }
 
+    public String getSql() {
+        return sql;
+    }
+
     //====================================================set get method end  =====================================================
 
 }
