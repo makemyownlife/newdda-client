@@ -4,12 +4,17 @@ import com.elong.pb.newdda.client.executor.wrapper.StatementExecutorWrapper;
 import com.elong.pb.newdda.client.router.SqlExecutionUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class StatementExecutor {
 
@@ -20,9 +25,11 @@ public class StatementExecutor {
 
     private final static int CORE_SIZE = Runtime.getRuntime().availableProcessors();
 
-    private final static int MAX_SIZE = CORE_SIZE * 2  + 1;
+    private final static int MAX_SIZE = CORE_SIZE * 2 + 1;
 
-    private final static int KEEP_ALIVE_TIME = 1800;
+    private final static int KEEP_ALIVE_TIME = 600;
+
+    private final static int EXECUTE_MAX_TIME = 10;
 
     private static ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
             CORE_SIZE,
@@ -43,7 +50,32 @@ public class StatementExecutor {
     }
 
     public List<ResultSet> executeQuery() {
-        List<ResultSet> result = null;
+        if (statementExecutorWrappers.size() == 1) {
+            return Collections.singletonList(executeQueryInternal(statementExecutorWrappers.get(0)));
+        }
+        final List<ResultSet> result = new ArrayList<ResultSet>();
+        final CountDownLatch countDownLatch = new CountDownLatch(statementExecutorWrappers.size());
+        //多线程处理
+        for (int i = 0; i < statementExecutorWrappers.size(); i++) {
+            final StatementExecutorWrapper statementExecutorWrapper = statementExecutorWrappers.get(i);
+            threadPoolExecutor.execute(new Runnable() {
+                public void run() {
+                    try {
+                        ResultSet resultSet = executeQueryInternal(statementExecutorWrapper);
+                        result.add(resultSet);
+                    } catch (Throwable e) {
+                        logger.error("threadPoolExecutor execute error:" + statementExecutorWrapper.getSqlExecutionUnit(), e);
+                    } finally {
+                        countDownLatch.countDown();
+                    }
+                }
+            });
+        }
+        try {
+            countDownLatch.await(EXECUTE_MAX_TIME, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            logger.error("executeQuery Interrupted by some reason :" + e.getMessage());
+        }
         return result;
     }
 
@@ -54,8 +86,8 @@ public class StatementExecutor {
             String sql = sqlExecutionUnit.getSql();
             ResultSet resultSet = statement.executeQuery(sql);
             return resultSet;
-        }catch (SQLException ex) {
-            logger.error("executeQueryInternal error: " ,ex);
+        } catch (SQLException ex) {
+            logger.error("executeQueryInternal error: ", ex);
             return null;
         }
     }
