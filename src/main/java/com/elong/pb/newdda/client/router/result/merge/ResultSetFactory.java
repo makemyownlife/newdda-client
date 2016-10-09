@@ -15,6 +15,15 @@ public class ResultSetFactory {
     private final static Logger logger = LoggerFactory.getLogger(ResultSetFactory.class);
 
     public static ResultSet getResultSet(final List<ResultSet> resultSets, final MergeContext mergeContext) throws SQLException {
+        //无结果集
+        if (resultSets == null) {
+            return null;
+        }
+        //单个结果集
+        if (resultSets.size() == 1) {
+            return resultSets.get(0);
+        }
+        //多个结果集
         return null;
     }
 
