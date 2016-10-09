@@ -1,5 +1,7 @@
 package com.elong.pb.newdda.client.router.result.merge;
 
+import com.elong.pb.newdda.client.jdbc.ShardingResultSets;
+import com.elong.pb.newdda.client.router.result.merge.resultset.IteratorReducerResultSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,11 +22,19 @@ public class ResultSetFactory {
             return null;
         }
         //单个结果集
-        if (resultSets.size() == 1) {
+        else if (resultSets.size() == 1) {
             return resultSets.get(0);
         }
         //多个结果集
-        return null;
+        else {
+            ShardingResultSets shardingResultSets = new ShardingResultSets(resultSets);
+            ResultSetMergeContext resultSetMergeContext = new ResultSetMergeContext(shardingResultSets, mergeContext);
+            return createMultipleResultSet(resultSetMergeContext);
+        }
+    }
+
+    private static ResultSet createMultipleResultSet(ResultSetMergeContext resultSetMergeContext) throws SQLException {
+        return new IteratorReducerResultSet(resultSetMergeContext);
     }
 
 }

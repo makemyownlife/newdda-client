@@ -92,7 +92,7 @@ public class ShardingDataSourceUnitTest extends AbstractTestNGSpringContextTests
             statement = shardingConnection.createStatement();
             rs = statement.executeQuery(sql);
             while (rs.next()) {
-                System.out.println("结果是:" + rs.getString("id"));
+                System.out.println("结果是:" + rs.getString("user_name"));
             }
         } finally {
             if (statement != null) {
