@@ -122,6 +122,8 @@
                 </property>
             </bean>
         </property>
+        <!-- 若select 查询不到 设置是否查询所有的分库 -->
+        <property name="selectNoneRouteAll" value="true" />
     </bean>
 
     <!-- 分区的统一数据源 -->

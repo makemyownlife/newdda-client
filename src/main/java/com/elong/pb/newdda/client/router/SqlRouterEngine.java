@@ -75,6 +75,15 @@ public class SqlRouterEngine {
 
         processLimit(sqlRouterResult.getExecutionUnits(), sqlParserResult, parameters);
 
+        //若是查询,路由结果是空值 默认查询所有库
+        if (sqlStatementType == SqlStatementType.SELECT && sqlRouterResult.getExecutionUnits().isEmpty() && shardingRule.isSelectNoneRouteAll()) {
+            List<String> dataSourceList = shardingRule.getAlgorithm().getDataSourceList();
+            for (String dataSource : dataSourceList) {
+                SqlExecutionUnit sqlExecutionUnit = new SqlExecutionUnit(dataSource, sqlAppender);
+                sqlRouterResult.getExecutionUnits().add(sqlExecutionUnit);
+            }
+        }
+
         if (sqlRouterResult.getExecutionUnits().isEmpty()) {
             throw new ShardingJdbcException("Sharding-JDBC: cannot route any result, please check your sharding rule.");
         }

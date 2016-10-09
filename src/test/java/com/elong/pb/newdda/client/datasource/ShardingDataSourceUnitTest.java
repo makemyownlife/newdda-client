@@ -81,6 +81,33 @@ public class ShardingDataSourceUnitTest extends AbstractTestNGSpringContextTests
     }
 
     @Test
+    public void testSelectAllStatement() throws SQLException {
+        Connection shardingConnection = shardingDataSource.getConnection();
+        Statement statement = null;
+        ResultSet rs = null;
+        String sql = "select * from test";
+        try {
+            statement = null;
+            rs = null;
+            statement = shardingConnection.createStatement();
+            rs = statement.executeQuery(sql);
+            while (rs.next()) {
+                System.out.println("结果是:" + rs.getString("id"));
+            }
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+            if (shardingConnection != null) {
+                shardingConnection.close();
+            }
+        }
+    }
+
+    @Test
     public void testShardingRule() {
         String abc = JSON.toJSONString(shardingRule);
         Assert.assertNotNull(abc);
