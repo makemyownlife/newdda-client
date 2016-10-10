@@ -12,11 +12,11 @@ import java.util.List;
 /**
  * Created by zhangyong on 16/8/6.
  */
-public class SqlParserTest{
+public class SqlParserUnitTest {
 
     @Test
     public void testSelect() throws Exception {
-        String sql = "   SELECT COUNT(*) FROM close_plan WHERE 1=1          AND close_type = ?             AND target_type = ?             AND target_id = ?         AND(    mi_name=?   )               AND end_time >= ?         ";
+        String sql = "SELECT COUNT(*)  FROM  close_plan WHERE 1=1          AND close_type = ?             AND target_type = ?             AND target_id = ?         AND(    mi_name=?   )               AND end_time >= ?         ";
         SQLSelectParser parser = new MySqlSelectParser(sql);
         SQLSelect select = parser.select();
 
@@ -24,8 +24,6 @@ public class SqlParserTest{
         MySql2OracleOutputVisitor visitor = new MySql2OracleOutputVisitor(out);
 
         select.accept(visitor);
-
-        System.out.println(out);
     }
 
     @Test
