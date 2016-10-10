@@ -54,11 +54,6 @@ public class ShardingConnection extends AbstractConnectionAdapter {
     }
 
     @Override
-    public DatabaseMetaData getMetaData() throws SQLException {
-        return null;
-    }
-
-    @Override
     public Statement createStatement(int resultSetType, int resultSetConcurrency) throws SQLException {
         return null;
     }
@@ -92,7 +87,6 @@ public class ShardingConnection extends AbstractConnectionAdapter {
     public PreparedStatement prepareStatement(String sql, String[] columnNames) throws SQLException {
         return null;
     }
-
 
     //======================================================== 通过数据源名称 以及 sql类型取得链接 ========================================================
     public Connection getConnection(final String dataSourceName, final SqlStatementType sqlStatementType) throws SQLException {

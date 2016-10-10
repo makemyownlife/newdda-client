@@ -1,11 +1,9 @@
 package com.elong.pb.newdda.client.datasource;
 
-import com.alibaba.fastjson.JSON;
 import com.elong.pb.newdda.client.router.rule.ShardingRule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.sql.*;
@@ -108,14 +106,31 @@ public class ShardingDataSourceUnitTest extends AbstractTestNGSpringContextTests
     }
 
     @Test
-    public void testShardingRule() {
-        String abc = JSON.toJSONString(shardingRule);
-        Assert.assertNotNull(abc);
-    }
-
-    @Test
-    public void testSqlRouterEngine() throws SQLException {
-
+    public void testPrepareStatement() throws SQLException {
+        Connection shardingConnection = shardingDataSource.getConnection();
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        String sql = "select * from test where user_id = ? ";
+        try {
+            statement = null;
+            rs = null;
+            statement = shardingConnection.prepareStatement(sql);
+            statement.setInt(1, 1);
+            rs = statement.executeQuery(sql);
+            while (rs.next()) {
+                System.out.println("结果是:" + rs.getString("user_name"));
+            }
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+            if (shardingConnection != null) {
+                shardingConnection.close();
+            }
+        }
     }
 
 }

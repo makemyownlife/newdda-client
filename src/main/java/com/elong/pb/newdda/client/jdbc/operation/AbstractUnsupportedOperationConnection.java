@@ -16,6 +16,11 @@ import java.util.concurrent.Executor;
 public abstract class AbstractUnsupportedOperationConnection extends WrapperAdapter implements Connection {
 
     @Override
+    public DatabaseMetaData getMetaData() throws SQLException {
+        throw new SQLFeatureNotSupportedException("getMetaData");
+    }
+
+    @Override
     public final CallableStatement prepareCall(final String sql) throws SQLException {
         throw new SQLFeatureNotSupportedException("prepareCall");
     }

@@ -12,7 +12,7 @@ import java.sql.*;
  */
 public abstract class AbstractOperationPreparedStatement extends ShardingStatement implements PreparedStatement {
 
-    public AbstractOperationPreparedStatement(final ShardingConnection shardingConnection, final SqlRouterEngine sqlRouterEngine, final int resultSetType, final int resultSetConcurrency, final int resultSetHoldability) throws SQLException {
+    public AbstractOperationPreparedStatement(final ShardingConnection shardingConnection, final SqlRouterEngine sqlRouterEngine, final int resultSetType, final int resultSetConcurrency, final int resultSetHoldability) {
         super(shardingConnection, sqlRouterEngine, resultSetType, resultSetConcurrency, resultSetHoldability);
     }
 
