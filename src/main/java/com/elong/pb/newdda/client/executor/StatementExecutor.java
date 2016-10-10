@@ -11,10 +11,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class StatementExecutor {
 
@@ -37,7 +35,14 @@ public class StatementExecutor {
             KEEP_ALIVE_TIME,
             TimeUnit.SECONDS,
             new LinkedBlockingDeque<Runnable>(),
-            new ThreadPoolExecutor.CallerRunsPolicy()
+            new ThreadFactory() {
+                private AtomicInteger threadIndex = new AtomicInteger(0);
+
+                @Override
+                public Thread newThread(Runnable r) {
+                    return new Thread(r, "StatementExecutor_" + this.threadIndex.incrementAndGet());
+                }
+            }
     );
 
     /**
