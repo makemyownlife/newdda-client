@@ -3,11 +3,12 @@ package com.elong.pb.newdda.client.executor;
 import com.elong.pb.newdda.client.executor.wrapper.PreparedStatementExecutorWrapper;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 public final class PreparedStatementExecutor {
 
-    private  List<PreparedStatementExecutorWrapper> preparedStatementExecutorWrappers;
+    private  List<PreparedStatementExecutorWrapper> preparedStatementExecutorWrappers = new ArrayList<PreparedStatementExecutorWrapper>(5);
 
     public List<ResultSet> executeQuery() {
         List<ResultSet> result = null;

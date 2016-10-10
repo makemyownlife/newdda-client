@@ -103,7 +103,7 @@ public class ShardingConnection extends AbstractConnectionAdapter {
         }
         DataSourceContainer dataSourceContainer = shardingRule.getDataSourceContainer();
         MasterSlaveDataSource masterSlaveDataSource = dataSourceContainer.getContainer().get(dataSourceName);
-        //TODO第一版默认取主库
+        //TODO 第一版默认取主库
         DataSource dataSource = masterSlaveDataSource.getMasterDataSource();
         Connection result = dataSource.getConnection();
         connectionMap.put(dataSourceName, result);
