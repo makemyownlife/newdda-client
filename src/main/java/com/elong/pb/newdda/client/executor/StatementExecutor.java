@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,6 +57,7 @@ public class StatementExecutor {
         if (statementExecutorWrappers.size() == 1) {
             return Collections.singletonList(executeQueryInternal(statementExecutorWrappers.get(0)));
         }
+
         final List<ResultSet> result = new ArrayList<ResultSet>();
         final CountDownLatch countDownLatch = new CountDownLatch(statementExecutorWrappers.size());
         //多线程处理
@@ -66,8 +66,16 @@ public class StatementExecutor {
             threadPoolExecutor.execute(new Runnable() {
                 public void run() {
                     try {
+                        if (logger.isDebugEnabled()) {
+                            logger.debug("sqlExecutionUnit:" + statementExecutorWrapper.getSqlExecutionUnit() + " begin to execute");
+                        }
                         ResultSet resultSet = executeQueryInternal(statementExecutorWrapper);
-                        result.add(resultSet);
+                        if (logger.isDebugEnabled()) {
+                            logger.debug("sqlExecutionUnit:" + statementExecutorWrapper.getSqlExecutionUnit() + " finish t execute resultset:" + resultSet);
+                        }
+                        if (resultSet != null) {
+                            result.add(resultSet);
+                        }
                     } catch (Throwable e) {
                         logger.error("threadPoolExecutor execute error:" + statementExecutorWrapper.getSqlExecutionUnit(), e);
                     } finally {
@@ -91,8 +99,8 @@ public class StatementExecutor {
             String sql = sqlExecutionUnit.getSql();
             ResultSet resultSet = statement.executeQuery(sql);
             return resultSet;
-        } catch (SQLException ex) {
-            logger.error("executeQueryInternal error: ", ex);
+        } catch (Exception ex) {
+            logger.error(sqlExecutionUnit + " executeQueryInternal error: ", ex);
             return null;
         }
     }

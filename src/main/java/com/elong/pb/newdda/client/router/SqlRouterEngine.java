@@ -113,4 +113,10 @@ public class SqlRouterEngine {
         // TODO: 第二版处理 limit 相关的内容
     }
 
+    //=========================================================== prepare start ==========================================================================
+
+    public PreparedSqlRouter prepareSql(String logicSql) {
+        return new PreparedSqlRouter(logicSql, this);
+    }
+
 }

@@ -105,9 +105,9 @@ public class ShardingConnection extends AbstractConnectionAdapter {
         MasterSlaveDataSource masterSlaveDataSource = dataSourceContainer.getContainer().get(dataSourceName);
         //TODO 第一版默认取主库
         DataSource dataSource = masterSlaveDataSource.getMasterDataSource();
-        Connection result = dataSource.getConnection();
-        connectionMap.put(dataSourceName, result);
-        return result;
+        Connection connection = dataSource.getConnection();
+        connectionMap.put(dataSourceName, connection);
+        return connection;
     }
 
 }
