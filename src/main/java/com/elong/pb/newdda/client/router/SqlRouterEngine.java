@@ -40,9 +40,17 @@ public class SqlRouterEngine {
     }
 
     public SqlRouterResult route(final String logicSql, final List<Object> parameters) throws SqlParserException {
+        SqlParserResult sqlParserResult = parserSql(logicSql, parameters);
+        return routeSql(sqlParserResult, parameters);
+    }
+
+    public SqlParserResult parserSql(final String logicSql, final List<Object> parameters) {
         SqlParserEngine sqlParserEngine = SqlParserFactory.createParserEngine(databaseType, logicSql, parameters, shardingRule.getShardingColumns());
         SqlParserResult sqlParserResult = sqlParserEngine.parse();
+        return sqlParserResult;
+    }
 
+    public SqlRouterResult routeSql(final SqlParserResult sqlParserResult, final List<Object> parameters) {
         RouterContext routerContext = sqlParserResult.getRouteContext();
         MergeContext mergeContext = sqlParserResult.getMergeContext();
         List<ConditionContext> conditionContextList = sqlParserResult.getConditionContexts();
@@ -102,7 +110,7 @@ public class SqlRouterEngine {
     }
 
     private void processLimit(final Set<SqlExecutionUnit> executionUnits, final SqlParserResult parsedResult, final List<Object> parameters) {
-
+        // TODO: 第二版处理 limit 相关的内容
     }
 
 }
