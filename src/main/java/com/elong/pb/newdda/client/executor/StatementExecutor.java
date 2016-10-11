@@ -36,7 +36,7 @@ public class StatementExecutor {
             MAX_SIZE,
             KEEP_ALIVE_TIME,
             TimeUnit.SECONDS,
-            new LinkedBlockingDeque<Runnable>(),
+            new ArrayBlockingQueue<Runnable>(100000),
             new ThreadFactory() {
                 private AtomicInteger threadIndex = new AtomicInteger(0);
 
@@ -44,7 +44,8 @@ public class StatementExecutor {
                 public Thread newThread(Runnable r) {
                     return new Thread(r, "StatementExecutor_" + this.threadIndex.incrementAndGet());
                 }
-            }
+            },
+            new ThreadPoolExecutor.CallerRunsPolicy()
     );
 
     /**
