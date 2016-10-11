@@ -229,6 +229,10 @@ public abstract class AbstractPreparedStatementAdapter extends AbstractOperation
         parameters.clear();
     }
 
+    public List<Object> getParameters() {
+        return parameters;
+    }
+
     private void setParameter(final int index, final Object x) {
         int extendedSize = index - parameters.size();
         if (extendedSize > 1) {

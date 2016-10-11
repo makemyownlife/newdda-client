@@ -25,7 +25,7 @@ public class ShardingStatement extends AbstractStatementAdapter {
 
     private ResultSet currentResultSet = null;
 
-    private MergeContext mergeContext = null;
+    private MergeContext mergeContext;
 
     //====================================================== 初始化参数 start  ================================================================
     private final ShardingConnection shardingConnection;
@@ -133,6 +133,26 @@ public class ShardingStatement extends AbstractStatementAdapter {
         return resultSetHoldability;
     }
 
+    public ResultSet getCurrentResultSet() {
+        return currentResultSet;
+    }
+
+    public void setCurrentResultSet(ResultSet currentResultSet) {
+        this.currentResultSet = currentResultSet;
+    }
+
+    public MergeContext getMergeContext() {
+        return mergeContext;
+    }
+
+    public ShardingConnection getShardingConnection() {
+        return shardingConnection;
+    }
+
+    public void setMergeContext(MergeContext mergeContext) {
+        this.mergeContext = mergeContext;
+    }
+
     //======================================================================= 基本参数 end ==================================================================================
     @Override
     public ResultSet getResultSet() throws SQLException {
@@ -177,6 +197,7 @@ public class ShardingStatement extends AbstractStatementAdapter {
         }
         return result;
     }
+
 
     //======================================================================= private method end ==================================================================
 
