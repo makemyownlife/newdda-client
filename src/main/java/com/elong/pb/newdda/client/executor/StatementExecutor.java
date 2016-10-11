@@ -17,6 +17,9 @@ public class StatementExecutor {
 
     private static final Logger logger = LoggerFactory.getLogger(StatementExecutor.class);
 
+    //防止多线程环境下,数据没有flush到主内存
+    private final Object fulshLock = new Object();
+
     //定义线程池
     private final List<StatementExecutorWrapper> statementExecutorWrappers = new ArrayList<StatementExecutorWrapper>();
 
@@ -66,15 +69,11 @@ public class StatementExecutor {
             threadPoolExecutor.execute(new Runnable() {
                 public void run() {
                     try {
-                        if (logger.isDebugEnabled()) {
-                            logger.debug("sqlExecutionUnit:" + statementExecutorWrapper.getSqlExecutionUnit() + " begin to execute");
-                        }
                         ResultSet resultSet = executeQueryInternal(statementExecutorWrapper);
-                        if (logger.isDebugEnabled()) {
-                            logger.debug("sqlExecutionUnit:" + statementExecutorWrapper.getSqlExecutionUnit() + " finish t execute resultset:" + resultSet);
-                        }
                         if (resultSet != null) {
-                            result.add(resultSet);
+                            synchronized (fulshLock) {
+                                result.add(resultSet);
+                            }
                         }
                     } catch (Throwable e) {
                         logger.error("threadPoolExecutor execute error:" + statementExecutorWrapper.getSqlExecutionUnit(), e);
