@@ -51,9 +51,6 @@ public class SqlParserContext {
         if (routerColumn == null) {
             return;
         }
-        if (logger.isDebugEnabled()) {
-            logger.debug("routerColumn:{}", routerColumn);
-        }
         List<ValuePair> values = new ArrayList<ValuePair>(valueExprList.size());
         for (SQLExpr each : valueExprList) {
             ValuePair evalValue = evalExpression(databaseType, each, paramters);
@@ -78,7 +75,7 @@ public class SqlParserContext {
     /**
      * 判断SQL表达式是否为二元操作且带有别名.
      *
-     * @param x                待判断的SQL表达式
+     * @param x                  待判断的SQL表达式
      * @param tableOrAliasName 表名称或别名
      * @return 是否为二元操作且带有别名
      */

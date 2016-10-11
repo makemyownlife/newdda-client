@@ -1,16 +1,22 @@
 package com.elong.pb.newdda.client.executor;
 
 import com.elong.pb.newdda.client.executor.wrapper.PreparedStatementExecutorWrapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public final class PreparedStatementExecutor {
+
+    private final static Logger logger = LoggerFactory.getLogger(PreparedStatementExecutor.class);
+
+    private final Object fulshLock = new Object();
 
     private final static int CORE_SIZE = Runtime.getRuntime().availableProcessors();
 
@@ -37,7 +43,6 @@ public final class PreparedStatementExecutor {
             new ThreadPoolExecutor.CallerRunsPolicy()
     );
 
-
     private List<PreparedStatementExecutorWrapper> preparedStatementExecutorWrappers;
 
     public PreparedStatementExecutor(List<PreparedStatementExecutorWrapper> preparedStatementExecutorWrappers) {
@@ -45,12 +50,53 @@ public final class PreparedStatementExecutor {
     }
 
     public List<ResultSet> executeQuery() {
-        List<ResultSet> result = null;
+        if (preparedStatementExecutorWrappers.size() == 1) {
+            return Collections.singletonList(executePrepareQueryInternal(preparedStatementExecutorWrappers.get(0)));
+        }
+
+        final List<ResultSet> result = new ArrayList<ResultSet>();
+        final CountDownLatch countDownLatch = new CountDownLatch(preparedStatementExecutorWrappers.size());
+        //多线程处理
+        for (int i = 0; i < preparedStatementExecutorWrappers.size(); i++) {
+            final PreparedStatementExecutorWrapper preparedStatementExecutorWrapper = preparedStatementExecutorWrappers.get(i);
+            prepareThreadPoolExecutor.execute(new Runnable() {
+                public void run() {
+                    try {
+                        ResultSet resultSet = executePrepareQueryInternal(preparedStatementExecutorWrapper);
+                        if (resultSet != null) {
+                            synchronized (fulshLock) {
+                                result.add(resultSet);
+                            }
+                        }
+                    } catch (Throwable e) {
+                        logger.error("threadPoolExecutor execute error:" + preparedStatementExecutorWrapper.getSqlExecutionUnit(), e);
+                    } finally {
+                        countDownLatch.countDown();
+                    }
+                }
+            });
+        }
+        try {
+            countDownLatch.await(EXECUTE_MAX_TIME, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            logger.error("executeQuery Interrupted by some reason :" + e.getMessage());
+        }
         return result;
     }
 
     public boolean execute() {
         return false;
+    }
+
+    private ResultSet executePrepareQueryInternal(final PreparedStatementExecutorWrapper preparedStatementExecutorWrapper) {
+        ResultSet result;
+        try {
+            result = preparedStatementExecutorWrapper.getPreparedStatement().executeQuery();
+        } catch (final SQLException ex) {
+            logger.error(preparedStatementExecutorWrapper.getSqlExecutionUnit() + " executeQueryInternal error: ", ex);
+            return null;
+        }
+        return result;
     }
 
 }
