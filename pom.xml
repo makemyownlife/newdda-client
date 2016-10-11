@@ -11,13 +11,6 @@
 
     <dependencies>
 
-        <!-- 对象拷贝 -->
-        <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils</artifactId>
-            <version>1.9.2</version>
-        </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -48,12 +41,6 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.28</version>
             <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils</artifactId>
-            <version>1.9.2</version>
         </dependency>
 
         <!-- 在测试环境测试连接池 -->
@@ -134,13 +121,6 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.16</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.dangdang</groupId>
-            <artifactId>sharding-jdbc-core</artifactId>
-            <version>1.0.0</version>
             <scope>test</scope>
         </dependency>
 
