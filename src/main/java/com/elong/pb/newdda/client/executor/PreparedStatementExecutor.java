@@ -37,7 +37,7 @@ public final class PreparedStatementExecutor {
 
                 @Override
                 public Thread newThread(Runnable r) {
-                    return new Thread(r, "StatementExecutor_" + this.threadIndex.incrementAndGet());
+                    return new Thread(r, "PrepareStatementExecutor_" + this.threadIndex.incrementAndGet());
                 }
             },
             new ThreadPoolExecutor.CallerRunsPolicy()
@@ -53,7 +53,6 @@ public final class PreparedStatementExecutor {
         if (preparedStatementExecutorWrappers.size() == 1) {
             return Collections.singletonList(executePrepareQueryInternal(preparedStatementExecutorWrappers.get(0)));
         }
-
         final List<ResultSet> result = new ArrayList<ResultSet>();
         final CountDownLatch countDownLatch = new CountDownLatch(preparedStatementExecutorWrappers.size());
         //多线程处理

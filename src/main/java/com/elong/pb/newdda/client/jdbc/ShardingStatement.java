@@ -200,14 +200,4 @@ public class ShardingStatement extends AbstractStatementAdapter {
     }
 
     //======================================================================= private method end ==================================================================
-
-    //======================================================================= interface method start ==================================================================
-    private interface Updater {
-        int executeUpdate(Statement statement, String sql) throws SQLException;
-    }
-
-    private interface Executor {
-        boolean execute(Statement statement, String sql) throws SQLException;
-    }
-    //======================================================================= interface method end ==================================================================
 }
