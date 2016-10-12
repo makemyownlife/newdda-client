@@ -33,16 +33,4 @@ public class MySqlSelectVisitor extends AbstractMySqlVisitor {
         super.endVisit(x);
     }
 
-    /**
-     * 父类使用<tt>@@</tt>代替<tt>?</tt>,此处直接输出参数占位符<tt>?</tt>
-     *
-     * @param x 变量表达式
-     * @return false 终止遍历AST
-     */
-    @Override
-    public final boolean visit(final SQLVariantRefExpr x) {
-        print(x.getName());
-        return false;
-    }
-
 }

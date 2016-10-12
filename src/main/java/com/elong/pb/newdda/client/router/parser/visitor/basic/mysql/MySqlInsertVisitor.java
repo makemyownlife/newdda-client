@@ -9,7 +9,7 @@ public class MySqlInsertVisitor extends AbstractMySqlVisitor {
 
     public boolean visit(final MySqlInsertStatement x) {
         getSqlParserContext().setCurrentTable(x.getTableName().toString(), x.getAlias());
-        return true;
+        return super.visit(x);
     }
 
 }

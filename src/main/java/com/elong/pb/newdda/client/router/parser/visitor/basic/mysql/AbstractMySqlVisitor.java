@@ -73,6 +73,11 @@ public abstract class AbstractMySqlVisitor extends MySqlOutputVisitor implements
         return false;
     }
 
+    public final boolean visit(final SQLVariantRefExpr x) {
+        print(x.getName());
+        return false;
+    }
+
     @Override
     public boolean visit(final SQLBetweenExpr x) {
         // TODO: 路由使用 暂时不处理相关的内容 第一版仅仅支持 = 操作符 sorry

@@ -9,7 +9,7 @@ public class MySqlUpdateVisitor extends AbstractMySqlVisitor {
 
     public boolean visit(final MySqlUpdateStatement x) {
         getSqlParserContext().setCurrentTable(x.getTableName().toString(), null);
-        return true;
+        return super.visit(x);
     }
 
 }
