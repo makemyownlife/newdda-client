@@ -21,6 +21,9 @@ public class StatementExecutor {
     //防止多线程环境下,数据没有flush到主内存
     private final Object fulshLock = new Object();
 
+    //是否抛出异常
+    private final static boolean THROW_EXCEPTION = true;
+
     //定义线程池
     private final List<StatementExecutorWrapper> statementExecutorWrappers = new ArrayList<StatementExecutorWrapper>();
 
@@ -248,6 +251,7 @@ public class StatementExecutor {
             result = updater.executeUpdate(statementExecutorWrapper.getStatement(), statementExecutorWrapper.getSqlExecutionUnit().getSql());
         } catch (final SQLException ex) {
             logger.error(statementExecutorWrapper.getSqlExecutionUnit() + " executeUpdateInternal error");
+            ExecutorExceptionHandler.handleException(ex , THROW_EXCEPTION);
             return 0;
         }
         return result;
@@ -259,6 +263,7 @@ public class StatementExecutor {
             result = executor.execute(statementExecutorWrapper.getStatement(), statementExecutorWrapper.getSqlExecutionUnit().getSql());
         } catch (final SQLException ex) {
             logger.error(statementExecutorWrapper.getSqlExecutionUnit() + " executeInternal error");
+            ExecutorExceptionHandler.handleException(ex , THROW_EXCEPTION);
             return false;
         }
         return result;
