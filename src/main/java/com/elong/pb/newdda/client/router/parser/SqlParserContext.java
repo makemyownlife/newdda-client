@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -29,8 +30,6 @@ public class SqlParserContext {
     private final static Logger logger = LoggerFactory.getLogger(SqlParserContext.class);
 
     private RouterTable currentRouterTable;
-
-    private List<Object> shardingColumns;
 
     private boolean hasOrCondition = false;
 
@@ -64,6 +63,14 @@ public class SqlParserContext {
         addCondition(routerColumn, operator, values);
     }
 
+    public void addCondition(final String columnName, final String tableName, final BinaryOperator operator, final SQLExpr valueExpr, final DatabaseType databaseType, final List<Object> parameters) {
+        RouterColumn column = createColumn(columnName, tableName);
+        ValuePair value = evalExpression(databaseType, valueExpr, parameters);
+        if (null != value) {
+            addCondition(column, operator, Collections.singletonList(value));
+        }
+    }
+
     public RouterTable addTable(final SQLExprTableSource x) {
         String tableName = SqlUtil.getExactlyValue(x.getExpr().toString());
         String alias = SqlUtil.getExactlyValue(x.getAlias());
@@ -75,7 +82,7 @@ public class SqlParserContext {
     /**
      * 判断SQL表达式是否为二元操作且带有别名.
      *
-     * @param x                  待判断的SQL表达式
+     * @param x                待判断的SQL表达式
      * @param tableOrAliasName 表名称或别名
      * @return 是否为二元操作且带有别名
      */
@@ -206,10 +213,6 @@ public class SqlParserContext {
     //=========================================================== private method end =======================================================
 
     //============================================================set get method start =====================================================
-
-    public void setShardingColumns(List<Object> shardingColumns) {
-        this.shardingColumns = shardingColumns;
-    }
 
     public SqlParserResult getSqlParsedResult() {
         return this.sqlParserResult;

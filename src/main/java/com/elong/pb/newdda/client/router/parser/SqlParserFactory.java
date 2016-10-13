@@ -26,7 +26,7 @@ public final class SqlParserFactory {
 
     private final static Logger logger = LoggerFactory.getLogger(SqlParserFactory.class);
 
-    public static SqlParserEngine createParserEngine(final DatabaseType databaseType, final String sql, final List<Object> parameters, final List<Object> shardingColumns) throws SqlParserException {
+    public static SqlParserEngine createParserEngine(final DatabaseType databaseType, final String sql, final List<Object> parameters) throws SqlParserException {
         if (logger.isDebugEnabled()) {
             logger.debug("Logic SQL: {}", sql);
         }
@@ -36,7 +36,7 @@ public final class SqlParserFactory {
             logger.debug("Get {} SQL Statement", sqlStatement.getClass().getName());
         }
         SQLASTOutputVisitor sqlastOutputVisitor = getSQLVisitor(databaseType, sqlStatement);
-        SqlParserEngine sqlParserEngine = new SqlParserEngine(sqlStatement, parameters, sqlastOutputVisitor, shardingColumns);
+        SqlParserEngine sqlParserEngine = new SqlParserEngine(sqlStatement, parameters, sqlastOutputVisitor);
         return sqlParserEngine;
     }
 

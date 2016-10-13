@@ -45,7 +45,7 @@ public class SqlRouterEngine {
     }
 
     public SqlParserResult parserSql(final String logicSql, final List<Object> parameters) {
-        SqlParserEngine sqlParserEngine = SqlParserFactory.createParserEngine(databaseType, logicSql, parameters, shardingRule.getShardingColumns());
+        SqlParserEngine sqlParserEngine = SqlParserFactory.createParserEngine(databaseType, logicSql, parameters);
         SqlParserResult sqlParserResult = sqlParserEngine.parse();
         return sqlParserResult;
     }

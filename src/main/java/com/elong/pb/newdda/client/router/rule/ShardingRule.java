@@ -25,12 +25,6 @@ public class ShardingRule {
 
     private List<TableRule> tableRules;
 
-    private List<Object> shardingColumns = new ArrayList<Object>();
-
-    public List<Object> getShardingColumns() {
-        return shardingColumns;
-    }
-
     //======================================================================get  set method start ======================================================================
     public DatabaseType getDatabaseType() {
         return databaseType;
