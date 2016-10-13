@@ -68,7 +68,7 @@ public final class PreparedStatementExecutor {
                             }
                         }
                     } catch (Throwable e) {
-                        logger.error("threadPoolExecutor execute error:" + preparedStatementExecutorWrapper.getSqlExecutionUnit(), e);
+                        logger.error("prepareThreadPoolExecutor execute error:" + preparedStatementExecutorWrapper.getSqlExecutionUnit(), e);
                     } finally {
                         countDownLatch.countDown();
                     }

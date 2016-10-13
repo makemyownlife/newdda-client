@@ -16,13 +16,11 @@ public class IdGenerator {
     //最大序号
     private final static int MAX_SEQ = 4095;
 
-    private final static long workerIdBits = 10L;
+    private final static long WORKERID_BITS = 10L;
 
-    private final static long sequenceBits = 12L;
+    private final static long SEQUENCE_BITS = 12L;
 
-    private final static long workerIdShift = sequenceBits;
-
-    private final static long timestampLeftShift = sequenceBits + workerIdBits;
+    private final static long TIMESTAMP_LEFTSHIFT = SEQUENCE_BITS + WORKERID_BITS;
 
     public static long getUniqueId(int workerId , int seqId) {
         if(workerId > MAX_WORKER_ID || workerId < 0) {
@@ -34,7 +32,7 @@ public class IdGenerator {
         //时间戳
         long timestamp = System.currentTimeMillis();
         //机器编号
-        return  (timestamp << timestampLeftShift) | (workerId << workerIdShift) | seqId;
+        return  (timestamp << TIMESTAMP_LEFTSHIFT) | (workerId << TIMESTAMP_LEFTSHIFT) | seqId;
     }
 
 
