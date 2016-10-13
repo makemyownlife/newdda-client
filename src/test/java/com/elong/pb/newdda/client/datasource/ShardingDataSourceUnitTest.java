@@ -102,7 +102,7 @@ public class ShardingDataSourceUnitTest extends AbstractTestNGSpringContextTests
     public void testInsertStatement() throws SQLException {
         Connection shardingConnection = shardingDataSource.getConnection();
         Statement statement = null;
-        String sql = "update test set user_name = 'zhangyong03' where user_id = 1";
+        String sql = "INSERT INTO `test`(user_id , user_name , create_time ,update_time) VALUES ('19', 'mytest', now(), now())";
         try {
             statement = null;
             statement = shardingConnection.createStatement();
