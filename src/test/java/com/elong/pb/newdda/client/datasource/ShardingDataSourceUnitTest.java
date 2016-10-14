@@ -1,6 +1,7 @@
 package com.elong.pb.newdda.client.datasource;
 
 import com.elong.pb.newdda.client.router.rule.ShardingRule;
+import com.elong.pb.newdda.client.util.IdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -102,7 +103,10 @@ public class ShardingDataSourceUnitTest extends AbstractTestNGSpringContextTests
     public void testInsertStatement() throws SQLException {
         Connection shardingConnection = shardingDataSource.getConnection();
         Statement statement = null;
-        String sql = "INSERT INTO `test`(user_id , user_name , create_time ,update_time) VALUES ('19', 'mytest', now(), now())";
+        int workerId = 213;
+        int seq = 11;
+        Long userId = IdGenerator.getUniqueId(workerId, seq);
+        String sql = "INSERT INTO `test`(user_id , user_name , create_time ,update_time) VALUES (" + userId + ", 'mytest', now(), now())";
         try {
             statement = null;
             statement = shardingConnection.createStatement();

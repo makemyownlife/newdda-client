@@ -22,6 +22,8 @@ public class IdGenerator {
 
     private final static long TIMESTAMP_LEFTSHIFT = SEQUENCE_BITS + WORKERID_BITS;
 
+    private final static long WORKERID_SHIFT = SEQUENCE_BITS;
+
     public static long getUniqueId(int workerId , int seqId) {
         if(workerId > MAX_WORKER_ID || workerId < 0) {
             throw new IllegalArgumentException("workerId is not Illegal");
@@ -32,8 +34,7 @@ public class IdGenerator {
         //时间戳
         long timestamp = System.currentTimeMillis();
         //机器编号
-        return  (timestamp << TIMESTAMP_LEFTSHIFT) | (workerId << TIMESTAMP_LEFTSHIFT) | seqId;
+        return  (timestamp << TIMESTAMP_LEFTSHIFT) | (workerId << WORKERID_SHIFT) | seqId;
     }
-
 
 }

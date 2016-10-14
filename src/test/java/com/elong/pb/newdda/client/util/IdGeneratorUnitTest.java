@@ -9,7 +9,7 @@ public class IdGeneratorUnitTest {
 
     @Test
     public void testGetUniqueId() {
-        long uniqueId = IdGenerator.getUniqueId(121, 21);
+        long uniqueId = IdGenerator.getUniqueId(1021, 12);
         System.out.println(uniqueId);
     }
 
