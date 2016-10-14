@@ -46,10 +46,8 @@ public class RangeAlgorithm implements Algorithm {
         if(obj instanceof String) {
             valueStr = (String)obj;
         }
-
         //计算hash值
         long hash = StringUtil.hash(valueStr , 0 , valueStr.length());
-
         //目标数据源
         String targetDataSource = null;
         //在虚拟的1024个分区中 查看位于哪个分区中
