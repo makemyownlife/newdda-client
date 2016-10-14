@@ -100,6 +100,28 @@ public class ShardingDataSourceUnitTest extends AbstractTestNGSpringContextTests
     }
 
     @Test
+    public void testUpdatePrepareStatement() throws SQLException {
+        Connection shardingConnection = shardingDataSource.getConnection();
+        PreparedStatement statement = null;
+        String sql = "update test set user_name = ? ,update_time = now() where user_id = ?";
+        try {
+            statement = null;
+            statement = shardingConnection.prepareStatement(sql);
+            statement.setString(1, "zhangyong17");
+            statement.setInt(2, 1);
+            int updateRow = statement.executeUpdate();
+            System.out.println("updateRow=" + updateRow);
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (shardingConnection != null) {
+                shardingConnection.close();
+            }
+        }
+    }
+
+    @Test
     public void testInsertStatement() throws SQLException {
         Connection shardingConnection = shardingDataSource.getConnection();
         Statement statement = null;
