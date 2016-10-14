@@ -80,16 +80,29 @@ public class ShardingPreparedStatement extends AbstractPreparedStatementAdapter 
 
     @Override
     public int executeUpdate() throws SQLException {
-        return 0;
+        try {
+            List<PreparedStatementExecutorWrapper> preparedStatementExecutorWrappers = routeSql();
+            PreparedStatementExecutor preparedStatementExecutor = new PreparedStatementExecutor(preparedStatementExecutorWrappers);
+            return preparedStatementExecutor.executeUpdate();
+        } finally {
+            clearRouteContext();
+        }
     }
 
     @Override
     public boolean execute() throws SQLException {
-        return false;
+        try {
+            List<PreparedStatementExecutorWrapper> preparedStatementExecutorWrappers = routeSql();
+            PreparedStatementExecutor preparedStatementExecutor = new PreparedStatementExecutor(preparedStatementExecutorWrappers);
+            return preparedStatementExecutor.execute();
+        } finally {
+            clearRouteContext();
+        }
     }
 
     @Override
     public void addBatch() throws SQLException {
+
     }
 
     private void clearRouteContext() throws SQLException {
