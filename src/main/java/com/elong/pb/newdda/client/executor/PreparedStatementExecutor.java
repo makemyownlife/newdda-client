@@ -155,6 +155,7 @@ public final class PreparedStatementExecutor {
             result = preparedStatementExecutorWrapper.getPreparedStatement().executeQuery();
         } catch (final SQLException ex) {
             logger.error(preparedStatementExecutorWrapper.getSqlExecutionUnit() + " executePrepareQueryInternal error: ", ex);
+            ExecutorExceptionHandler.handleException(ex, IS_EXCEPTION_THROWN);
             return null;
         }
         return result;
