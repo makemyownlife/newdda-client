@@ -17,7 +17,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zhangyong on 2016/7/26.
@@ -25,6 +27,8 @@ import java.util.List;
 public class ShardingPreparedStatement extends AbstractPreparedStatementAdapter {
 
     private final static Logger logger = LoggerFactory.getLogger(ShardingPreparedStatement.class);
+
+    private final Map<PreparedStatement, PreparedStatementExecutorWrapper> cachedRoutePreparedStatementMap = new HashMap<PreparedStatement, PreparedStatementExecutorWrapper>();
 
     private PreparedSqlRouter preparedSqlRouter;
 
