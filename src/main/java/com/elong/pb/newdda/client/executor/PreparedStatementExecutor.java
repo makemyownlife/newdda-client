@@ -100,6 +100,40 @@ public final class PreparedStatementExecutor {
                         int eachResult = executePrepareUpdateInternal(preparedStatementExecutorWrapper);
                         result.addAndGet(eachResult);
                     } catch (Throwable e) {
+                        logger.error("prepareThreadPoolExecutor executeUpdate error:" + preparedStatementExecutorWrapper.getSqlExecutionUnit(), e);
+                    } finally {
+                        countDownLatch.countDown();
+                    }
+                }
+            });
+        }
+        try {
+            countDownLatch.await(EXECUTE_MAX_TIME, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            logger.error("executeUpdate Interrupted by some reason :" + e.getMessage());
+        }
+        return result.get();
+    }
+
+    public boolean execute() {
+        if (1 == preparedStatementExecutorWrappers.size()) {
+            PreparedStatementExecutorWrapper preparedStatementExecutorWrapper = preparedStatementExecutorWrappers.iterator().next();
+            return executePrepareInternal(preparedStatementExecutorWrapper);
+        }
+
+        final List<Boolean> result = new ArrayList<Boolean>();
+        final CountDownLatch countDownLatch = new CountDownLatch(preparedStatementExecutorWrappers.size());
+        //多线程处理
+        for (int i = 0; i < preparedStatementExecutorWrappers.size(); i++) {
+            final PreparedStatementExecutorWrapper preparedStatementExecutorWrapper = preparedStatementExecutorWrappers.get(i);
+            prepareThreadPoolExecutor.execute(new Runnable() {
+                public void run() {
+                    try {
+                        boolean eachResult = executePrepareInternal(preparedStatementExecutorWrapper);
+                        synchronized (fulshLock) {
+                            result.add(eachResult);
+                        }
+                    } catch (Throwable e) {
                         logger.error("prepareThreadPoolExecutor execute error:" + preparedStatementExecutorWrapper.getSqlExecutionUnit(), e);
                     } finally {
                         countDownLatch.countDown();
@@ -112,11 +146,7 @@ public final class PreparedStatementExecutor {
         } catch (InterruptedException e) {
             logger.error("prepareExecuteQuery Interrupted by some reason :" + e.getMessage());
         }
-        return result.get();
-    }
-
-    public boolean execute() {
-        return false;
+        return (null == result || result.isEmpty()) ? false : result.get(0);
     }
 
     private ResultSet executePrepareQueryInternal(final PreparedStatementExecutorWrapper preparedStatementExecutorWrapper) {
