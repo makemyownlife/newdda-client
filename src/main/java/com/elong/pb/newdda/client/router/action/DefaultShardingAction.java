@@ -55,19 +55,12 @@ public class DefaultShardingAction implements ShardingAction {
     }
 
     //======================================================================== private method start ========================================================================
-
     private ShardingValue constructShardingValue(ShardingRule shardingRule , RouterCondition condition) {
         //所有的表规则(表以及列)
         List<TableRule> tableRuleList = shardingRule.getTableRules();
-        //分区算法
-        Algorithm algorithm = shardingRule.getAlgorithm();
-        //分区算法涉及到的数据库
-        List<String> dataSourceList = algorithm.getDataSourceList();
-
         RouterColumn routerColumn = condition.getRouterColumn();
         String tableName = routerColumn.getTableName();
         String columnName = routerColumn.getColumnName();
-
         //是否命中相关的表 以及分区关键字
         boolean isHit = false;
         for(TableRule tableRule : tableRuleList) {
@@ -79,7 +72,6 @@ public class DefaultShardingAction implements ShardingAction {
         if(!isHit) {
             return null;
         }
-
         List<Comparable<?>> conditionValues = condition.getValues();
         switch (condition.getOperator()) {
             case EQUAL:
@@ -92,7 +84,6 @@ public class DefaultShardingAction implements ShardingAction {
                 throw new UnsupportedOperationException(condition.getOperator().getExpression());
         }
     }
-
     //======================================================================== private method end ========================================================================
 
 
