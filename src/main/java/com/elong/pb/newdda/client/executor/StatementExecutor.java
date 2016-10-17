@@ -1,5 +1,6 @@
 package com.elong.pb.newdda.client.executor;
 
+import com.elong.pb.newdda.client.constants.ThreadPoolConstants;
 import com.elong.pb.newdda.client.executor.wrapper.StatementExecutorWrapper;
 import com.elong.pb.newdda.client.router.SqlExecutionUnit;
 import org.slf4j.Logger;
@@ -27,16 +28,14 @@ public class StatementExecutor {
     //定义线程池
     private final List<StatementExecutorWrapper> statementExecutorWrappers = new ArrayList<StatementExecutorWrapper>();
 
-    private final static int CORE_SIZE = Runtime.getRuntime().availableProcessors();
-
-    private final static int MAX_SIZE = CORE_SIZE * 2 + 1;
+    private final static int MAX_SIZE = ThreadPoolConstants.CORE_SIZE * 2 + 1;
 
     private final static int KEEP_ALIVE_TIME = 600;
 
     private final static int EXECUTE_MAX_TIME = 10;
 
     private static ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
-            CORE_SIZE,
+            ThreadPoolConstants.CORE_SIZE,
             MAX_SIZE,
             KEEP_ALIVE_TIME,
             TimeUnit.SECONDS,
