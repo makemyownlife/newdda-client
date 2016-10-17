@@ -16,7 +16,7 @@ public class StringUtil {
      * 字符串hash算法：s[0]*31^(n-1) + s[1]*31^(n-2) + ... + s[n-1] <br>
      * 其中s[]为字符串的字符数组，换算成程序的表达式为：<br>
      * h = 31*h + s.charAt(i); => h = (h << 5) - h + s.charAt(i); <br>
-     * 
+     *  s[i]是string的第i个字符，n是String的长度。那为什么这里用31，而不是其它数呢?《Effective Java》是这样说的：之所以选择31，是因为它是个奇素数，如果乘数是偶数，并且乘法溢出的话，信息就会丢失，因为与2相乘等价于移位运算。使用素数的好处并不是很明显，但是习惯上都使用素数来计算散列结果。31有个很好的特性，就是用移位和减法来代替乘法，可以得到更好的性能：31*i==(i<<5)-i。现在的VM可以自动完成这种优化。
      * @param start hash for s.substring(start, end)
      * @param end hash for s.substring(start, end)
      */
