@@ -10,7 +10,7 @@ public class StringUtilUnitTest {
 
     @Test
     public void testHashCode() {
-        String a = "1";
+        String a = "1121";
         Assert.assertEquals(a.hashCode(), StringUtil.hash(a, 0, a.length()));
     }
 

@@ -20,7 +20,7 @@ import java.util.*;
 
 public class ShardingStatement extends AbstractStatementAdapter {
 
-    //=========================================================  当前的结果  ===================================================================
+    //=================================================================================  当前的结果  ===========================================================================================
     private final Map<HashCode, Statement> cachedRoutedStatements = new HashMap<HashCode, Statement>();
 
     private ResultSet currentResultSet = null;
