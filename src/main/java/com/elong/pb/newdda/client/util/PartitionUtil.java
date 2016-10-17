@@ -15,13 +15,15 @@
  */
 package com.elong.pb.newdda.client.util;
 
+import com.elong.pb.newdda.client.constants.ShardingConstants;
+
 /**
  * 数据分区工具
  */
 public final class PartitionUtil {
 
     // 分区长度:数据段分布定义，其中取模的数一定要是2^n， 因为这里使用x % 2^n == x & (2^n - 1)等式，来优化性能。
-    private static final int PARTITION_LENGTH = 1024;
+    private static final int PARTITION_LENGTH = ShardingConstants.SHARDING_LENGTH;
 
     // %转换为&操作的换算数值
     private static final long AND_VALUE = PARTITION_LENGTH - 1;

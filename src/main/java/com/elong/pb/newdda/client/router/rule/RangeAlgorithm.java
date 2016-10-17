@@ -1,5 +1,6 @@
 package com.elong.pb.newdda.client.router.rule;
 
+import com.elong.pb.newdda.client.constants.ShardingConstants;
 import com.elong.pb.newdda.client.exception.ShardingJdbcException;
 import com.elong.pb.newdda.client.router.action.ShardingValue;
 import com.elong.pb.newdda.client.util.StringUtil;
@@ -22,7 +23,7 @@ public class RangeAlgorithm implements Algorithm {
     //分区列表
     private List<String> rangeList;
 
-    private static final int PARTITION_LENGTH = 1024;
+    private static final int PARTITION_LENGTH = ShardingConstants.SHARDING_LENGTH;
 
     // %转换为&操作的换算数值
     private static final long AND_VALUE = PARTITION_LENGTH - 1;
