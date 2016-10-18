@@ -69,7 +69,7 @@ public final class PreparedStatementExecutor {
                             }
                         }
                     } catch (Throwable e) {
-                        logger.error("prepareThreadPoolExecutor execute error:" + preparedStatementExecutorWrapper.getSqlExecutionUnit(), e);
+                        logger.error("prepareThreadPoolExecutor executeQuery error:" + preparedStatementExecutorWrapper.getSqlExecutionUnit(), e);
                     } finally {
                         countDownLatch.countDown();
                     }
