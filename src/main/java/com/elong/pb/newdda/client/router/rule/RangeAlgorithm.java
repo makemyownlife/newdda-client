@@ -59,6 +59,7 @@ public class RangeAlgorithm implements Algorithm {
         int realPos  = (int) (hash & AND_VALUE);
 
         AlgorithmResult algorithmResult = new AlgorithmResult();
+        algorithmResult.setLogicTable(shardingValue.getLogicTableName());
 
         //目标数据源 若仅有一个库,则命中当前唯一的库,否则计算hash值
         String targetDataSource = null;
@@ -104,7 +105,7 @@ public class RangeAlgorithm implements Algorithm {
                 }
             }
         }
-        algorithmResult.setTargetTableName(targetTableName == null ? shardingValue.getLogicTableName() : targetTableName);
+        algorithmResult.setTargetTableName(targetTableName);
         return algorithmResult;
     }
 

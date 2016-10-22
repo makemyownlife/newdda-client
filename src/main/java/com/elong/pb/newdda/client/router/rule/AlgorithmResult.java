@@ -9,6 +9,10 @@ public class AlgorithmResult {
     //命中数据源
     private String targetDataSource;
 
+    //逻辑表名
+    private String logicTable;
+
+    //目标表名
     private String targetTableName;
 
     public String getTargetDataSource() {
@@ -28,4 +32,11 @@ public class AlgorithmResult {
         this.targetTableName = targetTableName;
     }
 
+    public String getLogicTable() {
+        return logicTable;
+    }
+
+    public void setLogicTable(String logicTable) {
+        this.logicTable = logicTable;
+    }
 }

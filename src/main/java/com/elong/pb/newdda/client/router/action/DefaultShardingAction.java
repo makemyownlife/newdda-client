@@ -46,7 +46,11 @@ public class DefaultShardingAction implements ShardingAction {
             if(shardingValue != null){
                 AlgorithmResult algorithmResult = shardingRule.getAlgorithm().doAlgorithm(shardingValue);
                 if(algorithmResult != null) {
-                    SqlExecutionUnit sqlExecutionUnit = new SqlExecutionUnit(algorithmResult.getTargetDataSource(), sqlAppender);
+                    SqlAppender newSqlAppender = sqlAppender.cloneBuilder();
+                    if(!algorithmResult.getLogicTable().equals(algorithmResult.getTargetTableName())) {
+                        newSqlAppender.buildSQL(algorithmResult.getLogicTable() , algorithmResult.getTargetTableName());
+                    }
+                    SqlExecutionUnit sqlExecutionUnit = new SqlExecutionUnit(algorithmResult.getTargetDataSource(), newSqlAppender);
                     result.add(sqlExecutionUnit);
                 }
             }

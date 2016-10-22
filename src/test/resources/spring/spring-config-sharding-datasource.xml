@@ -18,7 +18,7 @@
 
     <bean id="dataSource1" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://10.100.19.205:3306/pb_account1"/>
+        <property name="url" value="jdbc:mysql://192.168.1.115:3306/pb_account1"/>
         <property name="username" value="root"/>
         <property name="password" value="ilxw"/>
         <property name="initialSize" value="5"/>
@@ -30,7 +30,7 @@
 
     <bean id="dataSource2" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://10.100.19.205:3306/pb_account2"/>
+        <property name="url" value="jdbc:mysql://192.168.1.115:3306/pb_account2"/>
         <property name="username" value="root"/>
         <property name="password" value="ilxw"/>
         <property name="initialSize" value="5"/>
@@ -42,7 +42,7 @@
 
     <bean id="dataSource3" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://10.100.19.205:3306/pb_account3"/>
+        <property name="url" value="jdbc:mysql://192.168.1.115:3306/pb_account3"/>
         <property name="username" value="root"/>
         <property name="password" value="ilxw"/>
         <property name="initialSize" value="5"/>
@@ -104,7 +104,7 @@
         <!-- 分区算法 -->
         <property name="algorithm">
             <bean class="com.elong.pb.newdda.client.router.rule.RangeAlgorithm">
-                <!-- 分区列表 -->
+                <!-- 数据源列表 -->
                 <property name="dataSourceList">
                     <list>
                         <value>sharding1</value>
@@ -112,12 +112,19 @@
                         <value>sharding3</value>
                     </list>
                 </property>
-                <!-- 分区范围 -->
-                <property name="rangeList">
+                <!-- 数据源分区范围 -->
+                <property name="dataSourceRangeList">
                     <list>
                         <value>0,255</value>
                         <value>256,511</value>
                         <value>512,1023</value>
+                    </list>
+                </property>
+                <!-- 表分区范围 -->
+                <property name="tableRangeList">
+                    <list>
+                        <value>0,255</value>
+                        <value>256,1023</value>
                     </list>
                 </property>
             </bean>
