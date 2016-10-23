@@ -36,23 +36,16 @@ public class DefaultShardingAction implements ShardingAction {
     @Override
     public Collection<SqlExecutionUnit> doSharding() {
         //分区的结果
-        List<SqlExecutionUnit> result = new ArrayList<SqlExecutionUnit>();
-
+        Set<SqlExecutionUnit> result = new HashSet<SqlExecutionUnit>();
+        //组装分区值
         Collection<RouterCondition> conditions = conditionContext.getAllConditions();
+        List<ShardingValue> shardingValues = new ArrayList<ShardingValue>(conditions.size());
         //判断该sql位于哪一个库,以及相关的表的替换
-        for(RouterCondition condition : conditions){
-            //判断该表 该列是否命中, 若命中, 则返回该表对应的数据源
-            ShardingValue shardingValue = constructShardingValue(shardingRule , condition);
-            if(shardingValue != null){
-                AlgorithmResult algorithmResult = shardingRule.getAlgorithm().doAlgorithm(shardingValue);
-                if(algorithmResult != null) {
-                    SqlAppender newSqlAppender = sqlAppender.cloneBuilder();
-                    if(!algorithmResult.getLogicTable().equals(algorithmResult.getTargetTableName())) {
-                        newSqlAppender.buildSQL(algorithmResult.getLogicTable() , algorithmResult.getTargetTableName());
-                    }
-                    SqlExecutionUnit sqlExecutionUnit = new SqlExecutionUnit(algorithmResult.getTargetDataSource(), newSqlAppender);
-                    result.add(sqlExecutionUnit);
-                }
+        for(RouterCondition condition : conditions) {
+            //判断该表以及字段是否命中
+            ShardingValue shardingValue = constructShardingValue(shardingRule, condition);
+            if (shardingValue != null) {
+                shardingValues.add(shardingValue);
             }
         }
         return result;

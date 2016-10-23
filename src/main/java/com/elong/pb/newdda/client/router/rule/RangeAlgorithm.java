@@ -105,7 +105,6 @@ public class RangeAlgorithm implements Algorithm {
                 }
             }
         }
-        algorithmResult.setTargetTableName(targetTableName);
         return algorithmResult;
     }
 
