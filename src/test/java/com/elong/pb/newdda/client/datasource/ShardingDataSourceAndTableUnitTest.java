@@ -32,7 +32,7 @@ public class ShardingDataSourceAndTableUnitTest extends AbstractTestNGSpringCont
         Connection shardingConnection = shardingDataSource.getConnection();
         Statement statement = null;
         String uuid = "'" + UUID.randomUUID().toString() + "'";
-        String sql = "INSERT INTO `t_coupon`(id , member_id ,coupon_value, create_time ,update_time) VALUES (" + uuid + ", 102918, 12.2, now(), now())";
+        String sql = "INSERT INTO `t_coupon`(id , member_id ,coupon_value, create_time ,update_time) VALUES (" + uuid + ", 302919, 12.2, now(), now())";
         try {
             statement = null;
             statement = shardingConnection.createStatement();
