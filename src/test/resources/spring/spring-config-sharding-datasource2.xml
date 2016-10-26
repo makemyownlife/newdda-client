@@ -4,8 +4,8 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd
-           http://www.springframework.org/schema/aop
-           http://www.springframework.org/schema/aop/spring-aop.xsd
+
+
            http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context.xsd">
 
@@ -17,7 +17,7 @@
 
     <bean id="dataSource1" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://192.168.1.115:3306/pb_account1"/>
+        <property name="url" value="jdbc:mysql://10.100.19.205:3306/pb_account1"/>
         <property name="username" value="root"/>
         <property name="password" value="ilxw"/>
         <property name="initialSize" value="5"/>
@@ -29,7 +29,7 @@
 
     <bean id="dataSource2" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://192.168.1.115:3306/pb_account2"/>
+        <property name="url" value="jdbc:mysql://10.100.19.205:3306/pb_account2"/>
         <property name="username" value="root"/>
         <property name="password" value="ilxw"/>
         <property name="initialSize" value="5"/>
@@ -41,7 +41,7 @@
 
     <bean id="dataSource3" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://192.168.1.115:3306/pb_account3"/>
+        <property name="url" value="jdbc:mysql://10.100.19.205:3306/pb_account3"/>
         <property name="username" value="root"/>
         <property name="password" value="ilxw"/>
         <property name="initialSize" value="5"/>
@@ -94,9 +94,9 @@
             <list>
                 <bean class="com.elong.pb.newdda.client.router.rule.ShardingKey">
                     <!-- 表名 -->
-                    <property name="tableName" value="test"/>
+                    <property name="tableName" value="t_coupon"/>
                     <!-- 分区关键字 -->
-                    <property name="shardingColumn" value="user_id"/>
+                    <property name="shardingColumn" value="member_id"/>
                 </bean>
             </list>
         </property>
@@ -120,6 +120,19 @@
                                 <value>0,255</value>
                                 <value>256,511</value>
                                 <value>512,1023</value>
+                            </list>
+                        </property>
+                    </bean>
+                </property>
+                <!-- 分表规则 -->
+                <property name="tableRule">
+                    <bean class="com.elong.pb.newdda.client.router.rule.RangeTableRule">
+                        <property name="tableRangeList">
+                            <list>
+                                <value>0,255</value>
+                                <value>256,511</value>
+                                <value>512,767</value>
+                                <value>768,1023</value>
                             </list>
                         </property>
                     </bean>

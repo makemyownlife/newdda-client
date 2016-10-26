@@ -10,8 +10,6 @@ import java.util.List;
  */
 public interface Algorithm {
 
-    List<String> getDataSourceList();
-
-    AlgorithmResult doAlgorithm(ShardingValue shardingValue);
+     AlgorithmResult doAlgorithm(ShardingValue shardingValue);
 
 }

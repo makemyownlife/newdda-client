@@ -1,7 +1,5 @@
 package com.elong.pb.newdda.client.router.rule;
 
-import java.util.List;
-
 /**
  * 算法结果
  * Created by zhangyong on 16/10/1.
@@ -15,7 +13,7 @@ public class AlgorithmResult {
     private String logicTable;
 
     //目标表名
-    private List<String> targetTableNames;
+    private String targetTableName;
 
     public String getTargetDataSource() {
         return targetDataSource;
@@ -33,12 +31,12 @@ public class AlgorithmResult {
         this.logicTable = logicTable;
     }
 
-    public List<String> getTargetTableNames() {
-        return targetTableNames;
+    public String getTargetTableName() {
+        return targetTableName;
     }
 
-    public void setTargetTableNames(List<String> targetTableNames) {
-        this.targetTableNames = targetTableNames;
+    public void setTargetTableName(String targetTableName) {
+        this.targetTableName = targetTableName;
     }
 
 }

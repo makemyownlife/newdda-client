@@ -9,4 +9,5 @@ public final class ExecutorExceptionHandler {
             throw new ShardingJdbcException(ex);
         }
     }
+
 }

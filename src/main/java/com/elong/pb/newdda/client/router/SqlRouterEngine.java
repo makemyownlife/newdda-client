@@ -14,6 +14,8 @@ import com.elong.pb.newdda.client.router.rule.ShardingRule;
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Sets;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -25,6 +27,8 @@ import java.util.Set;
  * Created by zhangyong on 2016/7/27.
  */
 public class SqlRouterEngine {
+
+    private final static Logger logger = LoggerFactory.getLogger(SqlRouterEngine.class);
 
     private DatabaseType databaseType;
 
@@ -85,6 +89,10 @@ public class SqlRouterEngine {
 
         if (sqlRouterResult.getExecutionUnits().isEmpty()) {
             throw new ShardingJdbcException("Sharding-JDBC: cannot route any result, please check your sharding rule.");
+        }
+
+        if (logger.isDebugEnabled()) {
+            logger.debug("getExecutionUnits:" + sqlRouterResult.getExecutionUnits());
         }
 
         return sqlRouterResult;
