@@ -2,10 +2,8 @@ package com.elong.pb.newdda.client.router.action;
 
 import com.elong.pb.newdda.client.router.SqlExecutionUnit;
 import com.elong.pb.newdda.client.router.result.router.*;
-import com.elong.pb.newdda.client.router.rule.Algorithm;
-import com.elong.pb.newdda.client.router.rule.AlgorithmResult;
+import com.elong.pb.newdda.client.router.rule.ShardingKey;
 import com.elong.pb.newdda.client.router.rule.ShardingRule;
-import com.elong.pb.newdda.client.router.rule.TableRule;
 
 import java.util.*;
 
@@ -54,14 +52,14 @@ public class DefaultShardingAction implements ShardingAction {
     //======================================================================== private method start ========================================================================
     private ShardingValue constructShardingValue(ShardingRule shardingRule , RouterCondition condition) {
         //所有的表规则(表以及列)
-        List<TableRule> tableRuleList = shardingRule.getTableRules();
+        List<ShardingKey> shardingKeyList = shardingRule.getShardingKeyBeen();
         RouterColumn routerColumn = condition.getRouterColumn();
         String tableName = routerColumn.getTableName();
         String columnName = routerColumn.getColumnName();
         //是否命中相关的表 以及分区关键字
         boolean isHit = false;
-        for(TableRule tableRule : tableRuleList) {
-            if(tableRule.getShardingKey().equals(columnName) && tableRule.getTableName().equals(tableName)) {
+        for(ShardingKey shardingKey : shardingKeyList) {
+            if(shardingKey.getShardingColumn().equals(columnName) && shardingKey.getTableName().equals(tableName)) {
                 isHit = true;
                 break;
             }

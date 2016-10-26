@@ -91,13 +91,13 @@
         <!-- 涉及到的数据库容器 -->
         <property name="dataSourceContainer" ref="dataSourceContainer"/>
         <!-- 涉及到分库的表 -->
-        <property name="tableRules">
+        <property name="shardingKey">
             <list>
-                <bean class="com.elong.pb.newdda.client.router.rule.TableRule">
+                <bean class="com.elong.pb.newdda.client.router.rule.ShardingKey">
                     <!-- 表名 -->
                     <property name="tableName" value="test"/>
                     <!-- 分区关键字 -->
-                    <property name="shardingKey" value="user_id"/>
+                    <property name="shardingColumn" value="user_id"/>
                 </bean>
             </list>
         </property>
@@ -129,8 +129,6 @@
                 </property>
             </bean>
         </property>
-        <!-- 若select 查询不到 设置是否查询所有的分库 -->
-        <property name="selectNoneRouteAll" value="true" />
     </bean>
 
     <!-- 分区的统一数据源 -->

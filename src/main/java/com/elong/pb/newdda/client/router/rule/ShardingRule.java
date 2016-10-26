@@ -3,8 +3,6 @@ package com.elong.pb.newdda.client.router.rule;
 import com.elong.pb.newdda.client.constants.DatabaseType;
 import com.elong.pb.newdda.client.datasource.DataSourceContainer;
 
-import javax.activation.DataSource;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,14 +14,11 @@ public class ShardingRule {
     //默认mysql数据类型也可以配置
     private DatabaseType databaseType = DatabaseType.MySQL;
 
-    //查询不到路由到所有的数据库或者表
-    private boolean selectNoneRouteAll = false;
-
     private DataSourceContainer dataSourceContainer;
 
     private Algorithm algorithm;
 
-    private List<TableRule> tableRules;
+    private List<ShardingKey> shardingKey;
 
     //======================================================================get  set method start ======================================================================
     public DatabaseType getDatabaseType() {
@@ -34,12 +29,12 @@ public class ShardingRule {
         this.databaseType = databaseType;
     }
 
-    public List<TableRule> getTableRules() {
-        return tableRules;
+    public List<ShardingKey> getShardingKey() {
+        return shardingKey;
     }
 
-    public void setTableRules(List<TableRule> tableRules) {
-        this.tableRules = tableRules;
+    public void setShardingKey(List<ShardingKey> shardingKey) {
+        this.shardingKey = shardingKey;
     }
 
     public Algorithm getAlgorithm() {
@@ -57,15 +52,6 @@ public class ShardingRule {
     public void setDataSourceContainer(DataSourceContainer dataSourceContainer) {
         this.dataSourceContainer = dataSourceContainer;
     }
-
-    public boolean isSelectNoneRouteAll() {
-        return selectNoneRouteAll;
-    }
-
-    public void setSelectNoneRouteAll(boolean selectNoneRouteAll) {
-        this.selectNoneRouteAll = selectNoneRouteAll;
-    }
-
 
 //======================================================================get  set method end =======================================================================
 
