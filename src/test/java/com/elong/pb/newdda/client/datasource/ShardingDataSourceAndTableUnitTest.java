@@ -7,6 +7,7 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.UUID;
@@ -47,5 +48,34 @@ public class ShardingDataSourceAndTableUnitTest extends AbstractTestNGSpringCont
             }
         }
     }
+
+
+    @Test
+    public void testSelectStatement() throws SQLException {
+        Connection shardingConnection = shardingDataSource.getConnection();
+        Statement statement = null;
+        ResultSet rs = null;
+        String sql = "select * from t_coupon where  member_id  = 302919";
+        try {
+            statement = null;
+            rs = null;
+            statement = shardingConnection.createStatement();
+            rs = statement.executeQuery(sql);
+            while (rs.next()) {
+                System.out.println("结果是:" + rs.getString("id") + " coupon:" + rs.getBigDecimal("coupon_value"));
+            }
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+            if (shardingConnection != null) {
+                shardingConnection.close();
+            }
+        }
+    }
+
 
 }
