@@ -17,7 +17,7 @@ public final class PreparedStatementExecutor {
 
     private final static Logger logger = LoggerFactory.getLogger(PreparedStatementExecutor.class);
 
-    private final Object fulshLock = new Object();
+    private final Object flushLock = new Object();
 
     private final static int MAX_SIZE = ThreadPoolConstants.CORE_SIZE * 2 + 1;
 
@@ -64,7 +64,7 @@ public final class PreparedStatementExecutor {
                     try {
                         ResultSet resultSet = executePrepareQueryInternal(preparedStatementExecutorWrapper);
                         if (resultSet != null) {
-                            synchronized (fulshLock) {
+                            synchronized (flushLock) {
                                 result.add(resultSet);
                             }
                         }
@@ -129,7 +129,7 @@ public final class PreparedStatementExecutor {
                 public void run() {
                     try {
                         boolean eachResult = executePrepareInternal(preparedStatementExecutorWrapper);
-                        synchronized (fulshLock) {
+                        synchronized (flushLock) {
                             result.add(eachResult);
                         }
                     } catch (Throwable e) {

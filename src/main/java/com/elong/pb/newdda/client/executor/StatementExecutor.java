@@ -20,7 +20,7 @@ public class StatementExecutor {
     private static final Logger logger = LoggerFactory.getLogger(StatementExecutor.class);
 
     //防止多线程环境下,数据没有flush到主内存
-    private final Object fulshLock = new Object();
+    private final Object flushLock = new Object();
 
     //是否抛出异常
     private final static boolean THROW_EXCEPTION = true;
@@ -75,7 +75,7 @@ public class StatementExecutor {
                     try {
                         ResultSet resultSet = executeQueryInternal(statementExecutorWrapper);
                         if (resultSet != null) {
-                            synchronized (fulshLock) {
+                            synchronized (flushLock) {
                                 result.add(resultSet);
                             }
                         }
@@ -196,7 +196,7 @@ public class StatementExecutor {
                 public void run() {
                     try {
                         boolean eachResult = executeInternal(executor, statementExecutorWrapper);
-                        synchronized (fulshLock) {
+                        synchronized (flushLock) {
                             result.add(eachResult);
                         }
                     } catch (Throwable e) {
