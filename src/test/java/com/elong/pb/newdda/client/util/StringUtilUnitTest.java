@@ -11,6 +11,7 @@ public class StringUtilUnitTest {
     @Test
     public void testHashCode() {
         String a = "1121";
+        System.out.println(a.hashCode());
         Assert.assertEquals(a.hashCode(), StringUtil.hash(a, 0, a.length()));
     }
 
