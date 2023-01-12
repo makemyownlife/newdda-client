@@ -130,6 +130,13 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.16</version>
             <scope>test</scope>
+
+        </dependency>
+
+        <dependency>
+            <groupId>com.dangdang</groupId>
+            <artifactId>sharding-jdbc-core</artifactId>
+            <version>1.4.2</version>
         </dependency>
 
     </dependencies>
